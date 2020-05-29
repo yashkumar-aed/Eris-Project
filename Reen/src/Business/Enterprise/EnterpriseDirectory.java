@@ -35,6 +35,19 @@ public class EnterpriseDirectory {
             enterprise=new HospitalEnterprise(name);
             enterpriseList.add(enterprise);
         }
+        if(type==Enterprise.EnterpriseType.NFRF){
+
+            enterprise=new NFRFEnterprise(name);
+            enterprise.setEnterpriseType(type);
+            enterpriseList.add(enterprise);
+            return enterprise;
+        }
+        if(type==Enterprise.EnterpriseType.Reen){
+            enterprise=new ReenEnterprise(name);
+            enterprise.setEnterpriseType(type);
+            enterpriseList.add(enterprise);
+            return enterprise;
+        }
         return enterprise;
     }
 }

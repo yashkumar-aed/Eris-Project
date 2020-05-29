@@ -22,8 +22,9 @@ public abstract class Enterprise extends Organization{
     }
     
     public enum EnterpriseType{
+        Reen("Reen Foundation"),
         Hospital("Hospital"),
-        NFRF("NFRFEnterprise");
+        NFRF("NFRF");
         
         private String value;
         
