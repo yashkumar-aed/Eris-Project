@@ -12,9 +12,30 @@ import Business.Enterprise.EnterpriseDirectory;
  * @author MyPC1
  */
 public class Network {
+    
     private String name;
     private EnterpriseDirectory enterpriseDirectory;
+    private String country;
+    private String city;
     
+    private EnterpriseDirectory EnterpriseDirectory;
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     public Network(){
         enterpriseDirectory=new EnterpriseDirectory();
     }
