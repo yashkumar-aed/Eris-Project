@@ -32,7 +32,11 @@ public class MainJFrame extends javax.swing.JFrame {
     public MainJFrame() {
         initComponents();
         system = dB4OUtil.retrieveSystem();
+        LandingPage lp=new LandingPage();
         this.setSize(1680, 1050);
+        container.add("LandingPanel", lp);
+        CardLayout layout = (CardLayout)this.container.getLayout();
+        layout.next(container);
     }
 
     /**
