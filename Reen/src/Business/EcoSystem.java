@@ -17,13 +17,13 @@ import java.util.ArrayList;
  */
 public class EcoSystem extends Organization{
     
-    private static EcoSystem business;
+    private static EcoSystem system;
     private ArrayList<Network> networkList;
     public static EcoSystem getInstance(){
-        if(business==null){
-            business=new EcoSystem();
+        if(system==null){
+            system=new EcoSystem();
         }
-        return business;
+        return system;
     }
     
     public Network createAndAddNetwork(){
@@ -45,6 +45,13 @@ public class EcoSystem extends Organization{
     public ArrayList<Network> getNetworkList() {
         return networkList;
     }
+    
+     public Network addNetwork()
+    {
+        Network network = new Network();
+        networkList.add(network);
+        return network;
+    }
 
     public void setNetworkList(ArrayList<Network> networkList) {
         this.networkList = networkList;
@@ -53,9 +60,7 @@ public class EcoSystem extends Organization{
     public boolean checkIfUserIsUnique(String userName){
         if(!this.getUserAccountDirectory().checkIfUsernameIsUnique(userName)){
             return false;
-        }
-        for(Network network:networkList){
-            
+        
         }
         return true;
     }

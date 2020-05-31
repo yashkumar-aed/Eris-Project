@@ -5,6 +5,15 @@
  */
 package userinterface;
 
+import Business.EcoSystem;
+import Business.Enterprise.Enterprise;
+import Business.Network.Network;
+import Business.Organization.Organization;
+import Business.UserAccount.UserAccount;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 /**
  *
  * @author yashk
@@ -14,8 +23,16 @@ public class LoginPage extends javax.swing.JPanel {
     /**
      * Creates new form LoginPage
      */
-    public LoginPage() {
+    JPanel container;
+    EcoSystem system;
+    Organization.Type type;
+    
+    public LoginPage(JPanel container, EcoSystem system, Organization.Type type ) {
         initComponents();
+        this.container = container;
+        this.system = system;
+        this.type = type;
+      
     }
 
     /**

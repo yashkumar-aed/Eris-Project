@@ -5,6 +5,11 @@
  */
 package userinterface;
 
+import Business.EcoSystem;
+import Business.Organization.Organization;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+
 /**
  *
  * @author yashk
@@ -14,9 +19,18 @@ public class SigninOptions extends javax.swing.JPanel {
     /**
      * Creates new form SigninOptiona
      */
-    public SigninOptions() {
+    JPanel container;
+    EcoSystem system;
+    Organization.Type type;
+    
+    public SigninOptions(JPanel container, EcoSystem system) {
         initComponents();
+        this.container = container;
+        this.system = system;
     }
+
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -35,7 +49,6 @@ public class SigninOptions extends javax.swing.JPanel {
         btnAdmin = new javax.swing.JButton();
         btnNFRFInsurance = new javax.swing.JButton();
 
-        jPanel1.setBackground(java.awt.SystemColor.activeCaption);
         jPanel1.setMaximumSize(new java.awt.Dimension(1245, 1000));
         jPanel1.setMinimumSize(new java.awt.Dimension(1245, 1000));
 
@@ -152,7 +165,10 @@ public class SigninOptions extends javax.swing.JPanel {
 
     private void btnRespondersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRespondersActionPerformed
         // TODO add your handling code here:
-        
+        LoginPage so = new LoginPage(container, system, Organization.Type.RespondersOrg);
+        container.add("LoginPage", so);
+        CardLayout layout = (CardLayout)this.container.getLayout();
+        layout.next(container);
     }//GEN-LAST:event_btnRespondersActionPerformed
 
     private void btnVolunteersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolunteersActionPerformed
@@ -167,7 +183,10 @@ public class SigninOptions extends javax.swing.JPanel {
 
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
         // TODO add your handling code here:
-      
+        LoginPage so = new LoginPage(container, system, type.Admin);
+        container.add("LoginPage", so);
+        CardLayout layout = (CardLayout)this.container.getLayout();
+        layout.next(container);
     }//GEN-LAST:event_btnAdminActionPerformed
 
     private void btnNFRFInsuranceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNFRFInsuranceActionPerformed
