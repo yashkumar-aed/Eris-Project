@@ -160,7 +160,10 @@ public class SigninOptions extends javax.swing.JPanel {
 
     private void btnClaimsManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClaimsManagerActionPerformed
         // TODO add your handling code here:
-       
+        LoginPage so = new LoginPage(container, system, type.ClaimsManager);
+        container.add("LoginPage", so);
+        CardLayout layout = (CardLayout)this.container.getLayout();
+        layout.next(container);
     }//GEN-LAST:event_btnClaimsManagerActionPerformed
 
     private void btnRespondersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRespondersActionPerformed
@@ -173,12 +176,18 @@ public class SigninOptions extends javax.swing.JPanel {
 
     private void btnVolunteersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolunteersActionPerformed
         // TODO add your handling code here:
-        
+        LoginPage so = new LoginPage(container, system, Organization.Type.VolunteersOrg);
+        container.add("LoginPage", so);
+        CardLayout layout = (CardLayout)this.container.getLayout();
+        layout.next(container);
     }//GEN-LAST:event_btnVolunteersActionPerformed
 
     private void btnNFRFAidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNFRFAidActionPerformed
         // TODO add your handling code here:
-        
+        LoginPage so = new LoginPage(container, system, Organization.Type.NFRFAidManager);
+        container.add("LoginPage", so);
+        CardLayout layout = (CardLayout)this.container.getLayout();
+        layout.next(container);
     }//GEN-LAST:event_btnNFRFAidActionPerformed
 
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
@@ -191,7 +200,10 @@ public class SigninOptions extends javax.swing.JPanel {
 
     private void btnNFRFInsuranceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNFRFInsuranceActionPerformed
         // TODO add your handling code here:
-         
+         LoginPage so = new LoginPage(container, system, type.NFRFInsuranceManager);
+        container.add("LoginPage", so);
+        CardLayout layout = (CardLayout)this.container.getLayout();
+        layout.next(container);
     }//GEN-LAST:event_btnNFRFInsuranceActionPerformed
 
 
