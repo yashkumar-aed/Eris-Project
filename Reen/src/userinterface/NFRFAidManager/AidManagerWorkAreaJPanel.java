@@ -5,6 +5,12 @@
  */
 package userinterface.NFRFAidManager;
 
+import Business.EcoSystem;
+import Business.Enterprise.Enterprise;
+import Business.Organization.Organization;
+import Business.UserAccount.UserAccount;
+import javax.swing.JPanel;
+
 /**
  *
  * @author yashk
@@ -16,6 +22,10 @@ public class AidManagerWorkAreaJPanel extends javax.swing.JPanel {
      */
     public AidManagerWorkAreaJPanel() {
         initComponents();
+    }
+
+    public AidManagerWorkAreaJPanel(JPanel container, UserAccount account, Organization organization, EcoSystem business, Enterprise enterprise) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**

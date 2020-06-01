@@ -5,6 +5,10 @@
  */
 package userinterface.NFRFInsuranceManager;
 
+import Business.Enterprise.Enterprise;
+import Business.UserAccount.UserAccount;
+import javax.swing.JPanel;
+
 /**
  *
  * @author yashk
@@ -16,6 +20,10 @@ public class NFRFInsuranceManagerWorkAreaJPanel extends javax.swing.JPanel {
      */
     public NFRFInsuranceManagerWorkAreaJPanel() {
         initComponents();
+    }
+
+    public NFRFInsuranceManagerWorkAreaJPanel(JPanel container, Enterprise enterprise, UserAccount account) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**

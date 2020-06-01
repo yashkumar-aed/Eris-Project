@@ -5,10 +5,19 @@
  */
 package Business.Role;
 
+import Business.EcoSystem;
+import Business.Enterprise.Enterprise;
+import Business.Organization.Organization;
+import Business.UserAccount.UserAccount;
+import javax.swing.JPanel;
+import userinterface.VolunteersRole.VolunteersWorkAreaJPanel;
 /**
  *
  * @author yashk
  */
-public class VolunteersRole {
+public class VolunteersRole extends Role {
     
+    public JPanel createWorkArea(JPanel container, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business) {
+        return new VolunteersWorkAreaJPanel(container, enterprise, account, organization);
+    }
 }

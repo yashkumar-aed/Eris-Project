@@ -4,7 +4,7 @@
  */
 package Business.UserAccount;
 
-import Business.Employee.Employee;
+import Business.Employee.*;
 import Business.Role.Role;
 import java.util.ArrayList;
 
@@ -37,16 +37,89 @@ public class UserAccountDirectory {
         userAccount.setUsername(username);
         userAccount.setPassword(password);
         userAccount.setEmployee(employee);
+        
         userAccount.setRole(role);
         userAccountList.add(userAccount);
         return userAccount;
     }
     
+    public UserAccount createUserAccount(String username, String password, Employee employee, Role role, String network){
+        UserAccount userAccount = new UserAccount();
+        userAccount.setUsername(username);
+        userAccount.setPassword(password);
+        userAccount.setEmployee(employee);
+        userAccount.setNetwork(network);
+        userAccount.setRole(role);
+        userAccountList.add(userAccount);
+        return userAccount;
+    }
+    
+    public UserAccount createClaimsManagerUserAccount(String username, String password, ClaimsManager employee, Role role, String network){
+        UserAccount userAccount = new UserAccount();
+        userAccount.setUsername(username);
+        userAccount.setPassword(password);
+        userAccount.setClaimsmanager(employee);
+        userAccount.setNetwork(network);
+        userAccount.setRole(role);
+        userAccountList.add(userAccount);
+        return userAccount;
+    }
+    public UserAccount createNFRFAidManagerUserAccount(String username, String password, NFRFAidManager employee, Role role,String network){
+        UserAccount userAccount = new UserAccount();
+        userAccount.setUsername(username);
+        userAccount.setPassword(password);
+        userAccount.setNfrfaid(employee);
+        userAccount.setRole(role);
+         userAccount.setNetwork(network);
+        userAccountList.add(userAccount);
+        return userAccount;
+    }
+
+    public UserAccount createNFRFInsuranceManagerUserAccount(String username, String password, NFRFInsuranceManager employee, Role role, String network){
+        UserAccount userAccount = new UserAccount();
+        userAccount.setUsername(username);
+        userAccount.setPassword(password);
+        userAccount.setNfrfinsurance(employee);
+        userAccount.setRole(role);
+         userAccount.setNetwork(network);
+        userAccountList.add(userAccount);
+        return userAccount;
+    }
+    
+    public UserAccount createUserAccountVolunteers(String username, String password, Volunteers volunteers, Role role, String network){
+        UserAccount userAccount = new UserAccount();
+        userAccount.setUsername(username);
+        userAccount.setPassword(password);
+        userAccount.setVolunteers(volunteers);
+        
+        userAccount.setNetwork(network);
+        userAccount.setRole(role);
+        userAccountList.add(userAccount);
+        return userAccount;
+    }
+    
+    public UserAccount createUserAccountResponders(String name,String username, String password, Responders responders, Role role, String network){
+        UserAccount userAccount = new UserAccount();
+        userAccount.setName(name);
+        userAccount.setUsername(username);
+        userAccount.setPassword(password);
+        userAccount.setResponders(responders);
+        
+        userAccount.setNetwork(network);
+        userAccount.setRole(role);
+        userAccountList.add(userAccount);
+        return userAccount;
+    
+    }
     public boolean checkIfUsernameIsUnique(String username){
         for (UserAccount ua : userAccountList){
             if (ua.getUsername().equals(username))
                 return false;
         }
         return true;
+    }
+    public void deleteUserAccount(UserAccount userAccount)
+    {
+        userAccountList.remove(userAccount);
     }
 }

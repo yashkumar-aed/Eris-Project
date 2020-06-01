@@ -5,10 +5,19 @@
  */
 package Business.Role;
 
+import Business.EcoSystem;
+import Business.Enterprise.Enterprise;
+import Business.Organization.Organization;
+import Business.UserAccount.UserAccount;
+import javax.swing.JPanel;
+import userinterface.RespondersRole.RespondersWorkAreaJPanel;
 /**
  *
  * @author yashk
  */
-public class RespondersRole {
+public class RespondersRole extends Role {
     
+    public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business) {
+        return new BirthMotherWorkAreaJPanel(userProcessContainer, account, organization, enterprise, business);
+    }
 }

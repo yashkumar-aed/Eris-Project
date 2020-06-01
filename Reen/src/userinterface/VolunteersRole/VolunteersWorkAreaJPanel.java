@@ -5,11 +5,20 @@
  */
 package userinterface.VolunteersRole;
 
+import Business.Enterprise.Enterprise;
+import Business.Organization.Organization;
+import Business.UserAccount.UserAccount;
+import javax.swing.JPanel;
+
 /**
  *
  * @author yashk
  */
 public class VolunteersWorkAreaJPanel extends javax.swing.JPanel {
+
+    public VolunteersWorkAreaJPanel(JPanel container, Enterprise enterprise, UserAccount account, Organization organization) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     /**
      * Creates new form VolunteersWorkAreaJPanel

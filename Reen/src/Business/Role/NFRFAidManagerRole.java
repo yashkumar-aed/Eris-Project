@@ -5,10 +5,18 @@
  */
 package Business.Role;
 
+import Business.EcoSystem;
+import Business.Enterprise.Enterprise;
+import Business.Organization.Organization;
+import Business.UserAccount.UserAccount;
+import javax.swing.JPanel;
+import userinterface.NFRFAidManager.AidManagerWorkAreaJPanel;
 /**
  *
  * @author yashk
  */
 public class NFRFAidManagerRole {
-    
+    public JPanel createWorkArea(JPanel container, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business) {
+        return new AidManagerWorkAreaJPanel(container, account, organization, business, enterprise);
+    }
 }

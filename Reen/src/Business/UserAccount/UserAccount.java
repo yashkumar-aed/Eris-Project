@@ -83,7 +83,13 @@ public class UserAccount {
         name=new String();
         
     }
-    
+    public String getNetwork() {
+        return network;
+    }
+
+    public void setNetwork(String network) {
+        this.network = network;
+    }
     
     
     public String getUsername() {

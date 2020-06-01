@@ -5,10 +5,19 @@
  */
 package Business.Role;
 
+import Business.EcoSystem;
+import Business.Enterprise.Enterprise;
+import Business.Organization.Organization;
+import Business.UserAccount.UserAccount;
+import userinterface.NFRFAdminRole.NFRFAdminWorkAreaJPanel;
+import javax.swing.JPanel;
 /**
  *
  * @author yashk
  */
-public class NFRFAdminRole {
+public class NFRFAdminRole extends Role{
     
+    public JPanel createWorkArea(JPanel container, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business) {
+        return new NFRFAdminWorkAreaJPanel(container, enterprise, account);
+    }
 }

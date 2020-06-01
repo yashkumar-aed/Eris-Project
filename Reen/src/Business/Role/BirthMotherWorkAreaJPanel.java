@@ -9,15 +9,15 @@ import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
-import userinterface.ReenAdminRole.ReenAdminWorkAreaJPanel;
 import javax.swing.JPanel;
+
 /**
  *
  * @author yashk
  */
-public class ReenAdminRole {
-    
-     public JPanel createWorkArea(JPanel container, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business) {
-        return new ReenAdminWorkAreaJPanel(container, business,enterprise, account);
+public class BirthMotherWorkAreaJPanel extends JPanel {
+
+    public BirthMotherWorkAreaJPanel(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business) {
     }
+    
 }

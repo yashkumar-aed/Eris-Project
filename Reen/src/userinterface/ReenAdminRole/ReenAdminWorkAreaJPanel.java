@@ -5,6 +5,11 @@
  */
 package userinterface.ReenAdminRole;
 
+import Business.EcoSystem;
+import Business.Enterprise.Enterprise;
+import Business.UserAccount.UserAccount;
+import javax.swing.JPanel;
+
 /**
  *
  * @author yashk
@@ -16,6 +21,10 @@ public class ReenAdminWorkAreaJPanel extends javax.swing.JPanel {
      */
     public ReenAdminWorkAreaJPanel() {
         initComponents();
+    }
+
+    public ReenAdminWorkAreaJPanel(JPanel container, EcoSystem business, Enterprise enterprise, UserAccount account) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
