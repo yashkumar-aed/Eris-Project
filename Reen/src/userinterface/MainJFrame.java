@@ -128,7 +128,9 @@ public class MainJFrame extends javax.swing.JFrame {
         container.add("loginOptions", so);
         CardLayout layout = (CardLayout)this.container.getLayout();
         layout.next(container);
-        
+        logoutJButton.setEnabled(true);
+        loginJButton.setEnabled(false);
+      //  btnRegister.setEnabled(false);
          
     }//GEN-LAST:event_loginJButtonActionPerformed
 
