@@ -10,5 +10,9 @@ package Business.Employee;
  * @author yashk
  */
 public class NFRFInsuranceManager {
+
+    void setName(String name) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

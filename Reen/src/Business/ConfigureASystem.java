@@ -1,10 +1,16 @@
 package Business;
 
 import Business.Employee.Employee;
+import Business.Employee.*;
 import Business.Enterprise.Enterprise;
 import Business.Enterprise.ReenEnterprise;
 import Business.Enterprise.NFRFEnterprise;
 import Business.Network.Network;
+import Business.Role.NFRFAidManagerRole;
+import Business.Role.ClaimsManagerRole;
+import Business.Role.NFRFAdminRole;
+import Business.Role.ReenAdminRole;
+import Business.Role.NFRFInsuranceManagerRole;
 import Business.Role.SystemAdminRole;
 import Business.UserAccount.UserAccount;
 import Business.Organization.Organization;
@@ -29,10 +35,11 @@ public class ConfigureASystem {
         //create user account
         
         
-        Employee employee = system.getEmployeeDirectory().createEmployee("RRH");
+        Employee employee = system.getEmployeeDirectory().createandaddEmployee("sysadmin");
         
         UserAccount ua = system.getUserAccountDirectory().createUserAccount("sysadmin", "sysadmin", employee, new SystemAdminRole());
-        
+        ConfigureASystem configure = new ConfigureASystem();
+        configure.configureNetwork();
         return system;
     }
     public void configureNetwork(){
@@ -44,6 +51,8 @@ public class ConfigureASystem {
         
         ReenEnterprise reen=(ReenEnterprise)network.getEnterpriseDirectory().createAndAddEnterprise("Reen Foundation Mumbai",Enterprise.EnterpriseType.Reen);
         NFRFEnterprise nfrf=(NFRFEnterprise)network.getEnterpriseDirectory().createAndAddEnterprise("NFRF Mumbai",Enterprise.EnterpriseType.NFRF);
+
+        Employee employee = reen.getEmployeeDirectory().createandaddEmployee("Reen Foundation Admin");
 
         Organization organization = reen.getOrganizationDirectory().createOrganization(Organization.Type.VolunteersOrg);
     
