@@ -192,7 +192,7 @@ public class SigninOptions extends javax.swing.JPanel {
 
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
         // TODO add your handling code here:
-        LoginPage so = new LoginPage(container, system, type.Admin);
+        LoginPage so = new LoginPage(container, system, type.ReenAdmin);
         container.add("LoginPage", so);
         CardLayout layout = (CardLayout)this.container.getLayout();
         layout.next(container);
