@@ -141,7 +141,185 @@ public class LoginPage extends javax.swing.JPanel {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here
-          
+            String userName = txtUserName.getText();
+            
+        char[] passwordCharArray = txtPassword.getPassword();
+        String password = String.valueOf(passwordCharArray);
+        
+        UserAccount userAccount=system.getUserAccountDirectory().authenticateUser(userName, password);
+        
+        Enterprise inEnterprise=null;
+        Organization inOrganization=null;
+        
+        if (type.getValue().equals(type.ReenAdmin.getValue())){
+            if(userAccount==null){
+                //Step 2: Go inside each network and check each enterprise
+                for(Network network:system.getNetworkList()){
+                    //Step 2.a: check against each enterprise
+                    for(Enterprise enterprise:network.getEnterpriseDirectory().getEnterpriseList()){
+                        userAccount=enterprise.getUserAccountDirectory().authenticateUser(userName, password);
+                        if(userAccount!=null){
+                                   inEnterprise=enterprise;
+                                   break;
+                        }  
+                    }
+                    if(inEnterprise!=null){
+                    break;}
+                }
+            }
+        }else if(type.getValue().equals(type.ClaimsManager.getValue())){
+          if(userAccount==null){
+            //Step 2: Go inside each network and check each enterprise
+                for(Network network:system.getNetworkList()){
+                    //Step 2.a: check against each enterprise
+                    for(Enterprise enterprise:network.getEnterpriseDirectory().getEnterpriseList()){
+                        if(enterprise.getEnterpriseType().equals(enterprise.getEnterpriseType().Reen)){
+                            for(Organization organization:enterprise.getOrganizationDirectory().getOrganizationList()){
+                                if(organization.getName().equals("Claims Manager Organization")){
+                                    userAccount=organization.getUserAccountDirectory().authenticateUser(userName, password);
+                                    if(userAccount!=null){
+                                        inEnterprise=enterprise;
+                                        inOrganization=organization;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    if(userAccount!=null){
+                        break;
+                        }
+                    }
+                    if(userAccount!=null){
+                            break;
+                            }
+                }
+            }
+        }else if(type.getValue().equals(type.RespondersOrg.getValue())){
+          if(userAccount==null){
+            //Step 2: Go inside each network and check each enterprise
+                for(Network network:system.getNetworkList()){
+                    //Step 2.a: check against each enterprise
+                    for(Enterprise enterprise:network.getEnterpriseDirectory().getEnterpriseList()){
+                        if(enterprise.getEnterpriseType().equals(enterprise.getEnterpriseType().Reen)){
+                            for(Organization organization:enterprise.getOrganizationDirectory().getOrganizationList()){
+                                if(organization.getName().equals("Responders Organization")){
+                                    userAccount=organization.getUserAccountDirectory().authenticateUser(userName, password);
+                                    if(userAccount!=null){
+                                        inEnterprise=enterprise;
+                                        inOrganization=organization;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        if(userAccount!=null){
+                            break;
+                            }
+                    }
+                if(userAccount!=null){
+                            break;
+                            }
+                }
+            }
+        }else if(type.getValue().equals(type.VolunteersOrg.getValue())){
+          if(userAccount==null){
+            //Step 2: Go inside each network and check each enterprise
+                for(Network network:system.getNetworkList()){
+                    //Step 2.a: check against each enterprise
+                    for(Enterprise enterprise:network.getEnterpriseDirectory().getEnterpriseList()){
+                        if(enterprise.getEnterpriseType().equals(enterprise.getEnterpriseType().Reen)){
+                            for(Organization organization:enterprise.getOrganizationDirectory().getOrganizationList()){
+                                if(organization.getName().equals("Volunteers Organization")){
+                                    userAccount=organization.getUserAccountDirectory().authenticateUser(userName, password);
+                                    if(userAccount!=null){
+                                        inEnterprise=enterprise;
+                                        inOrganization=organization;
+                                        break;
+                                    }
+                                }
+                            }
+                            
+                        }
+                        if(userAccount!=null){
+                            break;
+                            }
+                    }
+                    if(userAccount!=null){
+                            break;
+                            }
+                }
+            }
+        }else if(type.getValue().equals(type.NFRFAidManager.getValue())){
+          if(userAccount==null){
+            //Step 2: Go inside each network and check each enterprise
+                for(Network network:system.getNetworkList()){
+                    //Step 2.a: check against each enterprise
+                    for(Enterprise enterprise:network.getEnterpriseDirectory().getEnterpriseList()){
+                        if(enterprise.getEnterpriseType().equals(enterprise.getEnterpriseType().NFRF)){
+                            for(Organization organization:enterprise.getOrganizationDirectory().getOrganizationList()){
+                                if(organization.getName().equals("NFRF Aid Organization")){
+                                    userAccount=organization.getUserAccountDirectory().authenticateUser(userName, password);
+                                    if(userAccount!=null){
+                                        inEnterprise=enterprise;
+                                        inOrganization=organization;
+                                        break;
+                                    }
+                                }
+                            }
+                            
+                        }
+                        if(userAccount!=null){
+                            break;
+                            }
+                    }
+                    if(userAccount!=null){
+                            break;
+                            }
+                }
+            }
+        }else if(type.getValue().equals(type.NFRFInsuranceManager.getValue())){
+          if(userAccount==null){
+            //Step 2: Go inside each network and check each enterprise
+                for(Network network:system.getNetworkList()){
+                    //Step 2.a: check against each enterprise
+                    for(Enterprise enterprise:network.getEnterpriseDirectory().getEnterpriseList()){
+                        if(enterprise.getEnterpriseType().equals(enterprise.getEnterpriseType().NFRF)){
+                            for(Organization organization:enterprise.getOrganizationDirectory().getOrganizationList()){
+                                if(organization.getName().equals("NFRF Insurance Manager Organization")){
+                                    userAccount=organization.getUserAccountDirectory().authenticateUser(userName, password);
+                                    if(userAccount!=null){
+                                        inEnterprise=enterprise;
+                                        inOrganization=organization;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        if(userAccount!=null){
+                            break;
+                            }
+                    }
+                    if(userAccount!=null){
+                            break;
+                            }
+                }
+            }
+        }
+        
+        if(userAccount==null){
+            JOptionPane.showMessageDialog(null, "Invalid credentials");
+            return;
+        }
+        else{
+            CardLayout layout=(CardLayout)container.getLayout();
+            container.add("workArea",userAccount.getRole().createWorkArea(container, userAccount, inOrganization, inEnterprise, system));
+            layout.next(container);
+        }
+        
+        btnLogin.setEnabled(false);
+        //logoutJButton.setEnabled(true);
+        txtUserName.setEnabled(false);
+        txtPassword.setEnabled(false);
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
