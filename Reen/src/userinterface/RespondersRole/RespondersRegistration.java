@@ -5,6 +5,24 @@
  */
 package userinterface.RespondersRole;
 
+import Business.Employee.Responders;
+import Business.Employee.Employee;
+
+import Business.Employee.RespondersDirectory;
+import Business.Employee.ClaimsManager;
+import Business.EcoSystem;
+import Business.Enterprise.Enterprise;
+import Business.Enterprise.ReenEnterprise;
+ 
+import Business.Network.Network;
+import Business.Organization.Organization;
+import Business.UserAccount.UserAccount;
+
+import Business.WorkQueue.RespondersToClaimsManager;
+import Business.WorkQueue.WorkQueue;
+import java.util.Random;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 /**
  *
  * @author yashk
@@ -14,8 +32,25 @@ public class RespondersRegistration extends javax.swing.JPanel {
     /**
      * Creates new form RespondersRegistration
      */
-    public RespondersRegistration() {
+    public RespondersDirectory respondersDirectory;
+    public Responders responders;
+    public RespondersToClaimsManager rcWorkQueue;
+
+    private EcoSystem system;
+    
+    
+    
+        JPanel container;
+
+    
+    public RespondersRegistration(JPanel container, EcoSystem system) {
+        
         initComponents();
+        
+        this.container = container;
+        this.system = system;
+        this.responders = new Responders(); 
+        populateComboBox();
     }
 
     /**
@@ -203,12 +238,151 @@ public class RespondersRegistration extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_CityJComboBoxActionPerformed
 
+     private void populateComboBox() {
+        //hospitalJComboBox.removeAllItems();
+        CityJComboBox.removeAllItems();
+        for(Network n: system.getNetworkList()){
+            for(Enterprise e: n.getEnterpriseDirectory().getEnterpriseList()){
+                if(e.getEnterpriseType().equals(Enterprise.EnterpriseType.Reen)){
+                    CityJComboBox.addItem(e);
+                }    
+            }
+        }
+    }
     private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
 
         // TODO add your handling code here:
-       
-       
+       try {
+            
+        
+            String name = nameTxt.getText();
+            if (name.equals("")){
+                JOptionPane.showMessageDialog(null, "Please enter the Firstname");
+                //throw new RuntimeException("Please enter the Username");
+                return;
+            }
+            
+            String username = userNameTxt.getText();
+            if (username.equals("")){
+                JOptionPane.showMessageDialog(null, "Please enter the Username");
+                return;
+                //throw new RuntimeException("Please enter the Username");
+            }
+       String emailId = emailTxt.getText();
+            if (emailId.equals("")){
+                JOptionPane.showMessageDialog(null, "Please enter the Email Id");
+                return;
+                //throw new RuntimeException("Please enter the Email Id");
+            }
+            
+            String password = passwordTxt.getText();
+            String confpassword = confirmPassTxt.getText();
+            if (password.equals("")){
+                JOptionPane.showMessageDialog(null, "Please enter the password");
+                return;
+                //throw new RuntimeException("Please enter the password");
+            }
+            if (!password.equals(confpassword)){
+                JOptionPane.showMessageDialog(null, "Confirm Password and Password should match");
+                return;
+                //throw new RuntimeException("Confirm Password and Password should match");
+            }
+            
+            ReenEnterprise reen = (ReenEnterprise) CityJComboBox.getSelectedItem();
+            if (reen == null){
+                JOptionPane.showMessageDialog(null, "Please select the Branch");
+                throw new RuntimeException("Please enter the Branch");
+            }
+            
+            Random rand1 = new Random(); 
+            ClaimsManager c1 = new ClaimsManager();
+            
+            for (Organization o1 : reen.getOrganizationDirectory().getOrganizationList()){
+                   if (o1.getName().equals(Organization.Type.ClaimsManager.getValue())){
+                   int size = o1.getEmployeeDirectory().getClaimsManagerList().size();
+                   c1 = o1.getEmployeeDirectory().getClaimsManagerList().get(rand1.nextInt(size)); 
+                   
+                   if(c1.getName().equals(null) || c1.equals(null)){
+                       JOptionPane.showMessageDialog(null, "No Claims Manager available at this branch, Please select another branch!");
+                        throw new RuntimeException("No Claims Manager available");
+                       
+                   
+                   }
+                   }
+            }
+            for (Network n : system.getNetworkList()){
+            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()){
+                if (e.getEnterpriseType().equals(Enterprise.EnterpriseType.Hospital)){
+                    for(UserAccount ua : e.getUserAccountDirectory().getUserAccountList()){
+                        if(ua.getUsername().equals(username)){
+                            JOptionPane.showMessageDialog(null, "User Name already exists!, Please Enter valid user name","warning", JOptionPane.WARNING_MESSAGE);
+                            return;
+                        }
+                        for(Organization o : e.getOrganizationDirectory().getOrganizationList()){
+                            for(UserAccount ua1 : o.getUserAccountDirectory().getUserAccountList()){
+                                if(ua1.getUsername().equals(username)){
+                                    JOptionPane.showMessageDialog(null, "User Name already exists!, Please Enter valid user name","warning", JOptionPane.WARNING_MESSAGE);
+                                    return;
+                                }
+                            }
+                        }
 
+                    }
+                }
+            }
+        }
+            
+            responders.setReen(reen.getName());
+            responders.setPassword(password);
+            responders.setUsername(username);
+            responders.setFirstName(name);
+            JOptionPane.showMessageDialog(null, "Responders Profile Created");
+        //Initiating work request for BMC
+             RespondersToClaimsManager rc = new RespondersToClaimsManager(responders);
+     
+             try {
+        
+                Random rand = new Random(); 
+                ClaimsManager c = new ClaimsManager();
+
+                for (Organization o : reen.getOrganizationDirectory().getOrganizationList()){
+                   if (o.getName().equals(Organization.Type.ClaimsManager.getValue())){
+                   int size = o.getEmployeeDirectory().getClaimsManagerList().size();
+                   c = o.getEmployeeDirectory().getClaimsManagerList().get(rand.nextInt(size)); 
+                   responders.setClaimsmanager(c.getName());
+                   o.getRespondersDirectory().addResponders(responders);
+                   }
+                }
+            rc.setClaimsmanager(c);
+            rc.setStatus("Pending");
+            WorkQueue wq = reen.getWorkQueue();
+        
+            wq.addRespondersToClaimsManager(rc);
+            
+            
+            nameTxt.setText("");
+            userNameTxt.setText("");
+            passwordTxt.setText("");
+            confirmPassTxt.setText("");
+           
+            
+                
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "No Claims Manager available at this branch, Please select another branch!");
+            
+            }
+
+        }
+        catch(Exception e){
+            //e.printStackTrace();
+          JOptionPane.showMessageDialog(this, "Please enter valid data", "warning", JOptionPane.WARNING_MESSAGE);
+          return;     
+            
+        }
+       
+        //Adding work request to current work queue
+
+       
         //Adding work request to current work queue
     }//GEN-LAST:event_btnConfirmActionPerformed
 

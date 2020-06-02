@@ -4,7 +4,11 @@
  */
 package Business.Organization;
 
+import Business.ClaimsAccount.ClaimsAccountDirectory;
 import Business.Employee.EmployeeDirectory;
+import Business.Employee.RespondersDirectory;
+import Business.Employee.VolunteersDirectory;
+import Business.NFRFInsurance.NFRFInsuranceAccountDirectory;
 import Business.Role.Role;
 import Business.UserAccount.UserAccountDirectory;
 import Business.WorkQueue.WorkQueue;
@@ -18,7 +22,11 @@ public abstract class Organization {
 
     private String name;
     private WorkQueue workQueue;
+    private VolunteersDirectory volunteersDirectory;
+    private RespondersDirectory respondersDirectory;
     private EmployeeDirectory employeeDirectory;
+   
+
     private UserAccountDirectory userAccountDirectory;
     private int organizationID;
     private static int counter=0;
@@ -48,7 +56,11 @@ public abstract class Organization {
     public UserAccountDirectory getUserAccountDirectory() {
         return userAccountDirectory;
     }
-
+    
+    public RespondersDirectory getRespondersDirectory() {
+        return respondersDirectory;
+    }
+    
     public int getOrganizationID() {
         return organizationID;
     }

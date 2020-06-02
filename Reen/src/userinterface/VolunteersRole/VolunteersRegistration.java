@@ -5,6 +5,9 @@
  */
 package userinterface.VolunteersRole;
 
+import Business.EcoSystem;
+import javax.swing.JPanel;
+
 /**
  *
  * @author yashk
@@ -16,6 +19,10 @@ public class VolunteersRegistration extends javax.swing.JPanel {
      */
     public VolunteersRegistration() {
         initComponents();
+    }
+
+    public VolunteersRegistration(JPanel container, EcoSystem system) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**

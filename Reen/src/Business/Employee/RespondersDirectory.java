@@ -5,10 +5,34 @@
  */
 package Business.Employee;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author yashk
  */
 public class RespondersDirectory {
     
+    private ArrayList<Responders> respondersList;
+
+    public RespondersDirectory() {
+        respondersList = new ArrayList();
+    }
+
+    public ArrayList<Responders> getRespondersList() {
+        return respondersList;
+    }
+    
+    public Responders createBirthMother(String name){
+        Responders responders = new Responders();
+        responders.setUsername(name);
+        respondersList.add(responders);
+        return responders;
+    }
+    
+    public void addResponders(Responders r){
+        this.respondersList.add(r);
+    }
+
+  
 }

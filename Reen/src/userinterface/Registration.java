@@ -5,6 +5,13 @@
  */
 package userinterface;
 
+import Business.EcoSystem;
+import Business.Organization.Organization;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+import userinterface.RespondersRole.RespondersRegistration;
+import userinterface.VolunteersRole.VolunteersRegistration;
+
 /**
  *
  * @author yashk
@@ -14,8 +21,15 @@ public class Registration extends javax.swing.JPanel {
     /**
      * Creates new form Registration
      */
-    public Registration() {
+     JPanel container;
+    EcoSystem system;
+    Organization.Type type;
+   
+        
+        public Registration(JPanel container, EcoSystem system) {
         initComponents();
+        this.container = container;
+        this.system = system;
     }
 
     /**
@@ -59,8 +73,8 @@ public class Registration extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(452, 452, 452)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnResponders, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
-                    .addComponent(btnVolunteers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnVolunteers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnResponders, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE))
                 .addContainerGap(469, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -97,12 +111,18 @@ public class Registration extends javax.swing.JPanel {
 
     private void btnVolunteersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolunteersActionPerformed
         // TODO add your handling code here:
-      
+        VolunteersRegistration rr = new VolunteersRegistration(container, system);
+        container.add("VolunteersRegistration", rr);
+        CardLayout layout = (CardLayout)this.container.getLayout();
+        layout.next(container);
     }//GEN-LAST:event_btnVolunteersActionPerformed
 
     private void btnRespondersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRespondersActionPerformed
         // TODO add your handling code here:
-       
+        RespondersRegistration rr = new RespondersRegistration(container, system);
+        container.add("RespondersRegistration", rr);
+        CardLayout layout = (CardLayout)this.container.getLayout();
+        layout.next(container);
     }//GEN-LAST:event_btnRespondersActionPerformed
 
 

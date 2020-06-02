@@ -56,8 +56,8 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="452" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="btnResponders" alignment="0" pref="324" max="32767" attributes="0"/>
                       <Component id="btnVolunteers" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnResponders" alignment="1" pref="324" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace pref="469" max="32767" attributes="0"/>
               </Group>
