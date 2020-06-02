@@ -5,10 +5,27 @@
  */
 package Business.ClaimsAccount;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author yashk
  */
 public class ClaimsAccountDirectory {
     
+        private ArrayList<Claims> claimsList;
+
+    public ClaimsAccountDirectory() {
+        claimsList = new ArrayList();
+    }
+
+    public ArrayList<Claims> getClaimsAccountList() {
+        return claimsList;
+    }
+    
+    
+    public Claims addLoan(Claims claims){
+        claimsList.add(claims);
+        return claims;
+    }
 }
