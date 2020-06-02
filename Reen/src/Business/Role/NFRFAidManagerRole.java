@@ -15,7 +15,14 @@ import userinterface.NFRFAidManager.AidManagerWorkAreaJPanel;
  *
  * @author yashk
  */
-public class NFRFAidManagerRole {
+public class NFRFAidManagerRole extends Role{
+
+    public NFRFAidManagerRole() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+   
+    
     public JPanel createWorkArea(JPanel container, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business) {
         return new AidManagerWorkAreaJPanel(container, account, organization, business, enterprise);
     }

@@ -27,14 +27,6 @@ public class ConfigureASystem {
 
         system = EcoSystem.getInstance();
         
-        //Create a network
-        
-        //create an enterprise
-        //initialize some organizations
-        //have some employees 
-        //create user account
-        
-        
         Employee employee = system.getEmployeeDirectory().createandaddEmployee("sysadmin");
         
         UserAccount ua = system.getUserAccountDirectory().createUserAccount("sysadmin", "sysadmin", employee, new SystemAdminRole());
@@ -53,14 +45,31 @@ public class ConfigureASystem {
         NFRFEnterprise nfrf=(NFRFEnterprise)network.getEnterpriseDirectory().createAndAddEnterprise("NFRF Mumbai",Enterprise.EnterpriseType.NFRF);
 
         Employee employee = reen.getEmployeeDirectory().createandaddEmployee("Reen Foundation Admin");
+        UserAccount account = reen.getUserAccountDirectory().createUserAccount("reen", "reen", employee, new ReenAdminRole(), network.getName());
 
         Organization organization = reen.getOrganizationDirectory().createOrganization(Organization.Type.VolunteersOrg);
     
-        
+        ClaimsManager employee1 = organization.getEmployeeDirectory().createandaddClaimsManager("Claims Manager");
+        NFRFAidManager employee2 = organization.getEmployeeDirectory().createandaddNFRFAidManager("NFRF Aid Manager");
+        account = organization.getUserAccountDirectory().createNFRFAidManagerUserAccount("a", "a", employee2, new NFRFAidManagerRole(),network.getName());
+
+        Organization organization1 = nfrf.getOrganizationDirectory().createOrganization(Organization.Type.NFRFInsuranceManager);
+        NFRFInsuranceManager employee3 = organization1.getEmployeeDirectory().createandadNFRFInsuranceManager("NFRF Insurance Manager");
+        account = organization1.getUserAccountDirectory().createNFRFInsuranceManagerUserAccount("i", "i", employee3, new NFRFInsuranceManagerRole(), network.getName());
+        account.setNetwork(network.getName());
+
+        account = organization.getUserAccountDirectory().createClaimsManagerUserAccount("c", "c", employee1, new ClaimsManagerRole(),network.getName() );
+        employee = nfrf.getEmployeeDirectory().createandaddEmployee("Mumbai NFRF Admin");    
+        account = nfrf.getUserAccountDirectory().createUserAccount("nfrf", "nfrf", employee, new NFRFAdminRole(),network.getName());
+
         organization = reen.getOrganizationDirectory().createOrganization(Organization.Type.RespondersOrg);
         organization = reen.getOrganizationDirectory().createOrganization(Organization.Type.ClaimsManager);
         organization = nfrf.getOrganizationDirectory().createOrganization(Organization.Type.NFRFInsuranceManager);
         organization = nfrf.getOrganizationDirectory().createOrganization(Organization.Type.NFRFAidManager);
+        
+        reen.getOrganizationDirectory().createOrganization(Organization.Type.RespondersOrg);
+        reen.getOrganizationDirectory().createOrganization(Organization.Type.VolunteersOrg);
+        
 
     }
 }
