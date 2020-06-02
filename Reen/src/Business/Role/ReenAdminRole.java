@@ -15,8 +15,9 @@ import javax.swing.JPanel;
  *
  * @author yashk
  */
-public class ReenAdminRole {
+public class ReenAdminRole extends Role {
     
+     @Override
      public JPanel createWorkArea(JPanel container, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business) {
         return new ReenAdminWorkAreaJPanel(container, business,enterprise, account);
     }

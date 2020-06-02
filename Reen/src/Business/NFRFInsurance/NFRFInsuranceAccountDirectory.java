@@ -5,10 +5,25 @@
  */
 package Business.NFRFInsurance;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author yashk
  */
 public class NFRFInsuranceAccountDirectory {
-    
+    private ArrayList<NFRFInsurance> insuranceList;
+
+    public NFRFInsuranceAccountDirectory() {
+        insuranceList = new ArrayList();
+    }
+
+    public ArrayList<NFRFInsurance> getInsuranceList() {
+        return insuranceList;
+    }
+ 
+    public NFRFInsurance addInsurance(NFRFInsurance ins){
+        insuranceList.add(ins);
+        return ins;
+    }
 }
