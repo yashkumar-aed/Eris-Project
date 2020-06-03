@@ -7,6 +7,8 @@ package Business.WorkQueue;
 
 import Business.Employee.Responders;
 import Business.Employee.ClaimsManager;
+import java.util.Date;
+
 
 /**
  *
@@ -16,6 +18,8 @@ public class RespondersToClaimsManager extends WorkRequest{
     
     private String requestResult;
     private Responders responders;
+    private String claimsmanagerFeeback;
+    private ClaimsManager claimsmanager;
 
      public RespondersToClaimsManager() {
         super();
@@ -53,19 +57,27 @@ public class RespondersToClaimsManager extends WorkRequest{
         this.claimsmanager = claimsmanager;
     }
     
-    public RespondersToClaimsManager(Responders r) {
+    public RespondersToClaimsManager(Responders rr) {
         super();
         this.requestResult = new String();
-        this.responders = r;
+        this.responders = rr;
         this.claimsmanagerFeeback = new String();
     }
-    
-    private String claimsmanagerFeeback;
-    private ClaimsManager claimsmanager;
-    
+    /*
+    public Responders getResponders() {
+        return responders;
+    }
+
+    public void setResponders(Responders r) {
+        this.responders = r;
+    }
+*/
     public void selectClaimsManager(){
         
-      //TODO: Function to allot the Counsellor to BirthMother  
     }
     
+    @Override
+    public String toString() {
+        return getResponders().getUsername();
+    }
 }

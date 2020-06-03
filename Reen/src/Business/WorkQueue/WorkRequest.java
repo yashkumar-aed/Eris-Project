@@ -22,6 +22,10 @@ public abstract class WorkRequest {
     
     public WorkRequest(){
         requestDate = new Date();
+        this.message = new String();
+        sender =  new UserAccount();
+        receiver = new UserAccount();
+        resolveDate = null;
     }
 
     public String getMessage() {
@@ -70,5 +74,9 @@ public abstract class WorkRequest {
 
     public void setResolveDate(Date resolveDate) {
         this.resolveDate = resolveDate;
+    }
+     @Override
+    public String toString() {
+        return message;
     }
 }
