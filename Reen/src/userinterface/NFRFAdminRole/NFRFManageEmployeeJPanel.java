@@ -9,7 +9,7 @@ import Business.Enterprise.Enterprise;
 import userinterface.ReenAdminRole.*;
 import javax.swing.JPanel;
 import userinterface.ReenAdminRole.*;
-import Business.Employee.Employee;
+import Business.Directory.Employee;
 import Business.Organization.Organization;
 import Business.Role.Role;
 import java.awt.CardLayout;

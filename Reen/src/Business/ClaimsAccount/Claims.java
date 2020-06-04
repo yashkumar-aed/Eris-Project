@@ -5,7 +5,7 @@
  */
 package Business.ClaimsAccount;
 
-import Business.Employee.Responders;
+import Business.Directory.Responders;
 import java.util.Random;
 
 /**
@@ -17,10 +17,21 @@ public class Claims {
     private String firstName;
     private String lastName;
     private int funds;
+    private String emailId;
     private String address;
     private int claimsAccountNumber;
     private int accountBalance;
     private String passportNumber;
+
+ 
+
+    public String getEmailId() {
+        return emailId;
+    }
+
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
+    }
     private String username;
     private int ownFunds;
     private String docPath;
@@ -28,9 +39,9 @@ public class Claims {
     private String reen;
     private int fundsApproved; 
 
-    public Claims(String firstName, Responders responders) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+  //  public Claims(String firstName, Responders responders) {
+  //      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  //  }
 
     public String getFirstName() {
         return firstName;
@@ -46,8 +57,9 @@ public class Claims {
 
     
     
-     public Claims(String firstName) {
+     public Claims(String firstName,String emailId) {
         this.firstName = firstName;
+        this.emailId = emailId;
         Random rand =  new Random();
         this.claimsAccountNumber = rand.nextInt(100000000);
     }
@@ -102,6 +114,7 @@ public class Claims {
         this.firstName = new String();
         this.lastName = new String();
         this.address = new String();
+        this.emailId = new String();
         this.funds = 0;
         this.passportNumber = new String();
         this.docPath = new String();
@@ -157,6 +170,7 @@ public class Claims {
     
     public void addValues(int funds, String address, String passportNumber, String docPath) {
         this.funds = funds;
+        this.emailId = emailId;
         this.address = address;
         this.passportNumber = passportNumber;
         this.docPath = docPath;
@@ -164,6 +178,7 @@ public class Claims {
     }
     
     public void addValues1(int funds, String address, String passportNumber, String docPath) {
+        this.emailId = emailId;        
         this.ownFunds = funds;
         this.address = address;
         this.passportNumber = passportNumber;

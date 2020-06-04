@@ -6,7 +6,7 @@
 package userinterface.NFRFAidManager;
 
 import Business.ClaimsAccount.Claims;
-import Business.Employee.Responders;
+import Business.Directory.Responders;
 import Business.Enterprise.Enterprise;
 
 import Business.UserAccount.UserAccount;
@@ -44,12 +44,17 @@ public class ClaimsAccountCreate extends javax.swing.JPanel {
  
 
     private Enterprise enterprise;
-    public ClaimsAccountCreate() {
+    public ClaimsAccountCreate(UserAccount userAccount, JPanel container, Enterprise enterprise, ReenAdminToNFRFAid req) {
         initComponents();
-    }
-
-    ClaimsAccountCreate(UserAccount userAccount, JPanel container, Enterprise enterprise, ReenAdminToNFRFAid request) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.userAccount = userAccount;
+        this.req = req;
+        this.container = container;
+        this.enterprise = enterprise;
+        
+        txtFirstName.setText(req.getResponders().getFirstName());
+        txtEmail.setText(req.getResponders().getEmailId());
+        txtBranch.setText(req.getResponders().getReen());
+        txtManager.setText(req.getResponders().getClaimsManager());
     }
 
     /**
@@ -210,14 +215,14 @@ public class ClaimsAccountCreate extends javax.swing.JPanel {
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         // TODO add your handling code here:
-       this.firstName = txtFirstName.getText();
+        this.firstName = txtFirstName.getText();
 
         this.claimsmanager = txtManager.getText();
         this.reen = txtBranch.getText();
 
         Claims claims= new Claims();
 
-        claims = new Claims(req.getResponders().getFirstName(), req.getResponders());
+        claims = new Claims(req.getResponders().getFirstName(), req.getResponders().getEmailId());
         claims.setReen(reen);
         claims.setClaimsManager(claimsmanager);
         enterprise.getClaimsDirectory().addLoan(claims);

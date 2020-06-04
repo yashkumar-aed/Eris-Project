@@ -10,7 +10,7 @@ import Business.Enterprise.Enterprise;
 import Business.NFRFInsurance.NFRFInsurance;
 import Business.NFRFInsurance.NFRFInsuranceAccountDirectory;
 import Business.Network.Network;
-import Business.Employee.Responders;
+import Business.Directory.Responders;
 import Business.UserAccount.UserAccount;
  
 import Business.WorkQueue.RespondersToNFRFInsuranceManager;

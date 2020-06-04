@@ -5,9 +5,9 @@
 package Business.Organization;
 
 import Business.ClaimsAccount.ClaimsAccountDirectory;
-import Business.Employee.EmployeeDirectory;
-import Business.Employee.RespondersDirectory;
-import Business.Employee.VolunteersDirectory;
+import Business.Directory.EmployeeDirectory;
+import Business.Directory.RespondersDirectory;
+import Business.Directory.VolunteersDirectory;
 import Business.NFRFInsurance.NFRFInsuranceAccountDirectory;
 import Business.Role.Role;
 import Business.UserAccount.UserAccountDirectory;
@@ -65,7 +65,7 @@ public abstract class Organization {
     private static int counter=0;
     
     public enum Type{
-       Admin("Admin"),ClaimsManager("Claims Manager"), Doctor("Doctor Admin"), Lab("Lab"),NFRFInsuranceManager("NFRF Insurance Manager"), ReenAdmin("Reen Admin"), NFRFAdmin("NFRFAdmin"), NFRFAidManager("NFRF Aid Manager"), RespondersOrg("Responder"), VolunteersOrg("Volunteers");
+       ClaimsManager("Claims Manager"), Doctor("Doctor Admin"), Lab("Lab"),NFRFInsuranceManager("NFRF Insurance Manager"), ReenAdmin("Reen Admin"), NFRFAdmin("NFRFAdmin"), NFRFAidManager("NFRF Aid Manager"), RespondersOrg("Responder"), VolunteersOrg("Volunteers");
         private String value;
         private Type(String value) {
             this.value = value;

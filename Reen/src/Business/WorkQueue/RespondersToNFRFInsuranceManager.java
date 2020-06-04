@@ -7,7 +7,7 @@ package Business.WorkQueue;
 
 import Business.NFRFInsurance.NFRFInsurance;
 import Business.NFRFInsurance.NFRFInsuranceAccountDirectory;
-import Business.Employee.Responders;
+import Business.Directory.Responders;
 import Business.UserAccount.UserAccount;
 
 /**

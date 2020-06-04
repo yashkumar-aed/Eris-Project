@@ -5,12 +5,9 @@
  */
 package userinterface;
 
-import userinterface.RespondersRole.*;
-import Business.Employee.Responders;
-import Business.Employee.Employee;
-
-import Business.Employee.RespondersDirectory;
-import Business.Employee.ClaimsManager;
+import Business.Directory.Responders;
+import Business.Directory.RespondersDirectory;
+import Business.Directory.ClaimsManager;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.Enterprise.ReenEnterprise;
@@ -22,6 +19,7 @@ import Business.UserAccount.UserAccount;
 import Business.WorkQueue.RespondersToClaimsManager;
 import Business.WorkQueue.WorkQueue;
 import java.awt.CardLayout;
+import javafx.stage.FileChooser;
 import java.util.Random;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -351,7 +349,7 @@ public class RespondersRegistration extends javax.swing.JPanel {
                    if (o.getName().equals(Organization.Type.ClaimsManager.getValue())){
                    int size = o.getEmployeeDirectory().getClaimsManagerList().size();
                    c = o.getEmployeeDirectory().getClaimsManagerList().get(rand.nextInt(size)); 
-                   responders.setClaimsmanager(c.getName());
+                   responders.setClaimsManager(c.getName());
                    o.getRespondersDirectory().addResponders(responders);
                    }
                 }
@@ -364,6 +362,7 @@ public class RespondersRegistration extends javax.swing.JPanel {
             
             nameTxt.setText("");
             userNameTxt.setText("");
+            emailTxt.setText("");
             passwordTxt.setText("");
             confirmPassTxt.setText("");
            

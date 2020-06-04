@@ -6,8 +6,8 @@
 package userinterface.RespondersRole;
 
 import Business.ClaimsAccount.Claims;
-import Business.Employee.Responders;
-import Business.Employee.Volunteers;
+import Business.Directory.Responders;
+import Business.Directory.Volunteers;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.Organization.Organization;

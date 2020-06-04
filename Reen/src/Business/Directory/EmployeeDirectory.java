@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Business.Employee;
+package Business.Directory;
 
 import java.util.ArrayList;
 
@@ -40,24 +40,24 @@ public class EmployeeDirectory {
         return employee;
     }
      public ClaimsManager createandaddClaimsManager(String name){
-        ClaimsManager employee = new ClaimsManager();
-        employee.setName(name);
-        ClaimsManagerList.add(employee);
-        return employee;
+        ClaimsManager em = new ClaimsManager();
+        em.setName(name);
+        ClaimsManagerList.add(em);
+        return em;
     }
 
     public NFRFInsuranceManager createandadNFRFInsuranceManager (String name){
-        NFRFInsuranceManager employee = new NFRFInsuranceManager();
-        employee.setName(name);
-        NFRFInsuranceManagerList.add(employee);
-        return employee;
+        NFRFInsuranceManager em = new NFRFInsuranceManager();
+        em.setName(name);
+        NFRFInsuranceManagerList.add(em);
+        return em;
     }
 
     public NFRFAidManager createandaddNFRFAidManager (String name){
-        NFRFAidManager employee = new NFRFAidManager();
-        employee.setName(name);
-        NFRFAidManagerList.add(employee);
-        return employee;
+        NFRFAidManager em = new NFRFAidManager();
+        em.setName(name);
+        NFRFAidManagerList.add(em);
+        return em;
     }
 
     public ArrayList<ClaimsManager> getClaimsManagerList() {

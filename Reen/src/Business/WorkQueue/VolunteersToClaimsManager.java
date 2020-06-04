@@ -5,7 +5,7 @@
  */
 package Business.WorkQueue;
 
-import Business.Employee.Volunteers;
+import Business.Directory.Volunteers;
 import Business.UserAccount.UserAccount;
 import java.util.Date;
 

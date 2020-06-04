@@ -1,28 +1,30 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package Business.Organization;
 
-import Business.Role.AdminRole;
+import Business.Role.ReenAdminRole;
 import Business.Role.Role;
 import java.util.ArrayList;
 
 /**
  *
- * @author raunak
+ * @author yashk
  */
 public class AdminOrganization extends Organization{
 
     public AdminOrganization() {
-        super(Type.Admin.getValue());
+        super(Organization.Type.ReenAdmin.getValue());
     }
     
     @Override
     public ArrayList<Role> getSupportedRole() {
         ArrayList<Role> roles = new ArrayList();
-        roles.add(new AdminRole());
+        roles.add(new ReenAdminRole());
         return roles;
     }
      
 }
+

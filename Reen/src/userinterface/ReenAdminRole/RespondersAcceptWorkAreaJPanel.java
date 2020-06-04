@@ -10,7 +10,7 @@ import Business.Enterprise.NFRFEnterprise;
 import Business.Network.Network;
 import Business.Organization.NFRFAidManagerOrganization;
 import Business.Organization.Organization;
-import Business.Employee.Responders;
+import Business.Directory.Responders;
 import Business.Role.RespondersRole;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.RespondersToClaimsManager;

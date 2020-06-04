@@ -7,7 +7,7 @@ package userinterface.RespondersRole;
 
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
-import Business.Employee.Responders;
+import Business.Directory.Responders;
 import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;

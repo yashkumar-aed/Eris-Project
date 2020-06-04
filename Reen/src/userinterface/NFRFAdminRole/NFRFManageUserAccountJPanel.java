@@ -8,8 +8,8 @@ package userinterface.NFRFAdminRole;
 import Business.Enterprise.Enterprise;
 import Business.UserAccount.UserAccount;
 import javax.swing.JPanel;
-import Business.Employee.NFRFAidManager;
-import Business.Employee.NFRFInsuranceManager;
+import Business.Directory.NFRFAidManager;
+import Business.Directory.NFRFInsuranceManager;
 import Business.Organization.Organization;
 import Business.Role.Role;
 

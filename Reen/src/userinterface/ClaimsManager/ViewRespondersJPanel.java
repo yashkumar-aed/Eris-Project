@@ -5,9 +5,9 @@
  */
 package userinterface.ClaimsManager;
 
-import Business.Employee.Responders;
-import Business.Employee.RespondersDirectory;
-import Business.Employee.Volunteers;
+import Business.Directory.Responders;
+import Business.Directory.RespondersDirectory;
+import Business.Directory.Volunteers;
 import Business.Enterprise.Enterprise;
 import Business.Enterprise.Enterprise;
 import Business.UserAccount.UserAccount;

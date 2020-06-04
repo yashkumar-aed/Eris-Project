@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Business.Employee;
+package Business.Directory;
 
 import Business.ClaimsAccount.Claims;
 import Business.NFRFInsurance.NFRFInsurance;
@@ -21,7 +21,16 @@ public class Responders {
     private static int count = new Random().nextInt(100);
     private String password;
     private String Reen;
+    private String emailId;
     private String imgPath;
+
+    public String getEmailId() {
+        return emailId;
+    }
+
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
+    }
     private String firstName;
     private String lastName;
     private int typeL = 0;
@@ -269,31 +278,28 @@ public class Responders {
 
   
 
-    public void setAllValues(String username, String firstName, String LastName, String email, String blood, String contact, String address, String imgPath) {
+    public void setAllValues(String username, String firstName, String LastName, String email, String contact, String address, String imgPath) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = LastName;
         this.contactResponders= contact;
         this.address = address;
         this.imgPath = imgPath;
+        this.emailId = email;
+
        
     }
-   public void setValues(String firstName, String LastName, int bankBalance, String address) {
+   public void setValues(String firstName, String LastName,String email, int bankBalance, String address) {
        this.firstName = firstName;
-        this.lastName = LastName;
-      this.ownFunds = bankBalance;
-     this.bankBalance = bankBalance;
-        this.address = address;
+       this.emailId = email;
+       this.lastName = LastName;
+       this.ownFunds = bankBalance;
+       this.bankBalance = bankBalance;
+       this.address = address;
        this.imgPath = imgPath;
  } 
 
-    public void setClaimsmanager(Object name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public void setAllValues(String text, String text0, String text1, String text2, String text3, String path) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
    
 }
 

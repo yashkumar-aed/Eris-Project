@@ -5,7 +5,7 @@
  */
 package userinterface.RespondersRole;
 
-import Business.Employee.Responders;
+import Business.Directory.Responders;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
 
@@ -37,7 +37,7 @@ public class RespondersProfile extends javax.swing.JPanel {
         this.responders = userAccount.getResponders();
         this.org = org;
         this.container = container;
-        txtUser.setText(responders.getUsername());
+        txtUsername.setText(responders.getUsername());
         txtFirstName.setText(responders.getFirstName());
         txtLastName.setText(responders.getLastName());
         txtContact.setText(responders.getContactResponders());
@@ -56,7 +56,7 @@ public class RespondersProfile extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         btnBrowse = new javax.swing.JButton();
-        txtUser = new javax.swing.JTextField();
+        txtUsername = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         txtFirstName = new javax.swing.JTextField();
         documentPhotoComponent = new javax.swing.JLabel();
@@ -158,8 +158,7 @@ public class RespondersProfile extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel17)
                         .addGap(103, 103, 103)
-                        .addComponent(btnBrowse)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnBrowse))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
@@ -171,13 +170,13 @@ public class RespondersProfile extends javax.swing.JPanel {
                             .addComponent(jButton1))
                         .addGap(160, 160, 160)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtUser, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+                            .addComponent(txtUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
                             .addComponent(txtFirstName)
                             .addComponent(txtLastName)
                             .addComponent(txtEmail)
                             .addComponent(txtAffliation)
-                            .addComponent(txtContact))
-                        .addContainerGap(436, Short.MAX_VALUE))))
+                            .addComponent(txtContact))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -198,7 +197,7 @@ public class RespondersProfile extends javax.swing.JPanel {
                                 .addGap(26, 26, 26)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(86, 86, 86)
-                                .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(37, 37, 37))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGap(102, 102, 102)
@@ -285,8 +284,9 @@ public class RespondersProfile extends javax.swing.JPanel {
         for (Responders responders : org.getRespondersDirectory().getRespondersList()){
             if (responders.getUsername().equals(responders.getUsername())){
 
-                responders.setUsername(txtUser.getText());
+                responders.setUsername(txtUsername.getText());
                 responders.setFirstName(txtFirstName.getText());
+                responders.setEmailId(txtEmail.getText());
                 responders.setLastName(txtLastName.getText());
                 responders.setContactResponders(txtContact.getText());
                 responders.setAddress(txtAffliation.getText());
@@ -299,7 +299,7 @@ public class RespondersProfile extends javax.swing.JPanel {
                 }
 
               
-                if(txtUser.getText().equals("")){
+                if(txtUsername.getText().equals("")){
 
                     JOptionPane.showMessageDialog(this, "Please enter UserName", "warning", JOptionPane.WARNING_MESSAGE);
                     return;
@@ -335,7 +335,7 @@ public class RespondersProfile extends javax.swing.JPanel {
                     return;
                 }
 
-                responders.setAllValues(txtUser.getText(), txtFirstName.getText(),txtLastName.getText(),txtContact.getText(),txtAffliation.getText(), path);
+                responders.setAllValues(txtUsername.getText(), txtFirstName.getText(),txtLastName.getText(),txtEmail.getText(),txtContact.getText(),txtAffliation.getText(), path);
                 
                 JOptionPane.showMessageDialog(null, "Successfully updated Profile Details");
                 
@@ -370,6 +370,6 @@ public class RespondersProfile extends javax.swing.JPanel {
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtFirstName;
     private javax.swing.JTextField txtLastName;
-    private javax.swing.JTextField txtUser;
+    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }

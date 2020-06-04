@@ -5,8 +5,8 @@
  */
 package Business.WorkQueue;
 
-import Business.Employee.Responders;
-import Business.Employee.ClaimsManager;
+import Business.Directory.Responders;
+import Business.Directory.ClaimsManager;
 import java.util.Date;
 
 

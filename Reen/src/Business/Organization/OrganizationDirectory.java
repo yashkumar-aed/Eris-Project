@@ -56,8 +56,13 @@ public class OrganizationDirectory {
         }
         return organization;
     }
-
-    public boolean containsType(Type type) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+     public boolean containsType(Type type){
+        for (Organization org : organizationList){
+            if(org.getName().equals(type.getValue())){
+                return true;
+            }
+        }
+        return false;
     }
 }
+   

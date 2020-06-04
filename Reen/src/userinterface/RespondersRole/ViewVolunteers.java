@@ -5,8 +5,8 @@
  */
 package userinterface.RespondersRole;
 
-import Business.Employee.Responders;
-import Business.Employee.Volunteers;
+import Business.Directory.Responders;
+import Business.Directory.Volunteers;
 import Business.Enterprise.Enterprise;
 import Business.WorkQueue.RespondersToVolunteers;
 import java.awt.CardLayout;

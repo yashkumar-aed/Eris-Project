@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Business.Employee;
+package Business.Directory;
 
 import java.time.LocalTime;
 
@@ -13,7 +13,7 @@ import java.time.LocalTime;
  */
 
 
-public class ClaimsManager {
+public class ClaimsManager extends Employee{
 
     public ClaimsManager(int ratingReviews, boolean isAvailable, LocalTime availableTime) {
         super();
@@ -65,16 +65,6 @@ public class ClaimsManager {
    private boolean isAvailable;
    private LocalTime availableTime;
 
-    void setName(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public Object getName() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public Object getId() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+     
     
 }

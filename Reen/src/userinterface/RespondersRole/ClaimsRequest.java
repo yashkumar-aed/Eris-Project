@@ -9,7 +9,7 @@ import Business.ClaimsAccount.Claims;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.Network.Network;
-import Business.Employee.Responders;
+import Business.Directory.Responders;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.RespondersToClaims;
 import java.awt.CardLayout;

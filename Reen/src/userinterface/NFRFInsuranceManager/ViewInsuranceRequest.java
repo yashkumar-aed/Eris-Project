@@ -6,7 +6,7 @@
 package userinterface.NFRFInsuranceManager;
 import Business.Enterprise.Enterprise;
 import Business.NFRFInsurance.NFRFInsurance;
-import Business.Employee.Responders;
+import Business.Directory.Responders;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.RespondersToNFRFInsuranceManager;
 import java.awt.CardLayout;

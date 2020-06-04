@@ -1,7 +1,9 @@
 package Business;
 
-import Business.Employee.Employee;
-import Business.Employee.*;
+import Business.Directory.NFRFAidManager;
+import Business.Directory.NFRFInsuranceManager;
+import Business.Directory.ClaimsManager;
+import Business.Directory.Employee;
 import Business.Enterprise.Enterprise;
 import Business.Enterprise.ReenEnterprise;
 import Business.Enterprise.NFRFEnterprise;

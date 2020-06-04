@@ -5,7 +5,7 @@
  */
 package userinterface.VolunteersRole;
 
-import Business.Employee.Volunteers;
+import Business.Directory.Volunteers;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
  

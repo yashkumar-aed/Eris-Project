@@ -6,8 +6,8 @@
 package Business.WorkQueue;
 
 import Business.ClaimsAccount.Claims;
-import Business.Employee.Responders;
-import Business.Employee.Volunteers;
+import Business.Directory.Responders;
+import Business.Directory.Volunteers;
 /**
  *
  * @author yashk
