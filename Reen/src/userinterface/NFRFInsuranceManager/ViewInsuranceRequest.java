@@ -4,18 +4,43 @@
  * and open the template in the editor.
  */
 package userinterface.NFRFInsuranceManager;
-
+import Business.Enterprise.Enterprise;
+import Business.NFRFInsurance.NFRFInsurance;
+import Business.Employee.Responders;
+import Business.UserAccount.UserAccount;
+import Business.WorkQueue.RespondersToNFRFInsuranceManager;
+import java.awt.CardLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 /**
  *
  * @author yashk
  */
 public class ViewInsuranceRequest extends javax.swing.JPanel {
-
+    
+    private UserAccount userAccount;
+    private JPanel container;
+    private Enterprise enterprise;
+    private RespondersToNFRFInsuranceManager nfrfinsuranceRequest;
+    private Responders responders;
     /**
      * Creates new form ViewInsuranceRequest
      */
-    public ViewInsuranceRequest() {
+    public ViewInsuranceRequest(JPanel container,UserAccount userAccount, RespondersToNFRFInsuranceManager rir, Enterprise enterprise) {
         initComponents();
+        this.userAccount = userAccount;
+        this.nfrfinsuranceRequest = rir;
+        this.container = container;
+        this.enterprise = enterprise;
+        this.responders = nfrfinsuranceRequest.getResponders();
+     
+        txtFirstName.setText(nfrfinsuranceRequest.getNfrfinsurance().getFirstName());
+        txtAddress.setText(nfrfinsuranceRequest.getNfrfinsurance().getAddress());  
+        txtFunds.setText(String.valueOf(nfrfinsuranceRequest.getResponders().getNetFunding()));
+        txtPolicy.setText(String.valueOf(nfrfinsuranceRequest.getNfrfinsurance().getPolicyNumber()));
+        txtLastName.setText(nfrfinsuranceRequest.getNfrfinsurance().getLastName());
+        profilePhotoComponent.setIcon(new ImageIcon(nfrfinsuranceRequest.getNfrfinsurance().getDocPath())); 
     }
 
     /**
@@ -240,7 +265,9 @@ public class ViewInsuranceRequest extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        
+        container.remove(this);
+        CardLayout cardlayout = (CardLayout) container.getLayout();
+        cardlayout.previous(container);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void txtPolicyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPolicyActionPerformed
@@ -260,7 +287,16 @@ public class ViewInsuranceRequest extends javax.swing.JPanel {
     }//GEN-LAST:event_txtFirstNameActionPerformed
 
     private void btnApproveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApproveActionPerformed
-        
+        String firstname = nfrfinsuranceRequest.getNfrfinsurance().getFirstName();
+        for (NFRFInsurance l : enterprise.getNfrfinsuranceAccountDirectory().getInsuranceList()){
+            if(firstname.equals(l.getFirstName()))
+            {l.setFundsApproved(Integer.valueOf(txtApprovedAmount.getText()));
+             responders.setInsuranceAmount(Integer.valueOf(txtApprovedAmount.getText()));
+             nfrfinsuranceRequest.setStatus("Completed");
+             JOptionPane.showMessageDialog(null, "Amount "+ l.getFundsApproved()+ " approved " );
+            }
+            
+        }
     }//GEN-LAST:event_btnApproveActionPerformed
 
 

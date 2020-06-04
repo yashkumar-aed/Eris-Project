@@ -5,17 +5,50 @@
  */
 package userinterface.RespondersRole;
 
+import Business.EcoSystem;
+import Business.Enterprise.Enterprise;
+import Business.Employee.Responders;
+import Business.UserAccount.UserAccount;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 /**
  *
  * @author yashk
  */
 public class UpdateBankDetails extends javax.swing.JPanel {
 
+    private UserAccount userAccount;
+    private JPanel container;
+    private EcoSystem system;
+    private Responders Responders;
+    private String firstName;
+    private String lastName;
+    private int funds;
+    private String address;
+    private String passportNumber;
+    private String username;
+    private String docPath;
+    private Enterprise enterprise;
     /**
      * Creates new form UpdateBankDetails
      */
-    public UpdateBankDetails() {
+    public UpdateBankDetails(UserAccount userAccount, JPanel container, EcoSystem system) {
         initComponents();
+        this.userAccount = userAccount;
+        this.Responders = userAccount.getResponders();
+        this.container = container;
+        this.system = system;
+        checkButton();
+        txtFirstName.setText(Responders.getFirstName());
+        txtLastName.setText(Responders.getLastName());
+        txtAddress.setText(Responders.getAddress());
+        txtFirstName1.setText(String.valueOf(Responders.getClaimsaccount().getClaimsAccountNumber()));
+        txtInsuranceApproved.setText(String.valueOf(Responders.getInsuranceAmount()));
+        txtClaimsApproved.setText(String.valueOf(Responders.getLoanAmountApproved()));
+        txtVolunteersAid.setText(String.valueOf(Responders.getVolunteersAidfund()));
+        txtBankBalance.setText(String.valueOf(Responders.getBankBalance()));
+        
     }
 
     /**
@@ -275,7 +308,16 @@ public class UpdateBankDetails extends javax.swing.JPanel {
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    private void checkButton(){
+    if(Responders.getOwnFunds() == 0){
+            txtOwnFunds.setEnabled(true);
+            btnUpdate.setEnabled(true);
+        }
+        else{
+            txtOwnFunds.setText(String.valueOf(Responders.getOwnFunds()));
+            txtOwnFunds.setEnabled(false);
+            btnUpdate.setEnabled(false);
+        }}
     private void txtOwnFundsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOwnFundsActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtOwnFundsActionPerformed
@@ -286,7 +328,22 @@ public class UpdateBankDetails extends javax.swing.JPanel {
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
- 
+ this.funds = Integer.parseInt(txtOwnFunds.getText());
+        if(funds > 0){
+        
+        Responders.setOwnFunds(funds);
+        Responders.setBankBalance(funds);
+        Responders.getNetFunding();
+      
+        Responders.getClaimsaccount().addValues1(Responders.getOwnFunds(), Responders.getAddress(), Responders.getAddress(), Responders.getImgPath());
+  
+        JOptionPane.showMessageDialog(this, "Successfully updated AID Account Details.");
+                                checkButton();
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Please enter funds greater than 0!");
+            return;
+        }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void txtFirstName1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFirstName1ActionPerformed

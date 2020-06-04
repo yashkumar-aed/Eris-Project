@@ -49,10 +49,9 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="630" max="32767" attributes="0"/>
+                  <EmptySpace pref="746" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="btnBrowse" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="agreeCheckBox" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="btnConfirm" min="-2" pref="166" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="225" max="-2" attributes="0"/>
@@ -143,9 +142,7 @@
                       <Component id="jLabel17" alignment="0" min="-2" pref="29" max="-2" attributes="0"/>
                       <Component id="txtDoc" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                  <Component id="agreeCheckBox" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
                   <Component id="btnConfirm" min="-2" pref="43" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -268,14 +265,6 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnConfirmActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JCheckBox" name="agreeCheckBox">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="*I agree the above information is correct to the best of knowledge."/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="agreeCheckBoxActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

@@ -27,6 +27,14 @@ public class EnterpriseDirectory {
     public EnterpriseDirectory(){
         enterpriseList=new ArrayList<Enterprise>();
     }
+    public boolean containsName(String type){
+        for (Enterprise org : enterpriseList){
+            if(org.getName().equals(type)){
+                return true;
+            }
+        }
+                return false;
+    }
     
     //Create enterprise
     public Enterprise createAndAddEnterprise(String name,Enterprise.EnterpriseType type){

@@ -293,6 +293,10 @@ public class Responders {
     public void setClaimsmanager(Object name) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    public void setAllValues(String text, String text0, String text1, String text2, String text3, String path) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
    
 }
 

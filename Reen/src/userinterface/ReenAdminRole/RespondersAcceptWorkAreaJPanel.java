@@ -5,19 +5,84 @@
  */
 package userinterface.ReenAdminRole;
 
+import Business.Enterprise.Enterprise;
+import Business.Enterprise.NFRFEnterprise;
+import Business.Network.Network;
+import Business.Organization.NFRFAidManagerOrganization;
+import Business.Organization.Organization;
+import Business.Employee.Responders;
+import Business.Role.RespondersRole;
+import Business.UserAccount.UserAccount;
+import Business.WorkQueue.RespondersToClaimsManager;
+import Business.Role.Role;
+import Business.WorkQueue.ClaimsManagerToAdmin;
+import Business.WorkQueue.ReenAdminToNFRFAid;
+import java.awt.CardLayout;
+import java.io.File;
+import java.util.Properties;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author yashk
  */
 public class RespondersAcceptWorkAreaJPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form RespondersAcceptWorkAreaJPanel
-     */
-    public RespondersAcceptWorkAreaJPanel() {
+    private JPanel container;
+    private UserAccount account;
+    private Enterprise enterprise;
+    private Responders responders;
+    private Network network;
+    
+public RespondersAcceptWorkAreaJPanel(JPanel container, Network network, UserAccount account, Enterprise enterprise) {
         initComponents();
+         
+        this.container = container;
+        this.enterprise = enterprise;
+        this.account = account;
+        this.network = network;
+        valueLabel.setText(enterprise.getName());
+        populateRequestTable();
+        populateComboBox();
     }
 
+    public void populateComboBox(){
+        for(Enterprise e: network.getEnterpriseDirectory().getEnterpriseList()){
+            if(e.getEnterpriseType().getValue().equals(Enterprise.EnterpriseType.NFRF.getValue())){
+                 nfrfComboBox.addItem(e);
+                }
+        }
+    
+    }
+    public void populateRequestTable(){
+        txtPassword.setText("");
+        txtUserName.setText("");
+        DefaultTableModel model = (DefaultTableModel) workRequestJTable.getModel();
+        
+        model.setRowCount(0);
+
+        for (ClaimsManagerToAdmin request : enterprise.getWorkQueue().getClaimsManagerToAdmin()){
+            if(!(request.getResponders().getUsername().equals(""))){
+            
+                Object[] row = new Object[5];
+                row[0] = request;
+                row[1] = request.getSender();
+                if (request.getReceiver()== null)
+                        row[2] = "";
+                else
+                    row[2] = request.getReceiver();
+                if (request.getStatus() == null)
+                        row[3] = "";
+                else
+                        row[3] = request.getStatus();
+                String result = request.getRequestResult();
+                row[4] = result == null ? "Waiting" : result;
+
+                model.addRow(row);
+            }
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -243,19 +308,89 @@ public class RespondersAcceptWorkAreaJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
- 
-             
+  int selectedRow = workRequestJTable.getSelectedRow();
+        
+        NFRFEnterprise f = (NFRFEnterprise)nfrfComboBox.getSelectedItem();
+        if (f.equals("")){
+            JOptionPane.showMessageDialog(null, "Please select a nfrf enterprise to move further else add a nfrf enterprise");
+            return;
+        }
+        if (txtUserName.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Please select a row from the table or enter the Username");
+            return;
+        }
+        if(messageTxt.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Please enter message for Admin review");
+            return;
+        }
+        
+        ClaimsManagerToAdmin request = (ClaimsManagerToAdmin)workRequestJTable.getValueAt(selectedRow, 0);
+        if(request.getStatus().equals("Completed")){
+            JOptionPane.showMessageDialog(null, "User already exists!");
+        }
+        else{
 
+        for (Organization org : enterprise.getOrganizationDirectory().getOrganizationList()){
+            if(org.getName().equals("Responders Organization")){
+                if (org.getUserAccountDirectory().checkIfUsernameIsUnique(txtUserName.getText())){
+                    request.setStatus("Completed");
+                    request.setRequestResult("User Account Created");
+                    request.setReceiver(account);
+                    responders = request.getResponders();
+                    Role role = new RespondersRole();
+                    org.getRespondersDirectory().addResponders(responders);
+                    org.getUserAccountDirectory().createUserAccountResponders(responders.getFirstName(), txtUserName.getText(),txtPassword.getText() , responders, role, account.getNetwork() );
+                        
+                    ReenAdminToNFRFAid h = new ReenAdminToNFRFAid(messageTxt.getText(), responders);
+                    f.getWorkQueue().getReenAdminToNFRFAid().add(h);
+                    
+
+                    
+                    JOptionPane.showMessageDialog(null, "User account created successfully. Approval sent to NFRF Aid");
+
+                  
+                    populateRequestTable();
+                    break;
+                                     
+                }
+                else{
+                    JOptionPane.showMessageDialog(this, "Username already exists. Please select another username!");
+                    }
+                
+        } 
+        }
+     
+        txtUserName.setText("");
+        txtPassword.setText("");
+        messageTxt.setText("");
+        }
+        
+        btnView.setEnabled(true);
+        btnCreate.setEnabled(false);
+
+  
+ 
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void refreshTestJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshTestJButtonActionPerformed
-
- 
+        populateRequestTable();
     }//GEN-LAST:event_refreshTestJButtonActionPerformed
 
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
         // TODO add your handling code here:
-      
+      int selectedRow = workRequestJTable.getSelectedRow();
+        if (selectedRow < 0){
+            JOptionPane.showMessageDialog(null, "Please select a row from the table");
+            return;
+        }
+        
+        ClaimsManagerToAdmin request = (ClaimsManagerToAdmin)workRequestJTable.getValueAt(selectedRow, 0);
+        
+        txtUserName.setText(request.getResponders().getUsername());
+        txtPassword.setText(request.getResponders().getPassword());
+
+        btnCreate.setEnabled(true);
+        btnView.setEnabled(false);
     }//GEN-LAST:event_btnViewActionPerformed
 
     private void nfrfComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nfrfComboBoxActionPerformed
@@ -268,7 +403,9 @@ public class RespondersAcceptWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-         
+         container.remove(this);
+        CardLayout cardlayout = (CardLayout) container.getLayout();
+        cardlayout.previous(container);
     }//GEN-LAST:event_btnBackActionPerformed
 
 

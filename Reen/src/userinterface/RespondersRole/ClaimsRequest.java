@@ -5,17 +5,53 @@
  */
 package userinterface.RespondersRole;
 
+import Business.ClaimsAccount.Claims;
+import Business.EcoSystem;
+import Business.Enterprise.Enterprise;
+import Business.Network.Network;
+import Business.Employee.Responders;
+import Business.UserAccount.UserAccount;
+import Business.WorkQueue.RespondersToClaims;
+import java.awt.CardLayout;
+import java.io.File;
+import java.util.Date;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 /**
  *
  * @author yashk
  */
 public class ClaimsRequest extends javax.swing.JPanel {
-
+    
+    private UserAccount userAccount;
+    private JPanel container;
+    private EcoSystem system;
+    private Responders Responders;
+    private String firstName;
+    private String lastName;
+    private int funds;
+    private String address;
+    private String passportNumber;
+    private String username;
+    private String docPath;
+    private Enterprise enterprise;
+    
     /**
      * Creates new form LoanRequest
      */
-    public ClaimsRequest() {
+    public ClaimsRequest(UserAccount userAccount, JPanel container, EcoSystem system) {
         initComponents();
+        this.userAccount = userAccount;
+        
+        this.Responders = userAccount.getResponders();
+        this.container = container;
+        this.system = system;
+        
+        txtFirstName.setText(Responders.getFirstName());
+        txtLastName.setText(Responders.getLastName());
+        txtAffiliations.setText(Responders.getAddress());
     }
 
     /**
@@ -228,12 +264,86 @@ public class ClaimsRequest extends javax.swing.JPanel {
 
     private void btnBrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowseActionPerformed
 
-       
+        JFileChooser file = new JFileChooser();
+          file.setCurrentDirectory(new File(System.getProperty("user.home")));
+        FileNameExtensionFilter extensionfilter =  new FileNameExtensionFilter("*.Images", "jpg","png");
+        file.addChoosableFileFilter(extensionfilter);
+        int result = file.showSaveDialog(null);
+
+        if(result == JFileChooser.APPROVE_OPTION){
+            File selectedFile = file.getSelectedFile();
+            String path = selectedFile.getAbsolutePath();
+            this.docPath = path;
+            txtDocument.setText(path);
+        }
+        else if(result == JFileChooser.CANCEL_OPTION){
+            System.out.println("No File Select");
+        }
     }//GEN-LAST:event_btnBrowseActionPerformed
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         // TODO add your handling code here:
-         
+        this.firstName = txtFirstName.getText();
+        this.lastName = txtLastName.getText();
+        this.funds = Integer.parseInt(txtFunds.getText());
+        if(funds > this.Responders.getNetFunding()){
+            
+            JOptionPane.showMessageDialog(null, "Amount need to less or equal to net funding. Net funding :" + Responders.getNetFunding());
+            return;
+        }
+        this.address = txtAffiliations.getText();
+        
+        
+        if(passportNumber.equals("")){
+              JOptionPane.showMessageDialog(null, "Please enter passport number");
+            return;
+        
+        }
+        
+        if(txtDocument.getText().equals("")){
+              JOptionPane.showMessageDialog(null, "Please select document");
+            return;
+        
+        }
+                
+        Claims claims = new Claims();
+        for(Network network: system.getNetworkList()){
+            if(network.getName().equals(userAccount.getNetwork()))
+            {
+                for(Enterprise e : network.getEnterpriseDirectory().getEnterpriseList()){
+                    if(e.getEnterpriseType().equals(Enterprise.EnterpriseType.NFRF))
+                    {
+                        for(Claims l : e.getClaimsDirectory().getClaimsAccountList())
+                            if(l.getFirstName().equals(userAccount.getName()))
+                            { this.enterprise = e;
+                                l.addValues(funds, address, passportNumber, docPath);
+                                
+                                claims = l ;
+                            }
+                        
+                    }
+                }
+            }
+        }
+        
+        //Initiated Loan amount Requested
+        Responders.setClaimsRequestAmount(funds);
+        claims.setReen(userAccount.getResponders().getReen());
+        RespondersToClaims responderloan = new RespondersToClaims("Create new Loan", claims, userAccount.getResponders());
+        responderloan.setStatus("Pending");
+        responderloan.setSender(userAccount);
+        responderloan.setRequestDate(new Date());
+        Responders.setTypeL(1);
+        
+        enterprise.getWorkQueue().getRespondersToClaims().add(responderloan);
+        JOptionPane.showMessageDialog(null, "Successfully initiate Loan Process");
+        
+        txtFirstName.setText("");
+        txtLastName.setText("");
+        txtFunds.setText("");
+        txtAffiliations.setText("");
+        //SuccessDialog d = new SuccessDialog("Successfully initiate Loan Process");
+        //d.setVisible(true);        
        
         
     }//GEN-LAST:event_btnCreateActionPerformed

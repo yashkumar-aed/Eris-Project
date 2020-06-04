@@ -25,9 +25,42 @@ public abstract class Organization {
     private VolunteersDirectory volunteersDirectory;
     private RespondersDirectory respondersDirectory;
     private EmployeeDirectory employeeDirectory;
-   
+    private ClaimsAccountDirectory claimsDirectory;
+    private NFRFInsuranceAccountDirectory nfrfinsuranceAccountDirectory;
 
     private UserAccountDirectory userAccountDirectory;
+
+    public VolunteersDirectory getVolunteersDirectory() {
+        return volunteersDirectory;
+    }
+
+    public void setVolunteersDirectory(VolunteersDirectory volunteersDirectory) {
+        this.volunteersDirectory = volunteersDirectory;
+    }
+
+    public ClaimsAccountDirectory getClaimsDirectory() {
+        return claimsDirectory;
+    }
+
+    public void setClaimsDirectory(ClaimsAccountDirectory claimsDirectory) {
+        this.claimsDirectory = claimsDirectory;
+    }
+
+    public NFRFInsuranceAccountDirectory getNfrfinsuranceAccountDirectory() {
+        return nfrfinsuranceAccountDirectory;
+    }
+
+    public void setNfrfinsuranceAccountDirectory(NFRFInsuranceAccountDirectory nfrfinsuranceAccountDirectory) {
+        this.nfrfinsuranceAccountDirectory = nfrfinsuranceAccountDirectory;
+    }
+
+    public static int getCounter() {
+        return counter;
+    }
+
+    public static void setCounter(int counter) {
+        Organization.counter = counter;
+    }
     private int organizationID;
     private static int counter=0;
     

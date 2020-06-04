@@ -5,6 +5,17 @@
  */
 package userinterface.RespondersRole;
 
+import Business.Employee.Responders;
+import Business.Organization.Organization;
+import Business.UserAccount.UserAccount;
+
+import java.awt.CardLayout;
+import java.io.File;
+import javax.swing.ImageIcon;
+import javax.swing.InputVerifier;
+import javax.swing.JOptionPane;
+import javax.swing.JFileChooser;
+import javax.swing.JPanel;
 /**
  *
  * @author yashk
@@ -14,8 +25,24 @@ public class RespondersProfile extends javax.swing.JPanel {
     /**
      * Creates new form RespondersProfile
      */
-    public RespondersProfile() {
+    private Responders responders;
+    private JPanel container;
+    private UserAccount userAccount;
+    private Organization org;
+    private String path;
+    
+    public RespondersProfile(UserAccount userAccount,Organization org,  JPanel container) {
         initComponents();
+        this.userAccount = userAccount;
+        this.responders = userAccount.getResponders();
+        this.org = org;
+        this.container = container;
+        txtUser.setText(responders.getUsername());
+        txtFirstName.setText(responders.getFirstName());
+        txtLastName.setText(responders.getLastName());
+        txtContact.setText(responders.getContactResponders());
+        txtAffliation.setText(responders.getAddress());
+        documentPhotoComponent.setIcon(new ImageIcon(responders.getImgPath()));
     }
 
     /**
@@ -224,7 +251,18 @@ public class RespondersProfile extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowseActionPerformed
+        JFileChooser file = new JFileChooser();
+        int result = file.showSaveDialog(null);
 
+        if(result == JFileChooser.APPROVE_OPTION){
+            File selectedFile = file.getSelectedFile();
+            path = selectedFile.getAbsolutePath();
+            documentPhotoComponent.setIcon(new ImageIcon(path));
+        }
+        else if(result == JFileChooser.CANCEL_OPTION){
+            System.out.println("No File Select");
+        }
+                         
        
     }//GEN-LAST:event_btnBrowseActionPerformed
 
@@ -243,7 +281,67 @@ public class RespondersProfile extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-       
+       int count = 0;
+        for (Responders responders : org.getRespondersDirectory().getRespondersList()){
+            if (responders.getUsername().equals(responders.getUsername())){
+
+                responders.setUsername(txtUser.getText());
+                responders.setFirstName(txtFirstName.getText());
+                responders.setLastName(txtLastName.getText());
+                responders.setContactResponders(txtContact.getText());
+                responders.setAddress(txtAffliation.getText());
+
+                if(txtAffliation.getText().equals("")){
+
+                    JOptionPane.showMessageDialog(this, "Please enter affiliations", "warning", JOptionPane.WARNING_MESSAGE);
+                    return;
+
+                }
+
+              
+                if(txtUser.getText().equals("")){
+
+                    JOptionPane.showMessageDialog(this, "Please enter UserName", "warning", JOptionPane.WARNING_MESSAGE);
+                    return;
+
+                }
+                if(txtFirstName.getText().equals("")){
+
+                    JOptionPane.showMessageDialog(this, "Please enter First Name", "warning", JOptionPane.WARNING_MESSAGE);
+                    return;
+
+                }
+                if(txtLastName.getText().equals("")){
+
+                    JOptionPane.showMessageDialog(this, "Please enter Last Name", "warning", JOptionPane.WARNING_MESSAGE);
+                    return;
+
+                }
+                if(txtContact.getText().equals("")){
+
+                    JOptionPane.showMessageDialog(this, "Please enter Contact Number", "warning", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                try {
+                    if(path.equals("")|| path == null){
+
+                        JOptionPane.showMessageDialog(this, "Please upload a document Picture", "warning", JOptionPane.WARNING_MESSAGE);
+                        return;
+
+                    }
+                }
+                catch(Exception e){
+                    JOptionPane.showMessageDialog(this, "Please upload a Profile Picture", "warning", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                responders.setAllValues(txtUser.getText(), txtFirstName.getText(),txtLastName.getText(),txtContact.getText(),txtAffliation.getText(), path);
+                
+                JOptionPane.showMessageDialog(null, "Successfully updated Profile Details");
+                
+
+            }
+        }
 
              
     }//GEN-LAST:event_jButton2ActionPerformed

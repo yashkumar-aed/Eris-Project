@@ -5,17 +5,53 @@
  */
 package userinterface.RespondersRole;
 
+import Business.ClaimsAccount.Claims;
+import Business.Employee.Responders;
+import Business.Employee.Volunteers;
+import Business.EcoSystem;
+import Business.Enterprise.Enterprise;
+import Business.Organization.Organization;
+import Business.UserAccount.UserAccount;
+
+import java.awt.CardLayout;
+import java.io.File;
+import javax.swing.ImageIcon;
+import javax.swing.InputVerifier;
+import javax.swing.JOptionPane;
+import javax.swing.JFileChooser;
+import javax.swing.JPanel;
 /**
  *
  * @author yashk
  */
 public class RespondersWorkAreaJPanel extends javax.swing.JPanel {
+    private JPanel container;
+    private Enterprise enterprise;
+    private UserAccount userAccount;
+    private EcoSystem system;
+    private Organization organization;
+    private Responders responders;
+    private Volunteers volunteers;
 
     /**
      * Creates new form RespondersWorkAreaJPanel
      */
-    public RespondersWorkAreaJPanel() {
+    public RespondersWorkAreaJPanel(JPanel container, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem system) {
         initComponents();
+        
+        this.container = container;
+        this.enterprise = enterprise;
+        this.organization = organization;
+        this.userAccount = account;
+        this.system = system;
+        this.responders = account.getResponders();
+        valueLabel.setText(enterprise.getName());
+        
+        if(responders.getFinalizedVolunteers()!= null){
+        this.volunteers = responders.getFinalizedVolunteers();
+        
+        populateVolunteersDetails();
+        }
     }
 
     /**
@@ -45,7 +81,9 @@ public class RespondersWorkAreaJPanel extends javax.swing.JPanel {
         lblContact2 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         lblEmail2 = new javax.swing.JLabel();
-        parentImg2 = new javax.swing.JLabel();
+        volunteersImg2 = new javax.swing.JLabel();
+        valueLabel = new javax.swing.JLabel();
+        valueLabel2 = new javax.swing.JLabel();
 
         viewVolunteersJButton.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         viewVolunteersJButton.setText("Volunteers");
@@ -138,8 +176,8 @@ public class RespondersWorkAreaJPanel extends javax.swing.JPanel {
 
         lblEmail2.setText("TBP");
 
-        parentImg2.setBackground(new java.awt.Color(102, 255, 102));
-        parentImg2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        volunteersImg2.setBackground(new java.awt.Color(102, 255, 102));
+        volunteersImg2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -158,7 +196,7 @@ public class RespondersWorkAreaJPanel extends javax.swing.JPanel {
                     .addComponent(lblContact2)
                     .addComponent(lblEmail2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(parentImg2, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(volunteersImg2, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -166,7 +204,7 @@ public class RespondersWorkAreaJPanel extends javax.swing.JPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(parentImg2, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(volunteersImg2, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -188,14 +226,24 @@ public class RespondersWorkAreaJPanel extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        valueLabel.setFont(new java.awt.Font("Lucida Grande", 3, 24)); // NOI18N
+        valueLabel.setText("<value>");
+
+        valueLabel2.setFont(new java.awt.Font("Lucida Grande", 3, 24)); // NOI18N
+        valueLabel2.setText("ENTERPRISE:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(838, Short.MAX_VALUE)
+                .addContainerGap(572, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(valueLabel2)
+                        .addGap(65, 65, 65)
+                        .addComponent(valueLabel)
+                        .addGap(84, 84, 84)
                         .addComponent(btnRefresh)
                         .addGap(317, 317, 317))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -226,8 +274,15 @@ public class RespondersWorkAreaJPanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(valueLabel)
+                            .addComponent(valueLabel2))))
                 .addGap(34, 34, 34)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(280, Short.MAX_VALUE))
@@ -252,38 +307,132 @@ public class RespondersWorkAreaJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void viewVolunteersJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewVolunteersJButtonActionPerformed
-       
+       if(responders.getAddress() == null){
+            JOptionPane.showMessageDialog(this, "Please update the document before viewing volunteers");
+            return;
+        }
+        else{
+            if(responders.getFinalizedVolunteers()== null)
+            {
+
+                CardLayout layout = (CardLayout) container.getLayout();
+                container.add("ViewVolunteersDirectory", new VolunteersDirectory(container, userAccount, responders,enterprise));
+                layout.next(container);
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "You are already set, cant view volunteers. \n Please contact your claims manager!");
+                return;
+            }
+       }
     }//GEN-LAST:event_viewVolunteersJButtonActionPerformed
 
     private void updateProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateProfileActionPerformed
 
-        
+        CardLayout layout = (CardLayout) container.getLayout();
+        RespondersProfile respondersProfile = new RespondersProfile(userAccount,organization, container);
+        container.add(respondersProfile);
+        layout.next(container);
     }//GEN-LAST:event_updateProfileActionPerformed
 
+     private void populateVolunteersDetails(){
+        lblName2.setText(volunteers.getFirstName() +" "+ volunteers.getLastName());
+        lblAddress2.setText(volunteers.getAddress());
+        lblContact2.setText(volunteers.getContactVolunteers());
+        volunteersImg2.setIcon(new ImageIcon(volunteers.getImgPath()));
+    }
+    
     private void btnCreateClaimsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateClaimsActionPerformed
-      
+       if(userAccount.getResponders().getTypeL() != 2){
+            CardLayout layout = (CardLayout) container.getLayout();
+            //LoanCreation bankAcc = new LoanCreation();
+            ClaimsRequest bankAcc = new ClaimsRequest(userAccount, container, system);
+            container.add(bankAcc);
+            layout.next(container);
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Cant select Loan as your Bank account is not ready or else you have opted for Insurance");
+            return;
+        }
     }//GEN-LAST:event_btnCreateClaimsActionPerformed
 
     private void btnCreateInsuranceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateInsuranceActionPerformed
-        
+        if(userAccount.getResponders().getTypeL() != 1){
+            CardLayout layout = (CardLayout) container.getLayout();
+            InsuranceDetails bankAcc = new InsuranceDetails(userAccount, container, enterprise, system);
+            container.add(bankAcc);
+            layout.next(container);
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Cant select Insurance as your Bank account is not ready or else you have opted for Loan");
+            return;
+        }
     }//GEN-LAST:event_btnCreateInsuranceActionPerformed
 
     private void viewBankDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewBankDetailsActionPerformed
        
-        
+         if(responders.getClaimsaccount().getClaimsAccountNumber() == 0){
+            JOptionPane.showMessageDialog(this, "Please wait for AID Manager to accept the bank account req");
+            return;
+        }
+        else{
+            CardLayout layout = (CardLayout) container.getLayout();
+            UpdateBankDetails bankAcc = new UpdateBankDetails(userAccount, container, system);
+            container.add(bankAcc);
+            layout.next(container);
+        }
     }//GEN-LAST:event_viewBankDetailsActionPerformed
 
     private void chkInsuranceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkInsuranceActionPerformed
-       
+        if(responders.getClaimsaccount().getClaimsAccountNumber() == 0){
+            JOptionPane.showMessageDialog(this, "Please wait for AID Manager to accept the AID account req");
+            return;
+        }
+        if(responders.getVolunteersAidfund() == 0){
+            JOptionPane.showMessageDialog(this, "Please wait for volunteers to add aid amount");
+            return;
+        }
+        if(responders.getOwnFunds() == 0){
+            JOptionPane.showMessageDialog(this, "Please add your contribution in View claim Acccount page");
+            return;
+
+        }
+
+        if (chkBankAccount.isSelected()){
+            btnCreateClaims.setEnabled(false);
+            btnCreateInsurance.setEnabled(true);
+            chkInsurance.setSelected(false);
+        }
     }//GEN-LAST:event_chkInsuranceActionPerformed
 
     private void chkBankAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkBankAccountActionPerformed
-       
+        if(responders.getClaimsaccount().getClaimsAccountNumber() == 0){
+            JOptionPane.showMessageDialog(this, "Please wait for AID Manager to accept the AID account req");
+            return;
+        }
+        if(responders.getVolunteersAidfund() == 0){
+            JOptionPane.showMessageDialog(this, "Please wait for volunteers to add aid amount");
+            return;
+        }
+        if(responders.getOwnFunds() == 0){
+            JOptionPane.showMessageDialog(this, "Please add your contribution in View claim Acccount page");
+            return;
+
+        }
+
+        if (chkBankAccount.isSelected()){
+            btnCreateClaims.setEnabled(true);
+            btnCreateInsurance.setEnabled(false);
+            chkInsurance.setSelected(false);
+        }
     }//GEN-LAST:event_chkBankAccountActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         // TODO add your handling code here:
-       
+        if(responders.getFinalizedVolunteers()!= null){
+        this.volunteers = responders.getFinalizedVolunteers();
+        
+        populateVolunteersDetails();
+        }
     }//GEN-LAST:event_btnRefreshActionPerformed
 
 
@@ -303,9 +452,11 @@ public class RespondersWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblContact2;
     private javax.swing.JLabel lblEmail2;
     private javax.swing.JLabel lblName2;
-    private javax.swing.JLabel parentImg2;
     private javax.swing.JButton updateProfile;
+    private javax.swing.JLabel valueLabel;
+    private javax.swing.JLabel valueLabel2;
     private javax.swing.JButton viewBankDetails;
     private javax.swing.JButton viewVolunteersJButton;
+    private javax.swing.JLabel volunteersImg2;
     // End of variables declaration//GEN-END:variables
 }

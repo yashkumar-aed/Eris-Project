@@ -8,6 +8,12 @@ package userinterface.NFRFInsuranceManager;
 import Business.Enterprise.Enterprise;
 import Business.UserAccount.UserAccount;
 import javax.swing.JPanel;
+import Business.Organization.Organization;
+import Business.WorkQueue.RespondersToNFRFInsuranceManager;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,14 +24,35 @@ public class NFRFInsuranceManagerWorkAreaJPanel extends javax.swing.JPanel {
     /**
      * Creates new form NFRFInsuranceManagerWorkAreaJPanel
      */
-    public NFRFInsuranceManagerWorkAreaJPanel() {
-        initComponents();
-    }
-
+    private JPanel container;
+    private Organization organization;
+    private UserAccount userAccount;
+    private Enterprise enterprise;
+    
     public NFRFInsuranceManagerWorkAreaJPanel(JPanel container, Enterprise enterprise, UserAccount account) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        initComponents();
+        this.container = container;
+        this.enterprise = enterprise;
+        this.organization = organization;
+        this.userAccount = account;
+       valueLabel.setText(enterprise.getName());
+        populateRequestTable();
     }
 
+    public void populateRequestTable(){
+        DefaultTableModel model = (DefaultTableModel) workRequestJTable.getModel();
+        
+        model.setRowCount(0);
+        for (RespondersToNFRFInsuranceManager request : enterprise.getWorkQueue().getRespondersToNFRFInsuranceManager()){
+            Object[] row = new Object[4];
+            row[0] = request;
+            row[1] = request.getNfrfinsurance().getReenbranch();
+            row[2] = request.getNfrfinsurance().getPolicyNumber();
+            row[3] = request.getStatus();
+            
+            model.addRow(row);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -154,11 +181,33 @@ public class NFRFInsuranceManagerWorkAreaJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void viewRespondersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewRespondersActionPerformed
-      
+      int selectedRow = workRequestJTable.getSelectedRow();
+
+        if (selectedRow < 0){
+            JOptionPane.showMessageDialog(null, "Please select a row from the table");
+            return;
+        }
+        else{
+            RespondersToNFRFInsuranceManager request = (RespondersToNFRFInsuranceManager)workRequestJTable.getValueAt(selectedRow,0);
+            if(!(request.getStatus().equals("Completed"))){
+                request.setStatus("Processing");
+                request.setReceiver(userAccount);
+                CardLayout layout = (CardLayout) container.getLayout();
+
+                container.add("ViewInsuranceRequest", new ViewInsuranceRequest(container, userAccount, request, enterprise));
+                layout.next(container);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Insurance request completed");
+                return;
+
+            }
+        }
     }//GEN-LAST:event_viewRespondersActionPerformed
 
     private void refreshTestJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshTestJButtonActionPerformed
 
+        populateRequestTable();
 
     }//GEN-LAST:event_refreshTestJButtonActionPerformed
 

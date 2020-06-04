@@ -7,7 +7,30 @@ package userinterface.VolunteersRole;
 
 import Business.EcoSystem;
 import javax.swing.JPanel;
-
+import Business.Employee.Volunteers;
+import Business.Employee.VolunteersDirectory;
+import Business.EcoSystem;
+import Business.Enterprise.Enterprise;
+import Business.Enterprise.HospitalEnterprise;
+import Business.Enterprise.NFRFEnterprise;
+import Business.Enterprise.ReenEnterprise;
+ 
+import Business.Network.Network;
+import Business.Organization.Organization;
+import Business.UserAccount.UserAccount;
+ 
+import Business.WorkQueue.VolunteersToClaimsManager;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.io.File;
+import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javafx.stage.FileChooser;
+import javax.swing.BorderFactory;
+import javax.swing.InputVerifier;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 /**
  *
  * @author yashk
@@ -17,8 +40,23 @@ public class VolunteersRegistration extends javax.swing.JPanel {
     /**
      * Creates new form VolunteersRegistration
      */
+    EcoSystem system;
+    JPanel container;
+    private String username;
+    private static int count = 0;
+    private String email;
+    private String password;
+    private VolunteersDirectory volunteersDirectory;
+    private VolunteersToClaimsManager volunteersToClaimsManager;
+    private Enterprise enterprise;
+    private Organization organization;
+     
+    
     public VolunteersRegistration() {
         initComponents();
+        this.container = container;
+        this.system = system;
+        populateComboBox();
     }
 
     public VolunteersRegistration(JPanel container, EcoSystem system) {
@@ -47,30 +85,6 @@ public class VolunteersRegistration extends javax.swing.JPanel {
         emailIdLbl = new javax.swing.JLabel();
         btnConfirm = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        isChildrenOnBoard = new javax.swing.JRadioButton();
-        notOnBoardChildren = new javax.swing.JRadioButton();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        notPrepared = new javax.swing.JRadioButton();
-        isPrepared = new javax.swing.JRadioButton();
-        isFinance = new javax.swing.JRadioButton();
-        notSelectFinance = new javax.swing.JRadioButton();
-        isEducated = new javax.swing.JRadioButton();
-        notEducated = new javax.swing.JRadioButton();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        isBigChange = new javax.swing.JRadioButton();
-        notBigChange = new javax.swing.JRadioButton();
-        isComfortable = new javax.swing.JRadioButton();
-        jLabel8 = new javax.swing.JLabel();
-        notComfortable = new javax.swing.JRadioButton();
-        isGuilty = new javax.swing.JRadioButton();
-        notGuilty = new javax.swing.JRadioButton();
-        jLabel12 = new javax.swing.JLabel();
-        notPromise = new javax.swing.JRadioButton();
-        isPromise = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
 
         jPanel1.setMaximumSize(new java.awt.Dimension(1245, 1000));
@@ -120,142 +134,6 @@ public class VolunteersRegistration extends javax.swing.JPanel {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel5.setText("You ");
-
-        jLabel9.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel9.setText("You");
-
-        isChildrenOnBoard.setText("Yes");
-        isChildrenOnBoard.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                isChildrenOnBoardActionPerformed(evt);
-            }
-        });
-
-        notOnBoardChildren.setText("No");
-        notOnBoardChildren.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                notOnBoardChildrenActionPerformed(evt);
-            }
-        });
-
-        jLabel10.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel10.setText("You");
-
-        jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel6.setText("You ");
-
-        notPrepared.setText("No");
-        notPrepared.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                notPreparedActionPerformed(evt);
-            }
-        });
-
-        isPrepared.setText("Yes");
-        isPrepared.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                isPreparedActionPerformed(evt);
-            }
-        });
-
-        isFinance.setText("Yes");
-        isFinance.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                isFinanceActionPerformed(evt);
-            }
-        });
-
-        notSelectFinance.setText("No");
-        notSelectFinance.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                notSelectFinanceActionPerformed(evt);
-            }
-        });
-
-        isEducated.setText("Yes");
-        isEducated.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                isEducatedActionPerformed(evt);
-            }
-        });
-
-        notEducated.setText("No");
-        notEducated.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                notEducatedActionPerformed(evt);
-            }
-        });
-
-        jLabel11.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel11.setText("You ");
-
-        jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel7.setText("You ");
-
-        isBigChange.setText("Yes");
-        isBigChange.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                isBigChangeActionPerformed(evt);
-            }
-        });
-
-        notBigChange.setText("No");
-        notBigChange.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                notBigChangeActionPerformed(evt);
-            }
-        });
-
-        isComfortable.setText("Yes");
-        isComfortable.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                isComfortableActionPerformed(evt);
-            }
-        });
-
-        jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel8.setText("You");
-
-        notComfortable.setText("No");
-        notComfortable.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                notComfortableActionPerformed(evt);
-            }
-        });
-
-        isGuilty.setText("Yes");
-        isGuilty.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                isGuiltyActionPerformed(evt);
-            }
-        });
-
-        notGuilty.setText("No");
-        notGuilty.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                notGuiltyActionPerformed(evt);
-            }
-        });
-
-        jLabel12.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel12.setText("You ");
-
-        notPromise.setText("No");
-        notPromise.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                notPromiseActionPerformed(evt);
-            }
-        });
-
-        isPromise.setText("Yes");
-        isPromise.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                isPromiseActionPerformed(evt);
-            }
-        });
-
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("Volunteers Registration");
 
@@ -268,29 +146,6 @@ public class VolunteersRegistration extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(441, 441, 441)
                         .addComponent(btnConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(isPrepared)
-                                .addGap(30, 30, 30)
-                                .addComponent(notPrepared))
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(isBigChange)
-                                .addGap(29, 29, 29)
-                                .addComponent(notBigChange))
-                            .addComponent(jLabel8)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(isComfortable)
-                                .addGap(33, 33, 33)
-                                .addComponent(notComfortable))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(isFinance)
-                                .addGap(31, 31, 31)
-                                .addComponent(notSelectFinance))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(93, 93, 93)
                         .addComponent(jButton1)
@@ -310,34 +165,9 @@ public class VolunteersRegistration extends javax.swing.JPanel {
                             .addComponent(branchJComboBox, 0, 222, Short.MAX_VALUE))))
                 .addContainerGap(457, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(596, 596, 596)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(isGuilty)
-                                .addGap(41, 41, 41)
-                                .addComponent(notGuilty))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(isPromise)
-                                .addGap(45, 45, 45)
-                                .addComponent(notPromise))
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel12)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(isEducated)
-                                .addGap(41, 41, 41)
-                                .addComponent(notEducated))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(isChildrenOnBoard)
-                                .addGap(44, 44, 44)
-                                .addComponent(notOnBoardChildren))
-                            .addComponent(jLabel9)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(470, 470, 470)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 494, Short.MAX_VALUE))
+                .addGap(470, 470, 470)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 527, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -366,64 +196,7 @@ public class VolunteersRegistration extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(branchJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel9))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(isPrepared)
-                            .addComponent(notPrepared))
-                        .addGap(39, 39, 39)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(isFinance)
-                            .addComponent(notSelectFinance)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(106, 106, 106)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(isChildrenOnBoard)
-                            .addComponent(notOnBoardChildren))
-                        .addGap(35, 35, 35)
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(isEducated)
-                            .addComponent(notEducated))))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jLabel7))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel11)))
-                .addGap(5, 5, 5)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(notPromise)
-                            .addComponent(isPromise))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(notGuilty)
-                            .addComponent(isGuilty)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(isBigChange)
-                            .addComponent(notBigChange))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel8)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(isComfortable)
-                            .addComponent(notComfortable))))
-                .addGap(55, 55, 55)
+                .addGap(455, 455, 455)
                 .addComponent(btnConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(156, Short.MAX_VALUE))
         );
@@ -450,122 +223,126 @@ public class VolunteersRegistration extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtPasswordActionPerformed
+        container.remove(this);
+        CardLayout cardlayout = (CardLayout) container.getLayout();
+        cardlayout.previous(container);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
+        // TODO add your handling code here:
+            String username = txtUsername.getText();
+            if (username.equals("")){
+                JOptionPane.showMessageDialog(null, "Please enter the Username");
+                return;
+                //throw new RuntimeException("Please enter the Username");
+            }
+            
+            String emailId = txtEmail.getText();
+            if (emailId.equals("")){
+                JOptionPane.showMessageDialog(null, "Please enter the Email Id");
+                return;
+                //throw new RuntimeException("Please enter the Email Id");
+            }
+            
+            String password = txtPassword.getText();
+            String confpassword = txtConfPassword.getText();
+            if (password.equals("")){
+                JOptionPane.showMessageDialog(null, "Please enter the password");
+                return;
+                //throw new RuntimeException("Please enter the password");
+            }
+            
+            if (!password.equals(confpassword)){
+                JOptionPane.showMessageDialog(null, "Confirm Password and Password should match");
+                return;
+                //throw new RuntimeException("Confirm Password and Password should match");
+            }
+               
+        this.username = txtUsername.getText();
+        this.email = txtEmail.getText();
+        this.password = txtPassword.getText();
+      
+       
+        
+        ReenEnterprise reen = (ReenEnterprise) branchJComboBox.getSelectedItem();
+
+        if (reen == null){
+            JOptionPane.showMessageDialog(null, "Please select the branch");
+            throw new RuntimeException("Please enter the branch");
+        }
+        if ( txtUsername == null){
+            JOptionPane.showMessageDialog(null, "Please enter Username");
+            throw new RuntimeException("Please enter username");
+        }
+            
+        
+        
+        
+        for (Network n : system.getNetworkList()){
+            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()){
+                if (e.getEnterpriseType().equals(Enterprise.EnterpriseType.Hospital)){
+                    for(UserAccount ua : e.getUserAccountDirectory().getUserAccountList()){
+                        if(ua.getUsername().equals(username)){
+                            JOptionPane.showMessageDialog(null, "User Name already exists!, Please Enter valid user name","warning", JOptionPane.WARNING_MESSAGE);
+                            return;
+                        }
+                        for(Organization o : e.getOrganizationDirectory().getOrganizationList()){
+                            for(UserAccount ua1 : o.getUserAccountDirectory().getUserAccountList()){
+                                if(ua1.getUsername().equals(username)){
+                                    JOptionPane.showMessageDialog(null, "User Name already exists!, Please Enter valid user name","warning", JOptionPane.WARNING_MESSAGE);
+                                    return;
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+        
+        Volunteers volunteers = new Volunteers(username, email, password);
+        reen.getVolunteersDirectory().addVolunteers(volunteers);
+        volunteersToClaimsManager = new VolunteersToClaimsManager("Please review the volunteers profile", volunteers);
+        reen.getWorkQueue().getVolunteersToClaimsManager().add(volunteersToClaimsManager);
+        
+        JOptionPane.showMessageDialog(null, "Account Registered Successfully. Account sent to manager for Approval");
+        
+        txtUsername.setText("");
+        txtEmail.setText("");
+        txtPassword.setText("");
+        txtConfPassword.setText("");
+
+    }//GEN-LAST:event_btnConfirmActionPerformed
 
     private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsernameActionPerformed
 
-    private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
+    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
         // TODO add your handling code here:
-      
-    }//GEN-LAST:event_btnConfirmActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void isChildrenOnBoardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isChildrenOnBoardActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_isChildrenOnBoardActionPerformed
-
-    private void notOnBoardChildrenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notOnBoardChildrenActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_notOnBoardChildrenActionPerformed
-
-    private void notPreparedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notPreparedActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_notPreparedActionPerformed
-
-    private void isPreparedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isPreparedActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_isPreparedActionPerformed
-
-    private void isFinanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isFinanceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_isFinanceActionPerformed
-
-    private void notSelectFinanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notSelectFinanceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_notSelectFinanceActionPerformed
-
-    private void isEducatedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isEducatedActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_isEducatedActionPerformed
-
-    private void notEducatedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notEducatedActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_notEducatedActionPerformed
-
-    private void isBigChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isBigChangeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_isBigChangeActionPerformed
-
-    private void notBigChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notBigChangeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_notBigChangeActionPerformed
-
-    private void isComfortableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isComfortableActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_isComfortableActionPerformed
-
-    private void notComfortableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notComfortableActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_notComfortableActionPerformed
-
-    private void isGuiltyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isGuiltyActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_isGuiltyActionPerformed
-
-    private void notGuiltyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notGuiltyActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_notGuiltyActionPerformed
-
-    private void notPromiseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notPromiseActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_notPromiseActionPerformed
-
-    private void isPromiseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isPromiseActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_isPromiseActionPerformed
-
+    }//GEN-LAST:event_txtPasswordActionPerformed
+private void populateComboBox() {
+        branchJComboBox.removeAllItems();
+        for(Network n: system.getNetworkList()){
+            for(Enterprise e: n.getEnterpriseDirectory().getEnterpriseList()){
+                if(e.getEnterpriseType().equals(Enterprise.EnterpriseType.Hospital)){
+                    branchJComboBox.addItem(e);
+                }    
+            }
+        }
+    } 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox branchJComboBox;
     private javax.swing.JButton btnConfirm;
     private javax.swing.JLabel emailIdLbl;
-    private javax.swing.JRadioButton isBigChange;
-    private javax.swing.JRadioButton isChildrenOnBoard;
-    private javax.swing.JRadioButton isComfortable;
-    private javax.swing.JRadioButton isEducated;
-    private javax.swing.JRadioButton isFinance;
-    private javax.swing.JRadioButton isGuilty;
-    private javax.swing.JRadioButton isPrepared;
-    private javax.swing.JRadioButton isPromise;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton notBigChange;
-    private javax.swing.JRadioButton notComfortable;
-    private javax.swing.JRadioButton notEducated;
-    private javax.swing.JRadioButton notGuilty;
-    private javax.swing.JRadioButton notOnBoardChildren;
-    private javax.swing.JRadioButton notPrepared;
-    private javax.swing.JRadioButton notPromise;
-    private javax.swing.JRadioButton notSelectFinance;
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JTextField txtConfPassword;
     private javax.swing.JTextField txtEmail;

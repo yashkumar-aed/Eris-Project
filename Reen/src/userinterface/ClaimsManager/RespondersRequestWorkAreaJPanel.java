@@ -5,6 +5,16 @@
  */
 package userinterface.ClaimsManager;
 
+import Business.Employee.RespondersDirectory;
+import Business.Enterprise.Enterprise;
+import Business.Organization.Organization;
+import Business.UserAccount.UserAccount;
+import Business.WorkQueue.RespondersToClaimsManager;
+import Business.WorkQueue.VolunteersToClaimsManager;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author yashk
@@ -14,8 +24,35 @@ public class RespondersRequestWorkAreaJPanel extends javax.swing.JPanel {
     /**
      * Creates new form RespondersRequestWorkAreaJPanel
      */
-    public RespondersRequestWorkAreaJPanel() {
+    private JPanel container;
+    private Organization organization;
+    private Enterprise enterprise;
+    private UserAccount account;
+    private RespondersDirectory respondersDirectory;
+    
+    public RespondersRequestWorkAreaJPanel(JPanel container, UserAccount account, Organization organization, Enterprise enterprise) {
         initComponents();
+        this.container = container;
+        this.organization = organization;
+        this.enterprise = enterprise;
+        this.account = account;
+     
+        valueLabel.setText(enterprise.getName());
+        populateRequestTable();
+    }
+      public void populateRequestTable(){
+        DefaultTableModel model = (DefaultTableModel) workRequestJTable.getModel();
+        
+        model.setRowCount(0);
+        for (VolunteersToClaimsManager request : enterprise.getWorkQueue().getVolunteersToClaimsManager()){
+            Object[] row = new Object[4];
+            row[0] = request;
+            row[1] = request.getStatus();
+            UserAccount result = request.getReceiver();
+            row[3] = result == null ? "Waiting" : result;
+            
+            model.addRow(row);
+        }
     }
 
     /**
@@ -162,16 +199,36 @@ public class RespondersRequestWorkAreaJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void refreshTestJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshTestJButtonActionPerformed
+        populateRequestTable();
 
     }//GEN-LAST:event_refreshTestJButtonActionPerformed
-
+       
     private void viewRespondersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewRespondersActionPerformed
-        
+         int selectedRow = workRequestJTable.getSelectedRow();
+
+        if (selectedRow < 0){
+            JOptionPane.showMessageDialog(null, "Please select a row from the table");
+            return;
+        }
+        RespondersToClaimsManager request = (RespondersToClaimsManager)workRequestJTable.getValueAt(selectedRow,0);
+        if (request.getStatus().equals("Completed")){
+            JOptionPane.showMessageDialog(null, "Already Completed!");
+            return;
+
+        }
+        else
+        {
+            CardLayout layout = (CardLayout) container.getLayout();
+            container.add("ViewRespondersJPanel", new ViewRespondersJPanel(container, request, account, enterprise));
+            layout.next(container);
+        }
     }//GEN-LAST:event_viewRespondersActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        
+          container.remove(this);
+        CardLayout cardlayout = (CardLayout) container.getLayout();
+        cardlayout.previous(container);
     }//GEN-LAST:event_btnBackActionPerformed
 
 

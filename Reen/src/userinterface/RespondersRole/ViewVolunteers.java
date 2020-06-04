@@ -5,6 +5,14 @@
  */
 package userinterface.RespondersRole;
 
+import Business.Employee.Responders;
+import Business.Employee.Volunteers;
+import Business.Enterprise.Enterprise;
+import Business.WorkQueue.RespondersToVolunteers;
+import java.awt.CardLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 /**
  *
  * @author yashk
@@ -14,6 +22,11 @@ public class ViewVolunteers extends javax.swing.JPanel {
     /**
      * Creates new form ViewVolunteers
      */
+    private JPanel container;
+    private RespondersToVolunteers request;
+    private Volunteers volunteers;
+    private Enterprise enterprise;
+    private Responders responders;
     public ViewVolunteers() {
         initComponents();
     }
@@ -37,30 +50,6 @@ public class ViewVolunteers extends javax.swing.JPanel {
         profilePhotoComponent = new javax.swing.JLabel();
         btnAccept = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
-        isGuilty = new javax.swing.JRadioButton();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        notComfortable = new javax.swing.JRadioButton();
-        isComfortable = new javax.swing.JRadioButton();
-        jLabel8 = new javax.swing.JLabel();
-        isEducated = new javax.swing.JRadioButton();
-        notSelectFinance = new javax.swing.JRadioButton();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        notEducated = new javax.swing.JRadioButton();
-        notPromise = new javax.swing.JRadioButton();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        isPromise = new javax.swing.JRadioButton();
-        notPrepared = new javax.swing.JRadioButton();
-        notBigChange = new javax.swing.JRadioButton();
-        isPrepared = new javax.swing.JRadioButton();
-        isBigChange = new javax.swing.JRadioButton();
-        isChildrenOnBoard = new javax.swing.JRadioButton();
-        notOnBoardChildren = new javax.swing.JRadioButton();
-        notGuilty = new javax.swing.JRadioButton();
-        isFinance = new javax.swing.JRadioButton();
         jLabel3 = new javax.swing.JLabel();
 
         jPanel1.setMaximumSize(new java.awt.Dimension(1245, 1000));
@@ -98,83 +87,6 @@ public class ViewVolunteers extends javax.swing.JPanel {
             }
         });
 
-        jLabel9.setText("Your current children are on board with the situation.");
-        jLabel9.setEnabled(false);
-
-        isGuilty.setText("Yes");
-        isGuilty.setEnabled(false);
-
-        jLabel5.setText("You are prepared for the “worst case scenario.”");
-        jLabel5.setEnabled(false);
-
-        jLabel12.setText("You want to say “yes” not out of guilt.");
-        jLabel12.setEnabled(false);
-
-        notComfortable.setText("No");
-        notComfortable.setEnabled(false);
-
-        isComfortable.setText("Yes");
-        isComfortable.setEnabled(false);
-
-        jLabel8.setText("Your partner is comfortable with the situation.");
-        jLabel8.setEnabled(false);
-
-        isEducated.setText("Yes");
-        isEducated.setEnabled(false);
-
-        notSelectFinance.setText("No");
-        notSelectFinance.setEnabled(false);
-
-        jLabel7.setText("You are able or willing to make BIG changes.");
-        jLabel7.setEnabled(false);
-
-        jLabel11.setText("You plan to make promises or commitments you actually can or will keep");
-        jLabel11.setEnabled(false);
-
-        notEducated.setText("No");
-        notEducated.setEnabled(false);
-
-        notPromise.setText("No");
-        notPromise.setEnabled(false);
-
-        jLabel10.setText("You are educated about the realities of the type of adoption you are pursuing.");
-        jLabel10.setEnabled(false);
-
-        jLabel6.setText("You are financially prepared for the child.");
-        jLabel6.setEnabled(false);
-
-        isPromise.setText("Yes");
-        isPromise.setEnabled(false);
-
-        notPrepared.setText("No");
-        notPrepared.setEnabled(false);
-        notPrepared.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                notPreparedActionPerformed(evt);
-            }
-        });
-
-        notBigChange.setText("No");
-        notBigChange.setEnabled(false);
-
-        isPrepared.setText("Yes");
-        isPrepared.setEnabled(false);
-
-        isBigChange.setText("Yes");
-        isBigChange.setEnabled(false);
-
-        isChildrenOnBoard.setText("Yes");
-        isChildrenOnBoard.setEnabled(false);
-
-        notOnBoardChildren.setText("No");
-        notOnBoardChildren.setEnabled(false);
-
-        notGuilty.setText("No");
-        notGuilty.setEnabled(false);
-
-        isFinance.setText("Yes");
-        isFinance.setEnabled(false);
-
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel3.setText("Volunteer Profile");
 
@@ -185,26 +97,6 @@ public class ViewVolunteers extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 241, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(isComfortable)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(notComfortable))
-                    .addComponent(jLabel8)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(isBigChange)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(notBigChange))
-                    .addComponent(jLabel7)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(isFinance)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(notSelectFinance))
-                    .addComponent(jLabel6)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(isPrepared)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(notPrepared))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -214,31 +106,9 @@ public class ViewVolunteers extends javax.swing.JPanel {
                             .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jButton1))
-                .addGap(51, 51, 51)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(isEducated)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(notEducated))
-                    .addComponent(jLabel10)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(isGuilty)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(notGuilty))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(isPromise)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(notPromise))
-                    .addComponent(jLabel11)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(isChildrenOnBoard)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(notOnBoardChildren))
-                    .addComponent(jLabel12)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(profilePhotoComponent, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel9)))
-                .addGap(68, 68, 68))
+                .addGap(248, 248, 248)
+                .addComponent(profilePhotoComponent, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(241, 241, 241))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -272,57 +142,7 @@ public class ViewVolunteers extends javax.swing.JPanel {
                             .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)))
                     .addComponent(profilePhotoComponent, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(88, 88, 88)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(isPrepared)
-                            .addComponent(notPrepared))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(isFinance)
-                            .addComponent(notSelectFinance))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(isBigChange)
-                            .addComponent(notBigChange))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(isComfortable)
-                            .addComponent(notComfortable)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(isChildrenOnBoard)
-                            .addComponent(notOnBoardChildren))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(isEducated)
-                            .addComponent(notEducated))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(isPromise)
-                            .addComponent(notPromise))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(isGuilty)
-                            .addComponent(notGuilty))))
-                .addGap(39, 39, 39)
+                .addGap(393, 393, 393)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
@@ -343,52 +163,51 @@ public class ViewVolunteers extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptActionPerformed
- 
-            
-    }//GEN-LAST:event_btnAcceptActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void notPreparedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notPreparedActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_notPreparedActionPerformed
+    private void btnAcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptActionPerformed
+                    if(responders.getAcceptedVolunteers().contains(volunteers)){
+            JOptionPane.showMessageDialog(this, "You have already accepted this volunteer");
+            throw new RuntimeException("Please enter message");
+        }
+        else{
+            String message = txtMessage.getText();
+           
+
+            if(message == ""){
+                JOptionPane.showMessageDialog(this, "Please enter message for volunteer");
+                throw new RuntimeException("Please enter message");
+
+            }
+
+            request = new RespondersToVolunteers(responders, volunteers);
+            request.setRequestResult("Accepted by responders");
+            request.setMessage(message);
+          
+            responders.getAcceptedVolunteers().add(volunteers);
+
+            request.setStatus("Processing");
+            JOptionPane.showMessageDialog(null, "Successfully Accepted Parent");
+
+            enterprise.getWorkQueue().getRespondersToVolunteers().add(request);
+            container.remove(this);
+            CardLayout cardlayout = (CardLayout) container.getLayout();
+            cardlayout.previous(container);
+
+        }
+    }//GEN-LAST:event_btnAcceptActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAccept;
-    private javax.swing.JRadioButton isBigChange;
-    private javax.swing.JRadioButton isChildrenOnBoard;
-    private javax.swing.JRadioButton isComfortable;
-    private javax.swing.JRadioButton isEducated;
-    private javax.swing.JRadioButton isFinance;
-    private javax.swing.JRadioButton isGuilty;
-    private javax.swing.JRadioButton isPrepared;
-    private javax.swing.JRadioButton isPromise;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton notBigChange;
-    private javax.swing.JRadioButton notComfortable;
-    private javax.swing.JRadioButton notEducated;
-    private javax.swing.JRadioButton notGuilty;
-    private javax.swing.JRadioButton notOnBoardChildren;
-    private javax.swing.JRadioButton notPrepared;
-    private javax.swing.JRadioButton notPromise;
-    private javax.swing.JRadioButton notSelectFinance;
     private javax.swing.JLabel profilePhotoComponent;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtMessage;

@@ -8,6 +8,7 @@ import Business.EcoSystem;
 import Business.Network.Network;
 import java.awt.CardLayout;
 import java.awt.Component;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -17,17 +18,17 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ManageNetworkJPanel extends javax.swing.JPanel {
 
-    private JPanel userProcessContainer;
+    private JPanel container;
     private EcoSystem system;
 
     /**
      *
      * Creates new form ManageNetworkJPanel
      */
-    public ManageNetworkJPanel(JPanel userProcessContainer, EcoSystem system) {
+    public ManageNetworkJPanel(JPanel container, EcoSystem system) {
         initComponents();
 
-        this.userProcessContainer = userProcessContainer;
+        this.container = container;
         this.system = system;
 
         populateNetworkTable();
@@ -144,22 +145,38 @@ public class ManageNetworkJPanel extends javax.swing.JPanel {
 
     private void submitJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitJButtonActionPerformed
 
-        String name = nameJTextField.getText();
-
+         String name = nameJTextField.getText();
+        try {
+         
+            if (name.equals("")){
+                JOptionPane.showMessageDialog(null, "Please enter the Name of Network");
+                throw new RuntimeException("Please enter the Name of network");
+            }
+         }
+        catch(Exception e){
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Please enter valid data", "warning", JOptionPane.WARNING_MESSAGE);
+                return;     
+            
+            } 
         Network network = system.createAndAddNetwork();
         network.setName(name);
 
         populateNetworkTable();
+        nameJTextField.setText("");
+        
+        JOptionPane.showMessageDialog(null, "New Network Created Successfully" );
+     
     }//GEN-LAST:event_submitJButtonActionPerformed
 
     private void backJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backJButtonActionPerformed
-        userProcessContainer.remove(this);
-         Component[] componentArray = userProcessContainer.getComponents();
+        container.remove(this);
+        Component[] componentArray = container.getComponents();
         Component component = componentArray[componentArray.length - 1];
         SystemAdminWorkAreaJPanel sysAdminwjp = (SystemAdminWorkAreaJPanel) component;
         sysAdminwjp.populateTree();
-        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
-        layout.previous(userProcessContainer);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.previous(container);
     }//GEN-LAST:event_backJButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

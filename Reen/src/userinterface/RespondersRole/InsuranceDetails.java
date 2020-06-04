@@ -5,6 +5,24 @@
  */
 package userinterface.RespondersRole;
 
+import Business.EcoSystem;
+import Business.Enterprise.Enterprise;
+import Business.NFRFInsurance.NFRFInsurance;
+import Business.NFRFInsurance.NFRFInsuranceAccountDirectory;
+import Business.Network.Network;
+import Business.Employee.Responders;
+import Business.UserAccount.UserAccount;
+ 
+import Business.WorkQueue.RespondersToNFRFInsuranceManager;
+import java.awt.CardLayout;
+import java.io.File;
+import java.util.Date;
+import javax.swing.InputVerifier;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author yashk
@@ -14,10 +32,49 @@ public class InsuranceDetails extends javax.swing.JPanel {
     /**
      * Creates new form InsuranceDetails
      */
-    public InsuranceDetails() {
+    
+    private Responders Responders;
+    private NFRFInsurance insurance; 
+    private JPanel container;
+    private UserAccount userAccount;
+    private String documentUpload;
+    private String firstName;
+    private String lastName;
+    private String requestedFunds;
+    private int policynumber;
+    private String address;
+    private NFRFInsuranceAccountDirectory nfrfinsuranceDirectory;
+    private boolean flagC;
+    private String username;
+    private EcoSystem system;
+    private Network network;
+    private Enterprise enterprise;
+    
+    public InsuranceDetails(UserAccount userAccount, JPanel container, Enterprise enterprise, EcoSystem system) {
         initComponents();
+        
+        this.userAccount = userAccount;
+        this.Responders = userAccount.getResponders();
+        this.container = container;
+        this.enterprise = enterprise;
+       // this.Ins
+        
+        txtUsername.setText(Responders.getUsername());
+        txtFirstName.setText(Responders.getFirstName());
+        txtLastName.setText(Responders.getLastName());
+        
+        
+        this.system = system;
+        addInputVerifiers();
+
+        btnConfirm.setEnabled(true);
+        
     }
 
+     private void addInputVerifiers() {
+        
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,7 +103,6 @@ public class InsuranceDetails extends javax.swing.JPanel {
         jLabel17 = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
         btnConfirm = new javax.swing.JButton();
-        agreeCheckBox = new javax.swing.JCheckBox();
 
         jPanel1.setMaximumSize(new java.awt.Dimension(1245, 1000));
         jPanel1.setMinimumSize(new java.awt.Dimension(1245, 1000));
@@ -111,22 +167,14 @@ public class InsuranceDetails extends javax.swing.JPanel {
             }
         });
 
-        agreeCheckBox.setText("*I agree the above information is correct to the best of knowledge.");
-        agreeCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                agreeCheckBoxActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(630, Short.MAX_VALUE)
+                .addContainerGap(746, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnBrowse, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(agreeCheckBox, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(btnConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(225, 225, 225)))
@@ -197,9 +245,7 @@ public class InsuranceDetails extends javax.swing.JPanel {
                     .addComponent(btnBrowse)
                     .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDoc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addComponent(agreeCheckBox)
-                .addGap(35, 35, 35)
+                .addGap(91, 91, 91)
                 .addComponent(btnConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -231,29 +277,82 @@ public class InsuranceDetails extends javax.swing.JPanel {
     }//GEN-LAST:event_txtDocActionPerformed
 
     private void btnBrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowseActionPerformed
+        JFileChooser file = new JFileChooser();
+        file.setCurrentDirectory(new File(System.getProperty("user.home")));
+        FileNameExtensionFilter extensionfilter =  new FileNameExtensionFilter("*.Images", "jpg","png");
+        file.addChoosableFileFilter(extensionfilter);
+        int result = file.showSaveDialog(null);
 
+        if(result == JFileChooser.APPROVE_OPTION){
+            File selectedFile = file.getSelectedFile();
+            String path = selectedFile.getAbsolutePath();
+            this.documentUpload = path;
+            txtDoc.setText(path);
+        }
+        else if(result == JFileChooser.CANCEL_OPTION){
+            System.out.println("No File Select");
+        }
       
     }//GEN-LAST:event_btnBrowseActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-       
+        container.remove(this);
+        CardLayout cardlayout = (CardLayout) container.getLayout();
+        cardlayout.previous(container);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
         // TODO add your handling code here:
-        
+        this.firstName = txtFirstName.getText();
+        this.lastName = txtLastName.getText();
+        this.policynumber = Integer.parseInt(txtPolicyNumber.getText());
+        this.address = txtAddress.getText();
    
-    }//GEN-LAST:event_btnConfirmActionPerformed
+        if (flagC == true){
+        NFRFInsurance nw = new NFRFInsurance();
+        for(Network network: system.getNetworkList()){
+            if(network.getName().equals(userAccount.getNetwork()))
+            {
+                for(Enterprise e : network.getEnterpriseDirectory().getEnterpriseList()){
+                    if(e.getEnterpriseType().equals(Enterprise.EnterpriseType.NFRF))
+                    {
+                            this.enterprise = e;
+                               nw.setReen(userAccount.getResponders().getReen());
+                               nw.setAddress(this.address);
+                               nw.setLastName(lastName);
+                               nw.setFirstName(firstName);
+                               nw.setPolicyNumber(policynumber);
+                               nw.setUsername(userAccount.getUsername());
+                               nw.setDocPath(txtDoc.getText());
+                               
 
-    private void agreeCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agreeCheckBoxActionPerformed
+                                RespondersToNFRFInsuranceManager rinsure = new RespondersToNFRFInsuranceManager( this.Responders, userAccount, nw, nfrfinsuranceDirectory);
+                                rinsure.setStatus("Pending");
+                                rinsure.setSender(userAccount);
+                                rinsure.setRequestDate(new Date());
+                               e.getWorkQueue().getRespondersToNFRFInsuranceManager().add(rinsure);
+                               e.getNfrfinsuranceAccountDirectory().addInsurance(nw);
+                        
+                    }
+                }
+            }
+        }
+       this.Responders.setTypeL(2);
+       this.Responders.setNFRFInsurance(nw);
+       JOptionPane.showMessageDialog(null, "Successfully updated Insurance Profile");
+        
+       }
+        
+    }                                          
+
+    private void agreeCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {                                              
         // TODO add your handling code here:
       
-    }//GEN-LAST:event_agreeCheckBoxActionPerformed
+    }//GEN-LAST:event_btnConfirmActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox agreeCheckBox;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnBrowse;
     private javax.swing.JButton btnConfirm;

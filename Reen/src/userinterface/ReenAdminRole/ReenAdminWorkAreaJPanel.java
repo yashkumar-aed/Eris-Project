@@ -9,6 +9,8 @@ import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.UserAccount.UserAccount;
 import javax.swing.JPanel;
+import Business.Network.Network;
+import java.awt.CardLayout;
 
 /**
  *
@@ -19,12 +21,21 @@ public class ReenAdminWorkAreaJPanel extends javax.swing.JPanel {
     /**
      * Creates new form ReenAdminWorkAreaJPanel
      */
-    public ReenAdminWorkAreaJPanel() {
+    JPanel container;
+    Enterprise enterprise;
+    UserAccount account;
+    EcoSystem system;
+    
+    public ReenAdminWorkAreaJPanel(JPanel container, EcoSystem system, Enterprise enterprise, UserAccount account) {
         initComponents();
-    }
+        
+        this.container = container;
+        this.enterprise = enterprise;
+        this.account = account;
+        this.system = system;
+        
+        valueLabel.setText(enterprise.getName());
 
-    public ReenAdminWorkAreaJPanel(JPanel container, EcoSystem business, Enterprise enterprise, UserAccount account) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -155,12 +166,18 @@ public class ReenAdminWorkAreaJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void manageOrganizationJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageOrganizationJButtonActionPerformed
-
-      
+        ReenManageOrganizationJPanel manageOrganizationJPanel = new ReenManageOrganizationJPanel(container, account, enterprise);
+        container.add("manageOrganizationJPanel", manageOrganizationJPanel);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.next(container);  
     }//GEN-LAST:event_manageOrganizationJButtonActionPerformed
 
     private void manageEmployeeJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageEmployeeJButtonActionPerformed
+        ReenManageEmployeeJPanel manageEmployeeJPanel = new ReenManageEmployeeJPanel(container,account,  enterprise);
+        container.add("manageEmployeeJPanel", manageEmployeeJPanel);
 
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.next(container);
        
     }//GEN-LAST:event_manageEmployeeJButtonActionPerformed
 

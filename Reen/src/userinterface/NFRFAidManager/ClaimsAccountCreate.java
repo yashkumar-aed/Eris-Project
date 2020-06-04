@@ -5,6 +5,24 @@
  */
 package userinterface.NFRFAidManager;
 
+import Business.ClaimsAccount.Claims;
+import Business.Employee.Responders;
+import Business.Enterprise.Enterprise;
+
+import Business.UserAccount.UserAccount;
+import Business.WorkQueue.ReenAdminToNFRFAid;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.io.File;
+import java.util.Date;
+import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.BorderFactory;
+import javax.swing.InputVerifier;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 /**
  *
  * @author yashk
@@ -14,6 +32,18 @@ public class ClaimsAccountCreate extends javax.swing.JPanel {
     /**
      * Creates new form ClaimsAccountCreate
      */
+    private UserAccount userAccount;
+    private JPanel container;
+
+    private String firstName;
+    private String claimsmanager;
+    private String  reen;
+    private ReenAdminToNFRFAid req;
+   
+    private Responders responders;
+ 
+
+    private Enterprise enterprise;
     public ClaimsAccountCreate() {
         initComponents();
     }
@@ -176,7 +206,37 @@ public class ClaimsAccountCreate extends javax.swing.JPanel {
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         // TODO add your handling code here:
-       
+       this.firstName = txtFirstName.getText();
+
+        this.claimsmanager = txtManager.getText();
+        this.reen = txtBranch.getText();
+
+        Claims claims= new Claims();
+
+        claims = new Claims(req.getResponders().getFirstName(), req.getResponders());
+        claims.setReen(reen);
+        claims.setClaimsManager(claimsmanager);
+        enterprise.getClaimsDirectory().addLoan(claims);
+        req.getResponders().setClaimsaccount(claims);
+        req.setReceiver(userAccount);
+        req.setResolveDate(new Date());
+        req.setStatus("Completed");
+        
+        responders = req.getResponders();
+         
+
+
+        JOptionPane.showMessageDialog(null, "Bank Account created created successfully! \n Account Number : "+ claims.getClaimsAccountNumber(),"information", JOptionPane.INFORMATION_MESSAGE);
+        
+        
+
+        container.remove(this);
+        Component[] componentArray = container.getComponents();
+        Component component = componentArray[componentArray.length - 1];
+        ViewClaimsAccountRequest ViewClaimsAccountRequest = (ViewClaimsAccountRequest) component;
+        ViewClaimsAccountRequest.populateRequestTable();
+        CardLayout layout = (CardLayout)container.getLayout();
+        layout.previous(container);
   
        
     }//GEN-LAST:event_btnCreateActionPerformed
@@ -191,7 +251,9 @@ public class ClaimsAccountCreate extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-         
+         container.remove(this);
+        CardLayout cardlayout = (CardLayout) container.getLayout();
+        cardlayout.previous(container);
     }//GEN-LAST:event_btnBackActionPerformed
 
 

@@ -10,10 +10,14 @@ import Business.Enterprise.Enterprise;
 import Business.Network.Network;
 import Business.Role.AdminRole;
 import Business.UserAccount.UserAccount;
+import Business.Role.ReenAdminRole;
+import Business.Role.NFRFAdminRole;
+import Business.Role.SystemAdminRole;
 import java.awt.CardLayout;
 import java.awt.Component;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -243,7 +247,7 @@ public class ManageEnterpriseAdminJPanel extends javax.swing.JPanel {
     private void submitJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitJButtonActionPerformed
         
         Enterprise enterprise = (Enterprise) enterpriseJComboBox.getSelectedItem();
-        
+        Network n = (Network)networkJComboBox.getSelectedItem();
         String username = usernameJTextField.getText();
         String password = String.valueOf(passwordJPasswordField.getPassword());
         String name = nameJTextField.getText();
@@ -253,6 +257,46 @@ public class ManageEnterpriseAdminJPanel extends javax.swing.JPanel {
         UserAccount account = enterprise.getUserAccountDirectory().createUserAccount(username, password, employee, new AdminRole());
         populateTable();
         
+        try{ 
+           if (username.equals("")){
+           
+            throw new RuntimeException("Please enter the Username");
+            
+        }
+            if (password.equals("")){
+           
+            throw new RuntimeException("Please enter the Password");
+            
+        }
+             if (name.equals("")){
+            
+            throw new RuntimeException("Please enter the Name");
+            
+        }
+       }catch(Exception e){
+            e.printStackTrace();
+          JOptionPane.showMessageDialog(this, "Please enter valid data", "warning", JOptionPane.WARNING_MESSAGE);
+          return;     
+            
+        } 
+        if(enterprise.getUserAccountDirectory().checkIfUsernameIsUnique(username)){
+        if(enterprise.getEnterpriseType().equals(Enterprise.EnterpriseType.Reen)){
+            
+            employee = enterprise.getEmployeeDirectory().createandaddEmployee(name);
+            account = enterprise.getUserAccountDirectory().createUserAccount(username, password, employee, new ReenAdminRole(), n.getName());
+        }
+        else if(enterprise.getEnterpriseType().equals(Enterprise.EnterpriseType.NFRF)){
+            employee = enterprise.getEmployeeDirectory().createandaddEmployee(name);
+            account = enterprise.getUserAccountDirectory().createUserAccount(username, password, employee, new NFRFAdminRole(), n.getName());
+        }
+        populateTable();
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Username exists! Please select another username");
+        }
+        usernameJTextField.setText("");
+        passwordJPasswordField.setText("");
+        nameJTextField.setText("");                      
     }//GEN-LAST:event_submitJButtonActionPerformed
 
     private void backJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backJButtonActionPerformed

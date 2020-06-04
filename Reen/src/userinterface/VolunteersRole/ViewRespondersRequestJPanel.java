@@ -5,16 +5,57 @@
  */
 package userinterface.VolunteersRole;
 
+import Business.EcoSystem;
+import Business.Enterprise.Enterprise;
+import Business.Organization.Organization;
+import Business.UserAccount.UserAccount;
+import Business.WorkQueue.RespondersToVolunteers;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author yashk
  */
 public class ViewRespondersRequestJPanel extends javax.swing.JPanel {
 
+    private JPanel container;
+    private Organization organization;
+    private Enterprise enterprise;
+    private UserAccount userAccount;
+    private UserAccount claimsAccount;
+    private EcoSystem system;
+    
     /**
      * Creates new form ViewRespondersRequestJPanel
      */
-     
+      public ViewRespondersRequestJPanel(JPanel container, UserAccount userAccount, Organization organization, Enterprise enterprise, EcoSystem system) {
+        initComponents();
+        this.container = container;
+        this.organization = organization;
+        this.enterprise = enterprise;
+        this.userAccount = userAccount;
+        this.system = system;
+        valueLabel.setText(organization.getName());
+        populateRequestTable();
+    }
+    
+    public void populateRequestTable(){
+        DefaultTableModel model = (DefaultTableModel) workRequestJTable.getModel();
+        
+        model.setRowCount(0);
+        for (RespondersToVolunteers bm : enterprise.getWorkQueue().getRespondersToVolunteers()){
+            if(bm.getVolunteers().equals(userAccount.getVolunteers())){
+            Object[] row = new Object[3];
+            row[0] = bm;            
+            row[1] = bm.getResponders().getClaimsManager();
+            
+            model.addRow(row);
+            }
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -144,17 +185,32 @@ public class ViewRespondersRequestJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnContactRespondersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContactRespondersActionPerformed
- 
+ int selectedRow = workRequestJTable.getSelectedRow();
+
+        if (selectedRow < 0){
+            JOptionPane.showMessageDialog(null, "Please select a row from the table");
+            return;
+        }
+
+        RespondersToVolunteers request = (RespondersToVolunteers) workRequestJTable.getValueAt(selectedRow, 0);
+
+        CardLayout layout = (CardLayout) container.getLayout();
+        container.add("viewRespondersProfile", new ViewRespondersProfile(container, userAccount, request));
+        layout.next(container);
+
     }//GEN-LAST:event_btnContactRespondersActionPerformed
 
     private void refreshTestJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshTestJButtonActionPerformed
 
-        
+                populateRequestTable();
+
     }//GEN-LAST:event_refreshTestJButtonActionPerformed
 
     private void bckjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bckjButtonActionPerformed
         // TODO add your handling code here:
-        
+        container.remove(this);
+        CardLayout cardlayout = (CardLayout) container.getLayout();
+        cardlayout.previous(container);
     }//GEN-LAST:event_bckjButtonActionPerformed
 
 

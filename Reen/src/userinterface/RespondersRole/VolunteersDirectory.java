@@ -5,6 +5,16 @@
  */
 package userinterface.RespondersRole;
 
+import Business.Employee.Responders;
+import Business.Employee.Volunteers;
+import Business.Enterprise.Enterprise;
+import Business.Organization.Organization;
+import Business.UserAccount.UserAccount;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import userinterface.ClaimsManager.ViewVolunteersApplication;
 /**
  *
  * @author yashk
@@ -14,10 +24,38 @@ public class VolunteersDirectory extends javax.swing.JPanel {
     /**
      * Creates new form VolunteersDirectory
      */
-    public VolunteersDirectory() {
+    private JPanel container;
+    private Enterprise enterprise;
+    private UserAccount userAccount;
+    private Responders responders;
+    public VolunteersDirectory(JPanel container, UserAccount userAccount, Volunteers volunteers, Enterprise enterprise ) {
         initComponents();
+        this.container = container;
+        this.responders = responders;
+        this.enterprise = enterprise;
+        this.userAccount = userAccount;
+        valueLabel.setText(enterprise.getName());
+        populateRequestTable();
     }
+    
+     public void populateRequestTable(){
+        DefaultTableModel model = (DefaultTableModel) workRequestJTable.getModel();
+        model.setRowCount(0);
+        
 
+        for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()){
+            if(o.getName().equals(Organization.Type.VolunteersOrg.getValue())){
+                for (Volunteers volunteers : o.getVolunteersDirectory().getVolunteersList()){
+                    if(volunteers.isIsAvailable()){
+                    Object[] row = new Object[3];
+                    row[0] = volunteers;
+                    row[1] = volunteers.getClaimsmanager();
+                    model.addRow(row);
+                    }
+                }
+            }
+        }   
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -157,16 +195,30 @@ public class VolunteersDirectory extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnViewDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewDetailsActionPerformed
- 
+        int selectedRow = workRequestJTable.getSelectedRow();
+
+        if (selectedRow < 0){
+            JOptionPane.showMessageDialog(null, "Please select a row from the table");
+            return;
+        }
+
+        Volunteers volunteers = (Volunteers)workRequestJTable.getValueAt(selectedRow, 0);
+
+        CardLayout layout = (CardLayout) container.getLayout();
+        container.add("viewVolunteersApplication", new ViewVolunteersApplication(container, volunteers , responders, enterprise));
+        layout.next(container);
     }//GEN-LAST:event_btnViewDetailsActionPerformed
 
     private void refreshTestJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshTestJButtonActionPerformed
+        populateRequestTable();
 
     }//GEN-LAST:event_refreshTestJButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here
-       
+        container.remove(this);
+        CardLayout cardlayout = (CardLayout) container.getLayout();
+        cardlayout.previous(container);
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

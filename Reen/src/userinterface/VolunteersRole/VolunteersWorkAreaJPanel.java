@@ -9,16 +9,61 @@ import Business.Enterprise.Enterprise;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
 import javax.swing.JPanel;
-
+import static Business.ConfigureASystem.system;
+import Business.Employee.Responders;
+import Business.Employee.Volunteers;
+import Business.Enterprise.Enterprise;
+import Business.Organization.Organization;
+import Business.UserAccount.UserAccount;
+import java.awt.CardLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 /**
  *
  * @author yashk
  */
 public class VolunteersWorkAreaJPanel extends javax.swing.JPanel {
 
+    private JPanel container;
+    private Organization organization;
+    private UserAccount userAccount;
+    private Enterprise enterprise;
+    private Volunteers volunteers;
+    private Responders responders;
+    private int value;
+    private int volunteersValue;
+    private int remaining;
+    private float percentage;
     public VolunteersWorkAreaJPanel(JPanel container, Enterprise enterprise, UserAccount account, Organization organization) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         initComponents();
+        
+        this.container = container;
+        this.organization = organization;
+        this.enterprise = enterprise;
+        this.userAccount = account;
+        this.volunteers = account.getVolunteers();
+        valueLabel.setText(enterprise.getName());
+        this.responders = this.volunteers.getResponders();
+        if(responders != null){
+             populateParentDetails();
+        }
     }
+    
+    private void populateParentDetails(){
+        lblName.setText(responders.getFirstName() +" "+ volunteers.getLastName());
+        lblAddress.setText(responders.getAddress());
+        lblContact.setText(responders.getContactResponders());
+        lblSupportAmount.setText(String.valueOf(volunteers.getFunds()));
+        if (lblSupportAmount == null){
+            lblSupportAmount.setText("0");
+        }
+        lblRemainingAmount.setText(String.valueOf(volunteers.getRemainingFunds()));
+        parentImg.setIcon(new ImageIcon(responders.getImgPath()));
+    }
+    
+    //To change body of generated methods, choose Tools | Templates.
+    
 
     /**
      * Creates new form VolunteersWorkAreaJPanel
@@ -52,12 +97,20 @@ public class VolunteersWorkAreaJPanel extends javax.swing.JPanel {
         lblEmail = new javax.swing.JLabel();
         parentImg = new javax.swing.JLabel();
         btnRefresh = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        lblSupportAmount = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        lblRemainingAmount = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        txtEnterFunds = new javax.swing.JTextField();
+        btnTransfer = new javax.swing.JButton();
 
         jPanel1.setMaximumSize(new java.awt.Dimension(1245, 1000));
         jPanel1.setMinimumSize(new java.awt.Dimension(1245, 1000));
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel1.setText("Parents Work Area");
+        jLabel1.setText("Volunteers Work Area");
 
         enterpriseLabel.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         enterpriseLabel.setText("ENTERPRISE:");
@@ -171,6 +224,81 @@ public class VolunteersWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel6.setText("Contribution:");
+
+        lblSupportAmount.setText("jLabel7");
+
+        jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel8.setText("Remaining:");
+
+        lblRemainingAmount.setText("jLabel7");
+
+        jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel7.setText("Amount to Transfer:");
+
+        txtEnterFunds.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEnterFundsActionPerformed(evt);
+            }
+        });
+
+        btnTransfer.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        btnTransfer.setText("TRANSFER");
+        btnTransfer.setFocusPainted(false);
+        btnTransfer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTransferActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(82, 82, 82)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblSupportAmount))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblRemainingAmount)))
+                        .addContainerGap(211, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtEnterFunds, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(155, 155, 155)
+                .addComponent(btnTransfer, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(114, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(113, 113, 113)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(lblSupportAmount))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(lblRemainingAmount))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtEnterFunds, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31)
+                .addComponent(btnTransfer, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(38, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -182,8 +310,13 @@ public class VolunteersWorkAreaJPanel extends javax.swing.JPanel {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnViewVolunteers, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(checkRequestsPending, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(119, 119, 119)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(119, 119, 119)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(145, 145, 145)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(399, 399, 399)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -214,7 +347,9 @@ public class VolunteersWorkAreaJPanel extends javax.swing.JPanel {
                             .addComponent(valueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(502, 502, 502))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(161, 161, 161))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(236, 236, 236)
                         .addComponent(checkRequestsPending, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -246,21 +381,54 @@ public class VolunteersWorkAreaJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void checkRequestsPendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkRequestsPendingActionPerformed
- 
+      
+        CardLayout layout = (CardLayout) container.getLayout();
+        container.add("ViewRespondersRequestJPanel", new ViewRespondersRequestJPanel(container, userAccount, organization, enterprise, system));
+        layout.next(container);
     }//GEN-LAST:event_checkRequestsPendingActionPerformed
 
     private void btnViewVolunteersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewVolunteersActionPerformed
-        
+        CardLayout layout = (CardLayout) container.getLayout();
+        container.add("volunteersprofile", new VolunteersProfile(userAccount,organization,container));
+        layout.next(container);
     }//GEN-LAST:event_btnViewVolunteersActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         // TODO add your handling code here:
-       
+        if(volunteers != null){
+             populateParentDetails();
+        }
     }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void txtEnterFundsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEnterFundsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEnterFundsActionPerformed
+
+    private void btnTransferActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferActionPerformed
+        // TODO add your handling code here:
+    int remainingValue = volunteers.getRemainingFunds();
+        if(remainingValue > 0){
+            value = Integer.parseInt(txtEnterFunds.getText());
+
+            int total = responders.getBankBalance() + value;
+            responders.setBankBalance(total);
+            volunteersValue = volunteers.getFunds();
+
+            remaining = remainingValue - value;
+            volunteers.setRemainingFunds(remaining);
+            lblRemainingAmount.setText(String.valueOf(remaining));
+            this.percentage = ((float)(volunteersValue - remaining)/volunteersValue)*100;
+        }
+        else {
+            JOptionPane.showMessageDialog(this,"Remaining Amount is 0!");
+            return;
+        }
+    }//GEN-LAST:event_btnTransferActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRefresh;
+    private javax.swing.JButton btnTransfer;
     private javax.swing.JButton btnViewVolunteers;
     private javax.swing.JButton checkRequestsPending;
     private javax.swing.JLabel enterpriseLabel;
@@ -269,14 +437,21 @@ public class VolunteersWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblContact;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblName;
+    private javax.swing.JLabel lblRemainingAmount;
+    private javax.swing.JLabel lblSupportAmount;
     private javax.swing.JLabel parentImg;
+    private javax.swing.JTextField txtEnterFunds;
     private javax.swing.JLabel valueLabel;
     // End of variables declaration//GEN-END:variables
 }

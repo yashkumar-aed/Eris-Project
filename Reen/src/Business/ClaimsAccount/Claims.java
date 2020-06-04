@@ -5,6 +5,7 @@
  */
 package Business.ClaimsAccount;
 
+import Business.Employee.Responders;
 import java.util.Random;
 
 /**
@@ -26,6 +27,10 @@ public class Claims {
     private String claimsManager;
     private String reen;
     private int fundsApproved; 
+
+    public Claims(String firstName, Responders responders) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     public String getFirstName() {
         return firstName;

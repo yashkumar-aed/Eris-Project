@@ -20,7 +20,7 @@ public class ClaimManagerWorkAreaJPanel extends javax.swing.JPanel {
     /**
      * Creates new form CounselorWorkAreaJPanel
      */
-    private JPanel userProcessContainer;
+    private JPanel container;
     private Organization organization;
     private Enterprise enterprise;
     private UserAccount userAccount;
@@ -31,7 +31,7 @@ public class ClaimManagerWorkAreaJPanel extends javax.swing.JPanel {
     public ClaimManagerWorkAreaJPanel(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise) {
         initComponents();
         
-        this.userProcessContainer = userProcessContainer;
+        this.container = container;
         this.organization = organization;
         this.enterprise = enterprise;
         this.userAccount = account;
@@ -122,12 +122,17 @@ public class ClaimManagerWorkAreaJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void reviewRespondersJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reviewRespondersJButtonActionPerformed
-
+        CardLayout layout = (CardLayout) container.getLayout();
+        container.add("BirthMotherRequestWorkAreaJPanel", new RespondersRequestWorkAreaJPanel(container, userAccount, organization, enterprise));
+        layout.next(container);
        
     }//GEN-LAST:event_reviewRespondersJButtonActionPerformed
 
     private void reviewParentsJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reviewParentsJButtonActionPerformed
- 
+        CardLayout layout = (CardLayout) container.getLayout();
+        container.add("responderRequestWorkAreaJPanel", new RespondersRequestWorkAreaJPanel(container, userAccount, organization, enterprise));
+        layout.next(container);
+
         
     }//GEN-LAST:event_reviewParentsJButtonActionPerformed
 

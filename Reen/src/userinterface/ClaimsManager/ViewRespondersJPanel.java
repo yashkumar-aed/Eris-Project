@@ -5,10 +5,14 @@
  */
 package userinterface.ClaimsManager;
 
-
+import Business.Employee.Responders;
+import Business.Employee.RespondersDirectory;
+import Business.Employee.Volunteers;
 import Business.Enterprise.Enterprise;
-
+import Business.Enterprise.Enterprise;
 import Business.UserAccount.UserAccount;
+import Business.WorkQueue.ClaimsManagerToAdmin;
+import Business.WorkQueue.RespondersToClaimsManager;
 
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -31,15 +35,37 @@ public class ViewRespondersJPanel extends javax.swing.JPanel {
     
     private Enterprise enterprise;
     private UserAccount account;
-    
+    public RespondersDirectory respondersDirectory;
+    public Responders responders;
+    public RespondersToClaimsManager rWorkQueue;
+    private RespondersToClaimsManager request;
     
 
     /**
-     * Creates new form registerMother
+     * Creates new form 
      */
-    JPanel userProcessContainer;
+    JPanel container;
     
+    public ViewRespondersJPanel(JPanel container, RespondersToClaimsManager rc, UserAccount account, Enterprise enterprise) {
+        
+        initComponents();
+        
+        this.container = container;
+        this.request = rc;
+        this.account = account;
+        this.enterprise = enterprise;
+        populateComponents();
 
+    }
+    
+    private void populateComponents() {
+        //hospitalJComboBox.removeAllItems();
+        String msg = new String();
+        userNameTxt.setText(request.getResponders().getUsername());
+        respondersIDTxt.setText(String.valueOf(request.getResponders().getId()));
+       
+  
+    }
     
     
     /**
@@ -53,10 +79,8 @@ public class ViewRespondersJPanel extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         userNameTxt = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        emailTxt = new javax.swing.JTextField();
         patientID = new javax.swing.JLabel();
-        patientIDTxt = new javax.swing.JTextField();
+        respondersIDTxt = new javax.swing.JTextField();
         patientID1 = new javax.swing.JLabel();
         messageTxt = new javax.swing.JTextField();
         patientID2 = new javax.swing.JLabel();
@@ -66,7 +90,6 @@ public class ViewRespondersJPanel extends javax.swing.JPanel {
         enterpriseLabel = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
 
-        setBackground(java.awt.SystemColor.activeCaption);
         setMaximumSize(new java.awt.Dimension(1245, 1000));
         setMinimumSize(new java.awt.Dimension(1245, 1000));
         setPreferredSize(new java.awt.Dimension(1245, 1000));
@@ -74,15 +97,12 @@ public class ViewRespondersJPanel extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel1.setText("Username:");
 
-        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel4.setText("Email:");
-
         patientID.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        patientID.setText("Patient ID");
+        patientID.setText("Responders ID");
 
-        patientIDTxt.addActionListener(new java.awt.event.ActionListener() {
+        respondersIDTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                patientIDTxtActionPerformed(evt);
+                respondersIDTxtActionPerformed(evt);
             }
         });
 
@@ -119,7 +139,7 @@ public class ViewRespondersJPanel extends javax.swing.JPanel {
         });
 
         enterpriseLabel.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        enterpriseLabel.setText("Birth Mother Approval");
+        enterpriseLabel.setText("Responders Approval");
 
         btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/left-arrow-in-circular-button-black-symbol-2.png"))); // NOI18N
         btnBack.setText("Back");
@@ -144,8 +164,7 @@ public class ViewRespondersJPanel extends javax.swing.JPanel {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(patientID2, javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(patientID1)
-                                .addComponent(patientID)
-                                .addComponent(jLabel4))
+                                .addComponent(patientID))
                             .addComponent(jLabel1))
                         .addGap(52, 52, 52)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -153,13 +172,12 @@ public class ViewRespondersJPanel extends javax.swing.JPanel {
                                 .addComponent(btnReject, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnAccept, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(patientIDTxt, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(respondersIDTxt, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(userNameTxt, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(emailTxt, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(messageTxt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtFundsRequired, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(btnBack))
-                .addContainerGap(346, Short.MAX_VALUE))
+                .addContainerGap(329, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,13 +190,9 @@ public class ViewRespondersJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(userNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
+                .addGap(96, 96, 96)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(emailTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(patientIDTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(respondersIDTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(patientID))
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -191,14 +205,14 @@ public class ViewRespondersJPanel extends javax.swing.JPanel {
                 .addGap(67, 67, 67)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAccept, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnReject, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(420, Short.MAX_VALUE))
+                    .addComponent(btnReject, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE))
+                .addContainerGap(422, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void patientIDTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientIDTxtActionPerformed
+    private void respondersIDTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_respondersIDTxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_patientIDTxtActionPerformed
+    }//GEN-LAST:event_respondersIDTxtActionPerformed
 
     private void messageTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messageTxtActionPerformed
         // TODO add your handling code here:
@@ -210,17 +224,85 @@ public class ViewRespondersJPanel extends javax.swing.JPanel {
 
     private void btnRejectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRejectActionPerformed
         // TODO add your handling code here:
-       
+         request.setReceiver(account);
+        request.setResolveDate(new Date());
+        request.setRequestResult("Rejected by " + account.getClaimsmanager().getName());
+        
+        String msg = messageTxt.getText();
+        if(msg.equals("")){
+              JOptionPane.showMessageDialog(null, "Please input your message for the patient ");
+              throw new NullPointerException("Enter message");
+        }
+        request.setStatus("Rejected");
+        request.setClaimsmanagerFeeback(msg);
+        request.setMessage(msg);
+        request.setSender(account);
+        
+       container.remove(this);
+        Component[] componentArray = container.getComponents();
+        Component component = componentArray[componentArray.length - 1];
+        RespondersRequestWorkAreaJPanel respondersRequestWorkAreaJPanel = (RespondersRequestWorkAreaJPanel) component;
+        respondersRequestWorkAreaJPanel.populateRequestTable();
+        CardLayout layout = (CardLayout)container.getLayout();
+        layout.previous(container);
     }//GEN-LAST:event_btnRejectActionPerformed
 
     private void btnAcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptActionPerformed
         // TODO add your handling code here:
-      
+        request.setReceiver(account);
+        request.setResolveDate(new Date());
+        request.setRequestResult("Completed by Counselor" + account.getClaimsmanager().getName());
+     
+        String msg = messageTxt.getText();
+        if(msg.equals("")){
+              JOptionPane.showMessageDialog(null, "Please input your message for the responder ");
+              throw new NullPointerException("Enter message");
+        }
+
+        request.setStatus("Completed");
+        int totalfund;
+        try{
+        totalfund = Integer.parseInt(txtFundsRequired.getText());
+        if(totalfund == 0){
+              JOptionPane.showMessageDialog(null, "Please input the total fund required by the responder ");
+              throw new NullPointerException("Enter funds");
+        }
+        }
+        catch( NumberFormatException e){
+             JOptionPane.showMessageDialog(null, "Please input the total fund required by the patient in number format");
+              throw new NullPointerException("Enter funds");
+        }
+        
+        request.setClaimsmanagerFeeback(msg);
+        request.setMessage(msg);
+        request.getResponders().setRequiredFund(totalfund);
+
+        
+        ClaimsManagerToAdmin claimsManagerreq = new ClaimsManagerToAdmin(messageTxt.getText(), request.getResponders());
+        
+        claimsManagerreq.setStatus("Processing");
+        claimsManagerreq.setSender(account);
+        
+        enterprise.getWorkQueue().getClaimsManagerToAdmin().add(claimsManagerreq);
+        
+        responders = request.getResponders();
+        JOptionPane.showMessageDialog(null, "Acount Approved Successfully");
+        
+        container.remove(this);
+        Component[] componentArray = container.getComponents();
+        Component component = componentArray[componentArray.length - 1];
+        RespondersRequestWorkAreaJPanel respondersRequestWorkAreaJPanel = (RespondersRequestWorkAreaJPanel) component;
+        respondersRequestWorkAreaJPanel.populateRequestTable();
+        CardLayout layout = (CardLayout)container.getLayout();
+        layout.previous(container); 
+        
     }//GEN-LAST:event_btnAcceptActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-      
+      container.remove(this);
+        CardLayout cardlayout = (CardLayout) container.getLayout();
+        cardlayout.previous(container);
     }//GEN-LAST:event_btnBackActionPerformed
 
           
@@ -238,15 +320,13 @@ public class ViewRespondersJPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnAccept;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnReject;
-    private javax.swing.JTextField emailTxt;
     private javax.swing.JLabel enterpriseLabel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField messageTxt;
     private javax.swing.JLabel patientID;
     private javax.swing.JLabel patientID1;
     private javax.swing.JLabel patientID2;
-    private javax.swing.JTextField patientIDTxt;
+    private javax.swing.JTextField respondersIDTxt;
     private javax.swing.JTextField txtFundsRequired;
     private javax.swing.JTextField userNameTxt;
     // End of variables declaration//GEN-END:variables

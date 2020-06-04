@@ -5,6 +5,19 @@
  */
 package userinterface.VolunteersRole;
 
+import Business.Employee.Volunteers;
+import Business.Organization.Organization;
+import Business.UserAccount.UserAccount;
+ 
+import java.awt.CardLayout;
+import java.awt.Component;
+import java.io.File;
+import javax.swing.ImageIcon;
+import javax.swing.InputVerifier;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 /**
  *
  * @author yashk
@@ -14,8 +27,25 @@ public class VolunteersProfile extends javax.swing.JPanel {
     /**
      * Creates new form VolunteersProfile
      */
-    public VolunteersProfile() {
+    private Volunteers volunteers;
+    private JPanel container;
+    private UserAccount userAccount;
+    private Organization org;
+    private String path;
+    
+    public VolunteersProfile(UserAccount userAccount,Organization org,  JPanel container) {
         initComponents();
+        this.userAccount = userAccount;
+        this.volunteers = userAccount.getVolunteers();
+        this.org = org;
+        this.container = container;
+        txtUsername.setText(volunteers.getUsername());
+        txtFirstName.setText(volunteers.getFirstName());
+        txtLastName.setText(volunteers.getLastName());
+        txtFunds.setText(String.valueOf(volunteers.getFunds()));
+        txtAffiliation.setText(volunteers.getAddress());
+        profilePhotoComponent.setIcon(new ImageIcon(volunteers.getImgPath())); 
+        txtContact.setText(volunteers.getContactVolunteers());
     }
 
     /**
@@ -250,12 +280,31 @@ public class VolunteersProfile extends javax.swing.JPanel {
     }//GEN-LAST:event_txtAffiliationActionPerformed
 
     private void btnBrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowseActionPerformed
- 
+        JFileChooser file = new JFileChooser();
+        file.setCurrentDirectory(new File(System.getProperty("user.home")));
+        FileNameExtensionFilter extensionfilter =  new FileNameExtensionFilter("*.Images", "jpg","png");
+        file.addChoosableFileFilter(extensionfilter);
+        int result = file.showSaveDialog(null);
+
+        if(result == JFileChooser.APPROVE_OPTION){
+            File selectedFile = file.getSelectedFile();
+            path = selectedFile.getAbsolutePath();
+            profilePhotoComponent.setIcon(new ImageIcon(path));
+        }
+        else if(result == JFileChooser.CANCEL_OPTION){
+            System.out.println("No File Select");
+        }
     }//GEN-LAST:event_btnBrowseActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-      
+        container.remove(this);
+        Component[] componentArray = container.getComponents();
+        Component component = componentArray[componentArray.length - 1];
+        VolunteersWorkAreaJPanel volunteersWorkAreaJPanel = (VolunteersWorkAreaJPanel) component;
+        //ParentsWorkAreaJPanel.addDashBoard();
+        CardLayout layout = (CardLayout)container.getLayout();
+        layout.previous(container); 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

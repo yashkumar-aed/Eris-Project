@@ -13,14 +13,14 @@ import Business.Employee.Responders;
  * @author yashk
  */
 public class NFRFInsurance {
-
+    
     
      public NFRFInsurance(String firstName, String lastName,int policynumber, String address, String docPath) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.policyNumber = policynumber;
         this.address = address;
-        this.reen = new String();
+        this.reenbranch = new String();
         this.fundsApproved = 0;
         
         this.docPath = docPath;
@@ -70,14 +70,6 @@ public class NFRFInsurance {
         this.claimsmanager = claimsmanager;
     }
 
-    public String getReen() {
-        return reen;
-    }
-
-    public void setReen(String reen) {
-        this.reen = reen;
-    }
-
     public int getFundsApproved() {
         return fundsApproved;
     }
@@ -115,7 +107,15 @@ public class NFRFInsurance {
     private int policyNumber;
     private String address;
     private String claimsmanager;
-    private String reen;
+    private String reenbranch;
+
+    public String getReenbranch() {
+        return reenbranch;
+    }
+
+    public void setReenbranch(String reenbranch) {
+        this.reenbranch = reenbranch;
+    }
     private int fundsApproved;
     private Responders responders;
 

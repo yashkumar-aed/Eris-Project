@@ -65,11 +65,11 @@ public class RespondersToClaimsManager extends WorkRequest{
     }
     /*
     public Responders getResponders() {
-        return responders;
+        return Responders;
     }
 
     public void setResponders(Responders r) {
-        this.responders = r;
+        this.Responders = r;
     }
 */
     public void selectClaimsManager(){

@@ -18,7 +18,7 @@ public class VolunteersDirectory {
         volunteersList = new ArrayList();
     }
 
-    public ArrayList<Volunteers> getParentsList() {
+    public ArrayList<Volunteers> getVolunteersList() {
         return volunteersList;
     }
     
@@ -30,7 +30,7 @@ public class VolunteersDirectory {
         return volunteers;
     }
     
-    public Volunteers addParents(Volunteers volunteers){
+    public Volunteers addVolunteers(Volunteers volunteers){
         volunteersList.add(volunteers);
         return volunteers;
     }

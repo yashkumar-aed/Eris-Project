@@ -5,6 +5,14 @@
  */
 package userinterface.VolunteersRole;
 
+import Business.Employee.Responders;
+import Business.UserAccount.UserAccount;
+import Business.WorkQueue.RespondersToVolunteers;
+import java.awt.CardLayout;
+import java.awt.Component;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 /**
  *
  * @author yashk
@@ -14,8 +22,26 @@ public class ViewRespondersProfile extends javax.swing.JPanel {
     /**
      * Creates new form ViewRespondersProfile
      */
-    public ViewRespondersProfile() {
+    private RespondersToVolunteers respondersToVolunteers;
+    private JPanel container;
+    private UserAccount userAccount;
+    private Responders responders;
+
+    private String path;
+    public ViewRespondersProfile(JPanel container, UserAccount userAccount,RespondersToVolunteers request ) {
         initComponents();
+        this.userAccount = userAccount;
+        this.respondersToVolunteers = request;
+        this.container = container;
+        this.responders = request.getResponders();
+        
+        txtUsername.setText(responders.getUsername());
+        txtFirstName.setText(responders.getFirstName());
+        txtLastName.setText(responders.getLastName());
+   
+        txtAffliation.setText(responders.getAddress());
+        profilePhotoComponent.setIcon(new ImageIcon(responders.getImgPath())); 
+        
     }
 
     /**
@@ -256,12 +282,43 @@ public class ViewRespondersProfile extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
+        container.remove(this);
+        CardLayout cardlayout = (CardLayout) container.getLayout();
+        cardlayout.previous(container);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
- 
+ if(userAccount.getVolunteers().getResponders()== null){
+            if(responders.getFinalizedVolunteers()== null){
+                respondersToVolunteers.getVolunteers().setIsAvailable(false);
+                responders.setFinalizedVolunteers(respondersToVolunteers.getVolunteers());
+                respondersToVolunteers.getVolunteers().setResponders(responders);
+                responders.setVolunteersAidfund(userAccount.getVolunteers().getFunds());
+                //    BirthMother.setBankBalance(BirthMother.getBankBalance()+userAccount.getParent().getFunds());
+
+                JOptionPane.showMessageDialog(null, "Congratulations. responder selected!");
+               
+                container.remove(this);
+                Component[] componentArray = container.getComponents();
+                Component component = componentArray[componentArray.length - 1];
+                ViewRespondersRequestJPanel viewRespondersRequestJPanel = (ViewRespondersRequestJPanel) component;
+                viewRespondersRequestJPanel.populateRequestTable();
+                CardLayout layout = (CardLayout)container.getLayout();
+                layout.previous(container); }
+            else{
+                JOptionPane.showMessageDialog(this, "Responder already to someone else! Please checkout out other requests.");
+                container.remove(this);
+                CardLayout cardlayout = (CardLayout) container.getLayout();
+                cardlayout.previous(container);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Responder already assigned to you!");
+            container.remove(this);
+            CardLayout cardlayout = (CardLayout) container.getLayout();
+            cardlayout.previous(container);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
 
