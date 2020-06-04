@@ -9,7 +9,7 @@ package Business.Employee;
  *
  * @author yashk
  */
-public class NFRFInsuranceManager {
+public class NFRFInsuranceManager extends Employee{
 /*
     void setName(String name) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -52,7 +52,5 @@ public class NFRFInsuranceManager {
    public int maxFunding;
    public String location;
 
-    void setName(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 }

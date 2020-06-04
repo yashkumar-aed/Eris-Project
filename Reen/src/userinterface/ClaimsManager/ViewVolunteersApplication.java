@@ -8,7 +8,6 @@ package userinterface.ClaimsManager;
 import Business.Employee.Responders;
 import Business.Employee.Volunteers;
 import Business.Enterprise.Enterprise;
-import Business.Enterprise.Enterprise;
 import Business.WorkQueue.ClaimsManagerToAdmin;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.VolunteersToClaimsManager;
@@ -44,6 +43,10 @@ public class ViewVolunteersApplication extends javax.swing.JPanel {
         this.volunteers = v;
         
         initComponents();        
+    }
+
+    ViewVolunteersApplication(JPanel container, VolunteersToClaimsManager request, UserAccount userAccount, Enterprise enterprise) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**

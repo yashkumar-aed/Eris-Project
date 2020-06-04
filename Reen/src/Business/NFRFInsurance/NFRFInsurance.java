@@ -127,4 +127,8 @@ public class NFRFInsurance {
     public String toString() {
         return username;
     }
+
+    public void setReen(String reen) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

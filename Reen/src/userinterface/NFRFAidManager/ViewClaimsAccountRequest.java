@@ -5,6 +5,14 @@
  */
 package userinterface.NFRFAidManager;
 
+import Business.Enterprise.Enterprise;
+import Business.Organization.Organization;
+import Business.UserAccount.UserAccount;
+import Business.WorkQueue.ReenAdminToNFRFAid;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author yashk
@@ -14,10 +22,40 @@ public class ViewClaimsAccountRequest extends javax.swing.JPanel {
     /**
      * Creates new form ViewClaimsAccountRequest
      */
+    private JPanel container;
+    private Organization organization;
+    private UserAccount userAccount;
+    private Enterprise enterprise;
+    
     public ViewClaimsAccountRequest() {
         initComponents();
+   
+        this.container = container;
+        this.organization = organization;
+        this.enterprise = enterprise;
+        this.userAccount = userAccount;
+     
+        valueLabel.setText(organization.getName());
+        populateRequestTable();
     }
 
+    
+    public void populateRequestTable(){
+        DefaultTableModel model = (DefaultTableModel) workRequestJTable.getModel();
+        
+        model.setRowCount(0);
+        for (ReenAdminToNFRFAid request : enterprise.getWorkQueue().getReenAdminToNFRFAid()){
+            Object[] row = new Object[4];
+            row[0] = request;
+            row[1] = request.getResponders().getReen();
+            
+            row[2] = request.getResponders().getFirstName();
+            row[3] = request.getStatus();
+            
+            
+            model.addRow(row);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -164,7 +202,30 @@ public class ViewClaimsAccountRequest extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void viewRespondersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewRespondersActionPerformed
-        
+         int selectedRow = workRequestJTable.getSelectedRow();
+
+        if (selectedRow < 0){
+            JOptionPane.showMessageDialog(null, "Please select a row from the table");
+            return;
+        }
+        else{
+            ReenAdminToNFRFAid request = (ReenAdminToNFRFAid)workRequestJTable.getValueAt(selectedRow,0);
+            if(request.getStatus().equals("Pending")){
+                request.setStatus("Processing");
+                request.setReceiver(userAccount);
+
+                //              enterprise.getWorkQueue().getBirthMotherToCounsellor().add(request);
+                CardLayout layout = (CardLayout) container.getLayout();
+                ClaimsAccountCreate b = new ClaimsAccountCreate(userAccount, container, enterprise, request);
+                container.add("Claims AccountCreate", b);
+                layout.next(container);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Bank Account already created!");
+                return;
+
+            }
+        }
     }//GEN-LAST:event_viewRespondersActionPerformed
 
     private void refreshTestJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshTestJButtonActionPerformed
@@ -173,7 +234,9 @@ public class ViewClaimsAccountRequest extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        
+         container.remove(this);
+        CardLayout cardlayout = (CardLayout) container.getLayout();
+        cardlayout.previous(container);
     }//GEN-LAST:event_btnBackActionPerformed
 
 

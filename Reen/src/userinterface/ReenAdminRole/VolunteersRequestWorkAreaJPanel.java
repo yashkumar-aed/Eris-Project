@@ -5,17 +5,68 @@
  */
 package userinterface.ReenAdminRole;
 
+import Business.Enterprise.Enterprise;
+import Business.UserAccount.UserAccount;
+import javax.swing.JPanel;
+import Business.Employee.Responders;
+import Business.Organization.ClaimsManagerOrganization;
+import Business.Organization.Organization;
+import Business.Employee.Volunteers;
+import Business.Role.VolunteersRole;
+import Business.Role.Role;
+import Business.WorkQueue.ClaimsManagerToAdmin;
+import java.awt.CardLayout;
+import java.io.File;
+import java.util.Date;
+import java.util.Properties;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author yashk
  */
 public class VolunteersRequestWorkAreaJPanel extends javax.swing.JPanel {
 
+    private JPanel container;
+    private ClaimsManagerOrganization organization;
+    private UserAccount account;
+    private Enterprise enterprise;
+    private Volunteers volunteers;
+
     /**
      * Creates new form VolunteersRequestWorkAreaJPanel
      */
     public VolunteersRequestWorkAreaJPanel() {
         initComponents();
+        this.container = container;
+       
+        this.enterprise = enterprise;
+        this.account = account;
+        valueLabel.setText(enterprise.getName());
+        populateRequestTable();
+    }
+
+    VolunteersRequestWorkAreaJPanel(JPanel container, UserAccount account, Enterprise enterprise) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void populateRequestTable(){
+        DefaultTableModel model = (DefaultTableModel) workRequestJTable.getModel();
+        
+        model.setRowCount(0);
+        for (ClaimsManagerToAdmin request : enterprise.getWorkQueue().getClaimsManagerToAdmin()){
+            if(!(request.getVolunteers().getUsername().equals(""))){
+            Object[] row = new Object[4];
+            row[0] = request;
+            row[1] = request.getVolunteers().getUsername();
+            row[2] = request.getStatus();
+            String result = request.getRequestResult();
+            row[3] = result == null ? "Waiting" : result;
+            
+            model.addRow(row);
+            }
+        }
     }
 
     /**
@@ -222,18 +273,63 @@ public class VolunteersRequestWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
 
+      int selectedRow = workRequestJTable.getSelectedRow();
+        
+        ClaimsManagerToAdmin request = (ClaimsManagerToAdmin)workRequestJTable.getValueAt(selectedRow, 0);
+        if(txtMessage.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "Please enter comments for the operation!");
+            return;
+        }
+        if(!request.getStatus().equals("Completed")){
+        request.setReceiver(account);
+        request.setMessage(txtMessage.getText());
+        request.setStatus("Completed");
+        request.setResolveDate(new Date());
+        request.setRequestResult("User Account created");
       
+        volunteers = request.getVolunteers();
+        Role role = new VolunteersRole();
+        
+        for (Organization org : enterprise.getOrganizationDirectory().getOrganizationList()){
+            if(org.getName().equals("Parents Organization")){
+                org.getVolunteersDirectory().addVolunteers(volunteers);
+                org.getUserAccountDirectory().createUserAccountVolunteers(request.getVolunteers().getUsername(),request.getVolunteers().getPassword() , volunteers , role, account.getNetwork());
+            }
+        }        
+        populateRequestTable();
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "User Account already created");
+        }
+        txtUserName.setText("");
+        txtPassword.setText("");
+        txtMessage.setText("");
+        JOptionPane.showMessageDialog(null, "User Account created Successfully");
+        
+        btnCreate.setEnabled(false);
+        btnView.setEnabled(true);
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void refreshTestJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshTestJButtonActionPerformed
 
-       
-
+               populateRequestTable();
     }//GEN-LAST:event_refreshTestJButtonActionPerformed
 
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
         // TODO add your handling code here:
-     
+     int selectedRow = workRequestJTable.getSelectedRow();
+        if (selectedRow < 0){
+            JOptionPane.showMessageDialog(null, "Please select a row from the table");
+            return;
+        }
+        
+        ClaimsManagerToAdmin request = (ClaimsManagerToAdmin)workRequestJTable.getValueAt(selectedRow, 0);
+        
+        txtUserName.setText(request.getVolunteers().getUsername());
+        txtPassword.setText(request.getVolunteers().getPassword());
+        
+        btnCreate.setEnabled(true);
+        btnView.setEnabled(false);
     }//GEN-LAST:event_btnViewActionPerformed
 
     private void txtMessageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMessageActionPerformed
@@ -242,7 +338,9 @@ public class VolunteersRequestWorkAreaJPanel extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-      
+        container.remove(this);
+        CardLayout cardlayout = (CardLayout) container.getLayout();
+        cardlayout.previous(container);
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

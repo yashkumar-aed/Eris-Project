@@ -7,11 +7,13 @@ package userinterface.ClaimsManager;
 
 import Business.Enterprise.Enterprise;
 import Business.Organization.Organization;
+import Business.WorkQueue.VolunteersToClaimsManager;
 import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import userinterface.RespondersRole.ViewVolunteers;
 
 /**
  *
@@ -22,14 +24,38 @@ public class VolunteersRequestWorkAreaJPanel extends javax.swing.JPanel {
     /**
      * Creates new form 
      */
-   private JPanel userProcessContainer;
+   private JPanel container;
     private Organization organization;
     private Enterprise enterprise;
     private UserAccount userAccount;
     /**
      * Creates new form 
      */
-     
+     public VolunteersRequestWorkAreaJPanel(JPanel container, UserAccount account, Organization organization, Enterprise enterprise) {
+        initComponents();
+        
+        this.container = container;
+        this.organization = organization;
+        this.enterprise = enterprise;
+        this.userAccount = account;
+        valueLabel.setText(enterprise.getName());
+        populateRequestTable();
+    }
+    
+    public void populateRequestTable(){
+        DefaultTableModel model = (DefaultTableModel) workRequestJTable.getModel();
+        
+        model.setRowCount(0);
+        for (VolunteersToClaimsManager request : enterprise.getWorkQueue().getVolunteersToClaimsManager()){
+            Object[] row = new Object[4];
+            row[0] = request;
+            row[1] = request.getStatus();
+            UserAccount result = request.getReceiver();
+            row[2] = result == null ? "Waiting" : result;
+            
+            model.addRow(row);
+        }
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -155,16 +181,36 @@ public class VolunteersRequestWorkAreaJPanel extends javax.swing.JPanel {
 
     private void refreshTestJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshTestJButtonActionPerformed
 
- 
+         populateRequestTable();
+
     }//GEN-LAST:event_refreshTestJButtonActionPerformed
 
     private void btnViewApplicationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewApplicationActionPerformed
-        
+         int selectedRow = workRequestJTable.getSelectedRow();
+
+        if (selectedRow < 0){
+            JOptionPane.showMessageDialog(null, "Please select a row from the table");
+            return;
+        }
+        VolunteersToClaimsManager request = (VolunteersToClaimsManager)workRequestJTable.getValueAt(selectedRow, 0);
+        if (request.getRequestResult().equals("Completed")){
+            JOptionPane.showMessageDialog(null, "Already Completed!");
+
+        }
+
+        if(request.getRequestResult().equals("")){
+
+            CardLayout layout = (CardLayout) container.getLayout();
+            container.add("viewVolunteersApplication", new ViewVolunteersApplication(container, request, userAccount, enterprise));
+            layout.next(container);
+        }
     }//GEN-LAST:event_btnViewApplicationActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-       
+        container.remove(this);
+        CardLayout cardlayout = (CardLayout) container.getLayout();
+        cardlayout.previous(container);
     }//GEN-LAST:event_btnBackActionPerformed
 
 

@@ -53,4 +53,8 @@ public class RespondersToVolunteers extends WorkRequest {
     public void setVolunteers(Volunteers volunteers) {
         this.volunteers = volunteers;
     }
+
+    public void setClaimsmanagerFeeback(String accepted) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

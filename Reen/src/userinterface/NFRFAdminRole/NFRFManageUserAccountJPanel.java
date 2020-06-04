@@ -5,6 +5,22 @@
  */
 package userinterface.NFRFAdminRole;
 
+import Business.Enterprise.Enterprise;
+import Business.UserAccount.UserAccount;
+import javax.swing.JPanel;
+import Business.Employee.NFRFAidManager;
+import Business.Employee.NFRFInsuranceManager;
+import Business.Organization.Organization;
+import Business.Role.Role;
+
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.BorderFactory;
+import javax.swing.InputVerifier;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author yashk
@@ -14,9 +30,67 @@ public class NFRFManageUserAccountJPanel extends javax.swing.JPanel {
     /**
      * Creates new form NFRFManageUserAccountJPanel
      */
-    public NFRFManageUserAccountJPanel() {
+    private JPanel container;
+    private Enterprise enterprise;
+    private UserAccount userAccount;
+    
+    public NFRFManageUserAccountJPanel(JPanel container, Enterprise enterprise,  UserAccount account) {
         initComponents();
+        this.enterprise = enterprise;
+        this.container = container;
+        this.userAccount = account;
+        popOrganizationComboBox();
+        popData();
+     }
+      public void popOrganizationComboBox() {
+        organizationJComboBox.removeAllItems();
+
+        for (Organization organization : enterprise.getOrganizationDirectory().getOrganizationList()) {
+            organizationJComboBox.addItem(organization);
+        }
     }
+
+    public void populateEmployeeComboBox(Organization organization){
+        employeeJComboBox.removeAllItems();
+        
+         
+       if(organization.getName().equals("NFRF Aid Manager Organization"))       
+          {
+          for (NFRFAidManager employee : organization.getEmployeeDirectory().getNFRFAidManagerList()){
+            employeeJComboBox.addItem(employee);   
+          }
+        }
+       if(organization.getName().equals("NFRF Insurance Manager Organization"))       
+          {
+          for (NFRFInsuranceManager employee : organization.getEmployeeDirectory().getNFRFInsuranceManagerList()){
+            employeeJComboBox.addItem(employee);   
+          }
+        }
+    }
+    
+    private void populateRoleComboBox(Organization organization){
+        roleJComboBox.removeAllItems();
+        for (Role role : organization.getSupportedRole()){
+            roleJComboBox.addItem(role);
+        }
+    }
+
+    public void popData() {
+
+        DefaultTableModel model = (DefaultTableModel) userJTable.getModel();
+
+        model.setRowCount(0);
+
+        for (Organization organization : enterprise.getOrganizationDirectory().getOrganizationList()) {
+            for (UserAccount ua : organization.getUserAccountDirectory().getUserAccountList()) {
+                Object row[] = new Object[2];
+                row[0] = ua;
+                row[1] = ua.getRole().toString();
+                ((DefaultTableModel) userJTable.getModel()).addRow(row);
+            }
+        }
+    }
+        
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -206,20 +280,83 @@ public class NFRFManageUserAccountJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void organizationJComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_organizationJComboBoxActionPerformed
-     
+     Organization organization = (Organization) organizationJComboBox.getSelectedItem();
+        if (organization != null){
+            populateEmployeeComboBox(organization);
+            populateRoleComboBox(organization);
+        }
     }//GEN-LAST:event_organizationJComboBoxActionPerformed
 
     private void createUserJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createUserJButtonActionPerformed
-          
+          try
+        {
+            String userName = nameJTextField.getText();
+            String password = passwordJTextField.getText();
+            Organization organization = (Organization) organizationJComboBox.getSelectedItem();
+
+            try{
+                if (userName.equals("")){
+
+                    throw new RuntimeException("Please enter the Username");
+                }
+                if (password.equals("")){
+
+                    throw new RuntimeException("Please enter the Password");
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Please enter valid data", "warning", JOptionPane.WARNING_MESSAGE);
+                return;
+
+            } 
+            Role role = (Role) roleJComboBox.getSelectedItem();
+            for(UserAccount ua : organization.getUserAccountDirectory().getUserAccountList())
+            {
+                if(userName.equalsIgnoreCase(ua.getUsername()))
+                {
+                    JOptionPane.showMessageDialog(null, "User Name already exists!!", "warning", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+            }
+            if(organization.getName().equals("InsuranceManager Organization")){
+                NFRFInsuranceManager person = (NFRFInsuranceManager) employeeJComboBox.getSelectedItem();
+
+                UserAccount account = organization.getUserAccountDirectory().createNFRFInsuranceManagerUserAccount(userName, password, person, role, userAccount.getNetwork());
+                popData();
+                JOptionPane.showMessageDialog(null, " User Account has been created successfully", "success",JOptionPane.PLAIN_MESSAGE);
+                resetFields();
+            }
+
+            if(organization.getName().equals("BankManager Organization")){
+                NFRFAidManager person = (NFRFAidManager) employeeJComboBox.getSelectedItem();
+
+                UserAccount account = organization.getUserAccountDirectory().createNFRFAidManagerUserAccount(userName, password, person, role, userAccount.getNetwork());
+                popData();
+                JOptionPane.showMessageDialog(null, " User Account has been created successfully", "success",JOptionPane.PLAIN_MESSAGE);
+                resetFields();}
+
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Please enter valid data", "warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
             
     }//GEN-LAST:event_createUserJButtonActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
         // TODO add your handling code here:
-      
+        container.remove(this);
+        CardLayout cardlayout = (CardLayout) container.getLayout();
+        cardlayout.previous(container);
     }//GEN-LAST:event_btnBackActionPerformed
-
+    public void resetFields()
+    {
+        nameJTextField.setText("");
+        passwordJTextField.setText("");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel UsrNameLabel;

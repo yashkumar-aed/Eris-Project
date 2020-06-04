@@ -8,6 +8,7 @@ package userinterface.NFRFAdminRole;
 import Business.Enterprise.Enterprise;
 import Business.UserAccount.UserAccount;
 import javax.swing.JPanel;
+import java.awt.CardLayout;
 
 /**
  *
@@ -15,16 +16,22 @@ import javax.swing.JPanel;
  */
 public class NFRFAdminWorkAreaJPanel extends javax.swing.JPanel {
 
+    JPanel container;
+    Enterprise enterprise;
+    UserAccount account;
     /**
      * Creates new form NFRFAdminWorkAreaJPanel
      */
-    public NFRFAdminWorkAreaJPanel() {
+    public NFRFAdminWorkAreaJPanel(JPanel container, Enterprise enterprise, UserAccount account) {
         initComponents();
+        this.container = container;
+        this.enterprise = enterprise;
+        this.account = account;
+
+        valueLabel.setText(enterprise.getName());
     }
 
-    public NFRFAdminWorkAreaJPanel(JPanel container, Enterprise enterprise, UserAccount account) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -110,17 +117,26 @@ public class NFRFAdminWorkAreaJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void manageUserAccountJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageUserAccountJButtonActionPerformed
+        NFRFManageUserAccountJPanel nfrfManageUserAccountJPanel = new NFRFManageUserAccountJPanel(container, enterprise, account);
+        container.add("manageEmployeeJPanel", nfrfManageUserAccountJPanel);
 
-     
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.next(container);
     }//GEN-LAST:event_manageUserAccountJButtonActionPerformed
 
     private void manageOrganizationJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageOrganizationJButtonActionPerformed
- 
+        NFRFManageOrganizationJPanel manageOrganizationJPanel = new NFRFManageOrganizationJPanel(container, account, enterprise);
+        container.add("manageOrganizationJPanel", manageOrganizationJPanel);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.next(container);
     }//GEN-LAST:event_manageOrganizationJButtonActionPerformed
 
     private void manageEmployeeJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageEmployeeJButtonActionPerformed
+        NFRFManageEmployeeJPanel manageEmployeeJPanel = new NFRFManageEmployeeJPanel(container, enterprise);
+        container.add("manageEmployeeJPanel", manageEmployeeJPanel);
 
-         
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.next(container);
     }//GEN-LAST:event_manageEmployeeJButtonActionPerformed
 
 

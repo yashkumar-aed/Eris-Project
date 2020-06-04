@@ -5,6 +5,16 @@
  */
 package userinterface.NFRFAdminRole;
 
+import Business.Enterprise.Enterprise;
+import Business.UserAccount.UserAccount;
+import javax.swing.JPanel;
+import Business.Organization.Organization;
+import Business.Organization.Organization.Type;
+import Business.Organization.OrganizationDirectory;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author yashk
@@ -14,9 +24,41 @@ public class NFRFManageOrganizationJPanel extends javax.swing.JPanel {
     /**
      * Creates new form NFRFManageOrganizationJPanel
      */
-    public NFRFManageOrganizationJPanel() {
+    private OrganizationDirectory directory;
+    private JPanel container;
+    private UserAccount account;
+    private Enterprise enterprise;
+    
+    public NFRFManageOrganizationJPanel(JPanel container,UserAccount account, Enterprise enterprise) {
         initComponents();
+        this.container = container;
+        this.account = account;
+        this.enterprise = enterprise;
+        
+        populateTable();
+        populateCombo();
     }
+    private void populateCombo(){
+        organizationJComboBox.removeAllItems();
+        organizationJComboBox.addItem(Organization.Type.NFRFAidManager);
+        organizationJComboBox.addItem(Organization.Type.NFRFInsuranceManager);
+  
+    }
+
+    private void populateTable(){
+        DefaultTableModel model = (DefaultTableModel) organizationJTable.getModel();
+        
+        model.setRowCount(0);
+        
+        for (Organization organization : enterprise.getOrganizationDirectory().getOrganizationList()){
+            Object[] row = new Object[2];
+            row[0] = organization.getOrganizationID();
+            row[1] = organization.getName();
+            
+            model.addRow(row);
+        }
+    }
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -152,9 +194,14 @@ public class NFRFManageOrganizationJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addJButtonActionPerformed
-
-     
-        
+        Type type = (Type) organizationJComboBox.getSelectedItem();
+        if(!enterprise.getOrganizationDirectory().containsType(type)){
+            enterprise.getOrganizationDirectory().createOrganization(type);
+            populateTable();
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Organization already present under this enterprise");
+        }
     }//GEN-LAST:event_addJButtonActionPerformed
 
     private void organizationJComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_organizationJComboBoxActionPerformed
@@ -163,7 +210,9 @@ public class NFRFManageOrganizationJPanel extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        
+         container.remove(this);
+        CardLayout cardlayout = (CardLayout) container.getLayout();
+        cardlayout.previous(container);
     }//GEN-LAST:event_btnBackActionPerformed
 
 

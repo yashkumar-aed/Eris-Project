@@ -182,11 +182,26 @@ public class ReenAdminWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_manageEmployeeJButtonActionPerformed
 
     private void btnRespondersApplicationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRespondersApplicationsActionPerformed
-        
+         Network network =  new Network();
+        for(Network n : system.getNetworkList()){
+            if(n.getName().equals(account.getNetwork())){
+                network = n;
+            }
+
+        }
+
+        RespondersAcceptWorkAreaJPanel muajp = new RespondersAcceptWorkAreaJPanel(container, network, account, enterprise);
+        container.add("BirthMotherAcceptWorkAreaJPanel", muajp);
+
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.next(container);
     }//GEN-LAST:event_btnRespondersApplicationsActionPerformed
 
     private void btnVolunteersApplicationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolunteersApplicationsActionPerformed
-        
+        VolunteersRequestWorkAreaJPanel vrjp = new VolunteersRequestWorkAreaJPanel(container,account, enterprise);
+        container.add("VolunteersRequestWorkAreaJPanel", vrjp);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.next(container);
     }//GEN-LAST:event_btnVolunteersApplicationsActionPerformed
 
 

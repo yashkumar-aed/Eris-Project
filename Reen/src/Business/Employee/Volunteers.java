@@ -152,22 +152,30 @@ public class Volunteers {
     public void setPassword(String password) {
         this.password = password;
     }
-
+    public Volunteers(String username, String password) {
+        volunteersId = count;
+        count++;
+        this.password = password;
+        this.username = username;
+       
+        this.claimsmanager = new String();
+        this.isAvailable = false;
+    }
     public String getContactVolunteers() {
         return contactVolunteers;
     }
 
-    public Volunteers() {
+   
+     public Volunteers() {
         volunteersId = count;
         count++;
         this.password = new String();
         this.username = new String();
-       
+        
         this.claimsmanager = new String();
         this.isAvailable = false;
         
     }
-    
     public void setAllValues(String username, String firstName, String LastName, String email, String blood, int funds, String address, String imgPath, String contact) {
         this.username = username;
         this.firstName = firstName;

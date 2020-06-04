@@ -5,19 +5,61 @@
  */
 package userinterface.NFRFAdminRole;
 
+import Business.Enterprise.Enterprise;
+import userinterface.ReenAdminRole.*;
+import javax.swing.JPanel;
+import userinterface.ReenAdminRole.*;
+import Business.Employee.Employee;
+import Business.Organization.Organization;
+import Business.Role.Role;
+import java.awt.CardLayout;
+import javax.swing.InputVerifier;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author yashk
  */
 public class NFRFManageEmployeeJPanel extends javax.swing.JPanel {
 
+     private Enterprise enterprise;
+    private JPanel container;
     /**
      * Creates new form NFRFManageEmployeeJPanel
      */
-    public NFRFManageEmployeeJPanel() {
+    public NFRFManageEmployeeJPanel(JPanel container,Enterprise enterprise) {
         initComponents();
+         this.container = container;
+        this.enterprise = enterprise;
+        populateOrganizationEmpComboBox();
+
+    }
+     public void populateOrganizationEmpComboBox(){
+        organizationEmpJComboBox.removeAllItems();
+        
+        for (Organization organization : enterprise.getOrganizationDirectory().getOrganizationList()){
+            organizationEmpJComboBox.addItem(organization);
+        }
     }
 
+    private void populateTable(Organization organization){
+        DefaultTableModel model = (DefaultTableModel) organizationJTable.getModel();
+        
+        model.setRowCount(0);
+        
+        for (Employee employee : organization.getEmployeeDirectory().getNFRFAidManagerList()){
+            Object[] row = new Object[2];
+            row[0] = employee.getId();
+            row[1] = employee.getName();
+            model.addRow(row);
+        }
+         for (Employee employee : organization.getEmployeeDirectory().getNFRFInsuranceManagerList()){
+            Object[] row = new Object[2];
+            row[0] = employee.getId();
+            row[1] = employee.getName();
+            model.addRow(row);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -165,18 +207,43 @@ public class NFRFManageEmployeeJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addJButtonActionPerformed
-
+        String name = nameJTextField.getText();
+        Organization organization = (Organization) organizationEmpJComboBox.getSelectedItem();
+        
+       try{ 
+           if (name.equals("")){
+           
+            throw new RuntimeException("Please enter the Name");
+        }
+       }catch(Exception e){
+            e.printStackTrace();
+          JOptionPane.showMessageDialog(this, "Please enter valid data", "warning", JOptionPane.WARNING_MESSAGE);
+          return;     
+            
+        } 
+        Employee employee;
+        if (organization.getName().equals(Organization.Type.NFRFAidManager.getValue()))
+            employee = organization.getEmployeeDirectory().createandaddNFRFAidManager(name);
+        if (organization.getName().equals(Organization.Type.NFRFInsuranceManager.getValue()))
+            employee = organization.getEmployeeDirectory().createandadNFRFInsuranceManager(name);
+        
+        populateTable(organization);
       
 
     }//GEN-LAST:event_addJButtonActionPerformed
 
     private void organizationEmpJComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_organizationEmpJComboBoxActionPerformed
-     
+     Organization organization = (Organization) organizationEmpJComboBox.getSelectedItem();
+        if (organization != null){
+            populateTable(organization);
+        }
     }//GEN-LAST:event_organizationEmpJComboBoxActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-       
+         container.remove(this);
+        CardLayout cardlayout = (CardLayout) container.getLayout();
+        cardlayout.previous(container);
     }//GEN-LAST:event_btnBackActionPerformed
 
 
