@@ -5,6 +5,7 @@
  */
 package Business;
 
+import Business.Enterprise.Enterprise;
 import Business.Network.Network;
 import Business.Organization.Organization;
 import Business.Role.Role;
@@ -25,7 +26,11 @@ public class EcoSystem extends Organization{
         }
         return system;
     }
-    
+     private EcoSystem(){
+        super(null);
+        networkList=new ArrayList<Network>();
+    }
+     
     public Network createAndAddNetwork(){
         Network network=new Network();
         networkList.add(network);
@@ -37,10 +42,7 @@ public class EcoSystem extends Organization{
         roleList.add(new SystemAdminRole());
         return roleList;
     }
-    private EcoSystem(){
-        super(null);
-        networkList=new ArrayList<Network>();
-    }
+   
 
     public ArrayList<Network> getNetworkList() {
         return networkList;

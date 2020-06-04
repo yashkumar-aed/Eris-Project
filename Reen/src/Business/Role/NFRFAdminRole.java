@@ -16,7 +16,7 @@ import javax.swing.JPanel;
  * @author yashk
  */
 public class NFRFAdminRole extends Role{
-    
+    @Override
     public JPanel createWorkArea(JPanel container, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business) {
         return new NFRFAdminWorkAreaJPanel(container, enterprise, account);
     }

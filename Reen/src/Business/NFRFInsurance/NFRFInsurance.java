@@ -1,6 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
+ * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 package Business.NFRFInsurance;
@@ -8,16 +7,33 @@ package Business.NFRFInsurance;
 import Business.Employee.Responders;
 
 
+
 /**
  *
- * @author yashk
+ * @author HP
  */
 public class NFRFInsurance {
     
-    
-     public NFRFInsurance(String firstName, String lastName,int policynumber, String address, String docPath) {
+    private String firstName;
+    private String lastName;
+    private String emailId;
+    private int policyNumber;
+    private String address;
+    private String counselor;
+    private String reenbranch;
+    private int fundsApproved;
+    private Responders responders;
+   // private int requestedFunds ;
+
+   
+    private String username;
+    private String docPath;
+
+
+    public NFRFInsurance(String firstName, String lastName, String emailId, int policynumber, String address, String docPath) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.emailId = emailId;
         this.policyNumber = policynumber;
         this.address = address;
         this.reenbranch = new String();
@@ -27,9 +43,8 @@ public class NFRFInsurance {
     }
 
     public NFRFInsurance() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-     
+
     public String getFirstName() {
         return firstName;
     }
@@ -44,6 +59,14 @@ public class NFRFInsurance {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmailId() {
+        return emailId;
+    }
+
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
     }
 
     public int getPolicyNumber() {
@@ -62,21 +85,13 @@ public class NFRFInsurance {
         this.address = address;
     }
 
-    public String getClaimsmanager() {
-        return claimsmanager;
+    public String getCounselor() {
+        return counselor;
     }
 
-    public void setClaimsmanager(String claimsmanager) {
-        this.claimsmanager = claimsmanager;
-    }
-
-    public int getFundsApproved() {
-        return fundsApproved;
-    }
-
-    public void setFundsApproved(int fundsApproved) {
-        this.fundsApproved = fundsApproved;
-    }
+    public void setCounselor(String counselor) {
+        this.counselor = counselor;
+    } 
 
     public Responders getResponders() {
         return responders;
@@ -85,6 +100,24 @@ public class NFRFInsurance {
     public void setResponders(Responders responders) {
         this.responders = responders;
     }
+
+    public String getReenbranch() {
+        return reenbranch;
+    }
+
+    public void setReenbranch(String reenbranch) {
+        this.reenbranch = reenbranch;
+    }
+
+    public int getFundsApproved() {
+        return fundsApproved;
+    }
+
+    public void setFundsApproved(int fundsApproved) {
+        
+        this.fundsApproved = fundsApproved;
+    }
+
 
     public String getUsername() {
         return username;
@@ -101,34 +134,12 @@ public class NFRFInsurance {
     public void setDocPath(String docPath) {
         this.docPath = docPath;
     }
-    
-    private String firstName;
-    private String lastName;
-    private int policyNumber;
-    private String address;
-    private String claimsmanager;
-    private String reenbranch;
-
-    public String getReenbranch() {
-        return reenbranch;
-    }
-
-    public void setReenbranch(String reenbranch) {
-        this.reenbranch = reenbranch;
-    }
-    private int fundsApproved;
-    private Responders responders;
-
-   
-    private String username;
-    private String docPath;
-    
+ 
     @Override
     public String toString() {
         return username;
     }
-
-    public void setReen(String reen) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
+    
+    
 }

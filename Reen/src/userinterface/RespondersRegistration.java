@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package userinterface.RespondersRole;
+package userinterface;
 
+import userinterface.RespondersRole.*;
 import Business.Employee.Responders;
 import Business.Employee.Employee;
 
@@ -20,6 +21,7 @@ import Business.UserAccount.UserAccount;
 
 import Business.WorkQueue.RespondersToClaimsManager;
 import Business.WorkQueue.WorkQueue;
+import java.awt.CardLayout;
 import java.util.Random;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -312,7 +314,7 @@ public class RespondersRegistration extends javax.swing.JPanel {
             }
             for (Network n : system.getNetworkList()){
             for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()){
-                if (e.getEnterpriseType().equals(Enterprise.EnterpriseType.Hospital)){
+                if (e.getEnterpriseType().equals(Enterprise.EnterpriseType.Reen)){
                     for(UserAccount ua : e.getUserAccountDirectory().getUserAccountList()){
                         if(ua.getUsername().equals(username)){
                             JOptionPane.showMessageDialog(null, "User Name already exists!, Please Enter valid user name","warning", JOptionPane.WARNING_MESSAGE);
@@ -388,7 +390,9 @@ public class RespondersRegistration extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
+         container.remove(this);
+        CardLayout cardlayout = (CardLayout) container.getLayout();
+        cardlayout.previous(container);
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

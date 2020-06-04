@@ -18,6 +18,6 @@ import userinterface.RespondersRole.RespondersWorkAreaJPanel;
 public class RespondersRole extends Role {
     
     public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business) {
-        return new BirthMotherWorkAreaJPanel(userProcessContainer, account, organization, enterprise, business);
+        return new RespondersWorkAreaJPanel(userProcessContainer, account, organization, enterprise, business);
     }
 }

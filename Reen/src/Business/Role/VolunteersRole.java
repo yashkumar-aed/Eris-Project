@@ -16,7 +16,7 @@ import userinterface.VolunteersRole.VolunteersWorkAreaJPanel;
  * @author yashk
  */
 public class VolunteersRole extends Role {
-    
+    @Override
     public JPanel createWorkArea(JPanel container, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business) {
         return new VolunteersWorkAreaJPanel(container, enterprise, account, organization);
     }

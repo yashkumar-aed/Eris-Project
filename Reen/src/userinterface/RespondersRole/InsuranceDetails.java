@@ -318,7 +318,7 @@ public class InsuranceDetails extends javax.swing.JPanel {
                     if(e.getEnterpriseType().equals(Enterprise.EnterpriseType.NFRF))
                     {
                             this.enterprise = e;
-                               nw.setReen(userAccount.getResponders().getReen());
+                               nw.setReenbranch(userAccount.getResponders().getReen());
                                nw.setAddress(this.address);
                                nw.setLastName(lastName);
                                nw.setFirstName(firstName);

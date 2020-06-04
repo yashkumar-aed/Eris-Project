@@ -191,7 +191,7 @@ public class ReenAdminWorkAreaJPanel extends javax.swing.JPanel {
         }
 
         RespondersAcceptWorkAreaJPanel muajp = new RespondersAcceptWorkAreaJPanel(container, network, account, enterprise);
-        container.add("BirthMotherAcceptWorkAreaJPanel", muajp);
+        container.add("RespondersAcceptWorkAreaJPanel", muajp);
 
         CardLayout layout = (CardLayout) container.getLayout();
         layout.next(container);

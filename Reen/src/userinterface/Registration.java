@@ -9,8 +9,8 @@ import Business.EcoSystem;
 import Business.Organization.Organization;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
-import userinterface.RespondersRole.RespondersRegistration;
-import userinterface.VolunteersRole.VolunteersRegistration;
+import userinterface.RespondersRegistration;
+import userinterface.VolunteersRegistration;
 
 /**
  *

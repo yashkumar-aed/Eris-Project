@@ -19,7 +19,6 @@ public class Responders {
     private String username;
     private int id;
     private static int count = new Random().nextInt(100);
-    private String emailId;
     private String password;
     private String Reen;
     private String imgPath;
@@ -221,7 +220,6 @@ public class Responders {
         id = count;
         count++;
         this.Reen =new String();
-        this.emailId =new String();
         this.password =new String();
         this.username =new String();
         this.claimsaccount = new Claims();
@@ -280,10 +278,9 @@ public class Responders {
         this.imgPath = imgPath;
        
     }
-   public void setValues(String firstName, String LastName, String email, int bankBalance, String address) {
+   public void setValues(String firstName, String LastName, int bankBalance, String address) {
        this.firstName = firstName;
         this.lastName = LastName;
-       this.emailId = email;
       this.ownFunds = bankBalance;
      this.bankBalance = bankBalance;
         this.address = address;

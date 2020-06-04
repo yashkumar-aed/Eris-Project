@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package userinterface.VolunteersRole;
+package userinterface;
 
+import userinterface.VolunteersRole.*;
 import Business.EcoSystem;
 import javax.swing.JPanel;
 import Business.Employee.Volunteers;
 import Business.Employee.VolunteersDirectory;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
-import Business.Enterprise.HospitalEnterprise;
 import Business.Enterprise.NFRFEnterprise;
 import Business.Enterprise.ReenEnterprise;
  
@@ -52,15 +52,11 @@ public class VolunteersRegistration extends javax.swing.JPanel {
     private Organization organization;
      
     
-    public VolunteersRegistration() {
+    public VolunteersRegistration(JPanel container, EcoSystem system) {
         initComponents();
         this.container = container;
         this.system = system;
         populateComboBox();
-    }
-
-    public VolunteersRegistration(JPanel container, EcoSystem system) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -282,7 +278,7 @@ public class VolunteersRegistration extends javax.swing.JPanel {
         
         for (Network n : system.getNetworkList()){
             for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()){
-                if (e.getEnterpriseType().equals(Enterprise.EnterpriseType.Hospital)){
+                if (e.getEnterpriseType().equals(Enterprise.EnterpriseType.Reen)){
                     for(UserAccount ua : e.getUserAccountDirectory().getUserAccountList()){
                         if(ua.getUsername().equals(username)){
                             JOptionPane.showMessageDialog(null, "User Name already exists!, Please Enter valid user name","warning", JOptionPane.WARNING_MESSAGE);
@@ -327,7 +323,7 @@ private void populateComboBox() {
         branchJComboBox.removeAllItems();
         for(Network n: system.getNetworkList()){
             for(Enterprise e: n.getEnterpriseDirectory().getEnterpriseList()){
-                if(e.getEnterpriseType().equals(Enterprise.EnterpriseType.Hospital)){
+                if(e.getEnterpriseType().equals(Enterprise.EnterpriseType.Reen)){
                     branchJComboBox.addItem(e);
                 }    
             }

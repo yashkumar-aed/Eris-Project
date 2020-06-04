@@ -17,7 +17,7 @@ import userinterface.ClaimsManager.ClaimManagerWorkAreaJPanel;
  * @author yashk
  */
 public class ClaimsManagerRole extends Role {
-    
+    @Override 
     public JPanel createWorkArea(JPanel container, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business) {
         return new ClaimManagerWorkAreaJPanel(container, account, organization, enterprise);
     }

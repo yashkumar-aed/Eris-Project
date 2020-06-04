@@ -50,7 +50,6 @@ public class SigninOptions extends javax.swing.JPanel {
         btnNFRFAid = new javax.swing.JButton();
         btnAdmin = new javax.swing.JButton();
         btnNFRFInsurance = new javax.swing.JButton();
-        btnRegister = new javax.swing.JButton();
 
         jPanel1.setMaximumSize(new java.awt.Dimension(1245, 1000));
         jPanel1.setMinimumSize(new java.awt.Dimension(1245, 1000));
@@ -106,13 +105,6 @@ public class SigninOptions extends javax.swing.JPanel {
             }
         });
 
-        btnRegister.setText("New? Create Account!");
-        btnRegister.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegisterActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -126,17 +118,13 @@ public class SigninOptions extends javax.swing.JPanel {
                     .addComponent(btnNFRFAid, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnNFRFInsurance, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnResponders, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 254, Short.MAX_VALUE)
-                .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50))
+                .addContainerGap(512, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(111, 111, 111)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnRegister, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE))
+                .addComponent(btnAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnResponders, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -220,24 +208,12 @@ public class SigninOptions extends javax.swing.JPanel {
         layout.next(container);
     }//GEN-LAST:event_btnNFRFInsuranceActionPerformed
 
-    private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-        Registration so = new Registration(container,system);
-        container.add("registerOptions", so);
-        CardLayout layout = (CardLayout)this.container.getLayout();
-        layout.next(container);
-       
-         
-
-        btnRegister.setEnabled(false);        // TODO add your handling code here:
-    }//GEN-LAST:event_btnRegisterActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdmin;
     private javax.swing.JButton btnClaimsManager;
     private javax.swing.JButton btnNFRFAid;
     private javax.swing.JButton btnNFRFInsurance;
-    private javax.swing.JButton btnRegister;
     private javax.swing.JButton btnResponders;
     private javax.swing.JButton btnVolunteers;
     private javax.swing.JPanel jPanel1;

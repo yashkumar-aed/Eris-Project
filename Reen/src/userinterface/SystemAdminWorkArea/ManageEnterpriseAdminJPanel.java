@@ -25,16 +25,16 @@ import javax.swing.JOptionPane;
  */
 public class ManageEnterpriseAdminJPanel extends javax.swing.JPanel {
 
-    private JPanel userProcessContainer;
+    private JPanel container;
     private EcoSystem system;
 
     /**
      * Creates new form ManageEnterpriseJPanel
      */
-    public ManageEnterpriseAdminJPanel(JPanel userProcessContainer, EcoSystem system) {
+    public ManageEnterpriseAdminJPanel(JPanel container, EcoSystem system) {
         initComponents();
 
-        this.userProcessContainer = userProcessContainer;
+        this.container = container;
         this.system = system;
 
         populateTable();
@@ -252,10 +252,7 @@ public class ManageEnterpriseAdminJPanel extends javax.swing.JPanel {
         String password = String.valueOf(passwordJPasswordField.getPassword());
         String name = nameJTextField.getText();
         
-        Employee employee = enterprise.getEmployeeDirectory().createandaddEmployee(name);
         
-        UserAccount account = enterprise.getUserAccountDirectory().createUserAccount(username, password, employee, new AdminRole());
-        populateTable();
         
         try{ 
            if (username.equals("")){
@@ -282,12 +279,12 @@ public class ManageEnterpriseAdminJPanel extends javax.swing.JPanel {
         if(enterprise.getUserAccountDirectory().checkIfUsernameIsUnique(username)){
         if(enterprise.getEnterpriseType().equals(Enterprise.EnterpriseType.Reen)){
             
-            employee = enterprise.getEmployeeDirectory().createandaddEmployee(name);
-            account = enterprise.getUserAccountDirectory().createUserAccount(username, password, employee, new ReenAdminRole(), n.getName());
+         Employee   employee = enterprise.getEmployeeDirectory().createandaddEmployee(name);
+          UserAccount  account = enterprise.getUserAccountDirectory().createUserAccount(username, password, employee, new ReenAdminRole(), n.getName());
         }
         else if(enterprise.getEnterpriseType().equals(Enterprise.EnterpriseType.NFRF)){
-            employee = enterprise.getEmployeeDirectory().createandaddEmployee(name);
-            account = enterprise.getUserAccountDirectory().createUserAccount(username, password, employee, new NFRFAdminRole(), n.getName());
+           Employee employee = enterprise.getEmployeeDirectory().createandaddEmployee(name);
+          UserAccount  account = enterprise.getUserAccountDirectory().createUserAccount(username, password, employee, new NFRFAdminRole(), n.getName());
         }
         populateTable();
         }
@@ -300,13 +297,13 @@ public class ManageEnterpriseAdminJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_submitJButtonActionPerformed
 
     private void backJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backJButtonActionPerformed
-        userProcessContainer.remove(this);
-         Component[] componentArray = userProcessContainer.getComponents();
+        container.remove(this);
+         Component[] componentArray = container.getComponents();
         Component component = componentArray[componentArray.length - 1];
         SystemAdminWorkAreaJPanel sysAdminwjp = (SystemAdminWorkAreaJPanel) component;
         sysAdminwjp.populateTree();
-        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
-        layout.previous(userProcessContainer);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.previous(container);
     }//GEN-LAST:event_backJButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

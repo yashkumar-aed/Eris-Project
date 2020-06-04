@@ -5,6 +5,7 @@
  */
 package Business.Organization;
 
+import Business.Role.NFRFInsuranceManagerRole;
 import Business.Role.Role;
 import java.util.ArrayList;
 
@@ -21,7 +22,7 @@ public class NFRFInsuranceManagerOrganization extends Organization{
     @Override
     public ArrayList<Role> getSupportedRole() {
         ArrayList<Role> roles = new ArrayList();
-  //      roles.add(new NFRFInsuranceManagerRole());
+        roles.add(new NFRFInsuranceManagerRole());
         return roles;
     }
      

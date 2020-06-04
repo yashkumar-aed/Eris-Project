@@ -37,6 +37,10 @@ public class VolunteersDirectory extends javax.swing.JPanel {
         valueLabel.setText(enterprise.getName());
         populateRequestTable();
     }
+
+    VolunteersDirectory(JPanel container, UserAccount userAccount, Responders responders, Enterprise enterprise) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
      public void populateRequestTable(){
         DefaultTableModel model = (DefaultTableModel) workRequestJTable.getModel();

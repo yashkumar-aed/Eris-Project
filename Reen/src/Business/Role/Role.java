@@ -17,9 +17,6 @@ import javax.swing.JPanel;
 public abstract class Role {
     
     public enum RoleType{
-        Admin("Admin"),
-        Doctor("Doctor"),
-        LabAssistant("Lab Assistant"),
         NFRFAdmin("NFRFAdmin"),
         ClaimsManager("Claims Manager"),
         NFRFAidManager("NFRF Aid Manager"),
@@ -43,7 +40,7 @@ public abstract class Role {
         }
     }
     
-    public abstract JPanel createWorkArea(JPanel userProcessContainer, 
+    public abstract JPanel createWorkArea(JPanel container, 
             UserAccount account, 
             Organization organization, 
             Enterprise enterprise, 
