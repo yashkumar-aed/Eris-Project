@@ -1,0 +1,66 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Business.Directory;
+
+import java.time.LocalTime;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author yashk
+ */
+public class ClaimsManager extends Employee {
+   private int workRequestCount;
+   private int ratingReviews;
+   private boolean isAvailable;
+   private LocalTime availableTime;
+
+      public ClaimsManager(int ratingReviews, boolean isAvailable, LocalTime availableTime) {
+        super();
+        this.ratingReviews = ratingReviews;
+        this.isAvailable = isAvailable;
+        this.availableTime = availableTime;
+     
+    }
+    
+    public ClaimsManager(){
+        super();
+        this.isAvailable = true;
+        this.availableTime = LocalTime.MIN;
+    }
+    public int getWorkRequestCount() {
+        return workRequestCount;
+    }
+
+    public void setWorkRequestCount(int workRequestCount) {
+        this.workRequestCount = workRequestCount;
+    }
+
+    public int getRatingReviews() {
+        return ratingReviews;
+    }
+
+    public void setRatingReviews(int ratingReviews) {
+        this.ratingReviews = ratingReviews;
+    }
+
+    public boolean isIsAvailable() {
+        return isAvailable;
+    }
+
+    public void setIsAvailable(boolean isAvailable) {
+        this.isAvailable = isAvailable;
+    }
+
+    public LocalTime getAvailableTime() {
+        return availableTime;
+    }
+
+    public void setAvailableTime(LocalTime availableTime) {
+        this.availableTime = availableTime;
+    }
+
+}
